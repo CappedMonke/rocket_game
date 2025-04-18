@@ -1,0 +1,3 @@
+Place the prefab containing all global prefabs, which persist across scene changes here!
+
+If you are adding a new singleton, then add it by adding a child gameobject containing the singleton component to this prefab.
