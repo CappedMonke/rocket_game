@@ -32,9 +32,8 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
         {
             _blockMap[entry.blockKind] = entry.tiles;
         }
-        _generator = new TerrainGenerator();
+        _generator = new TerrainGenerator(new TerrainGeneratorSettings(1337));
         _tilemap = GetComponent<Tilemap>();
-        _generator.Initalize(new TerrainGeneratorSettings(1337, 10, 3));
     }
 
     //TODO: this is just temp, call this in the playermanager
@@ -58,7 +57,10 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
                 Vector2Int chunkCoord = new Vector2Int(centerChunk.x + x, centerChunk.y + y);
 
                 if (_loadedChunks.ContainsKey(chunkCoord))
+                {
                     continue; // Already loaded
+                }
+
                 Debug.Log($"Generationg chunk {chunkCoord}");
                 _loadedChunks.Add(chunkCoord, LoadChunk(chunkCoord));
             }
