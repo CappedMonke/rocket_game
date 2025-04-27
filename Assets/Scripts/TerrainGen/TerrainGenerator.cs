@@ -56,7 +56,7 @@ public sealed class TerrainGenerator
         noise.SetNoiseType(FastNoiseLite.NoiseType.Value);
         noise2.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
         var chunkBuffer = ArrayPool<float>.Shared.Rent(Chunk.ChunkArea);
-        Span<float> chunkHardness = new Span<float>(chunkBuffer, 0, Chunk.ChunkArea);
+        Span<float> chunkHardness = new(chunkBuffer, 0, Chunk.ChunkArea);
         //Surface
         for (int x = 0; x < Chunk.ChunkSizeX; x++)
         {
@@ -93,7 +93,7 @@ public sealed class TerrainGenerator
                 float caveNoise = noise.GetNoise(worldX * 4, worldY * 4);
                 if (Mathf.Abs(caveNoise) < 0.2f || caveNoise > 0.7f)
                 {
-                    chunkHardness[x + Chunk.ChunkSizeX * y] -= (erosion * falloff + 0.2f);
+                    chunkHardness[x + Chunk.ChunkSizeX * y] -= (erosion * falloff + 0.4f);
                 }
             }
         }
