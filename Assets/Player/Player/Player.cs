@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +15,12 @@ public class Player : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
+    [Header("Stats")]
+    public int health = 100;
+    public int maxHealth = 100;
+    public int oxygen = 100;
+    public int maxOxygen = 100;
+
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool canEnterRocket = false;
@@ -30,6 +35,7 @@ public class Player : MonoBehaviour
         CheckGrounded();
         HandleJump();
         HandleEnterRocket();
+        UiManager.Instance.UpdatePlayerUi(health, maxHealth, oxygen, maxOxygen);
     }
 
     void FixedUpdate()

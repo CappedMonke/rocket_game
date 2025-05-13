@@ -16,6 +16,13 @@ public class Rocket : MonoBehaviour
     public Transform doorTransform;
     private Player player;
 
+    [Header("Stats")]
+    public int health = 100;
+    public int maxHealth = 100;
+    public int oxygen = 100;
+    public int maxOxygen = 100;
+    public int fuel = 100;
+    public int maxFuel = 100;
 
     private Rigidbody2D rb;
 
@@ -28,6 +35,7 @@ public class Rocket : MonoBehaviour
     void Update()
     {
         HandleExitRocket();
+        UiManager.Instance.UpdateRocketUi(health, maxHealth, oxygen, maxOxygen, fuel, maxFuel);
     }
 
     void FixedUpdate()
