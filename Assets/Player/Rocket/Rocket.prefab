@@ -54,6 +54,16 @@ MonoBehaviour:
   rotationSpeed: 50
   thrustSpeed: 12
   doorTransform: {fileID: 2525444162580969122}
+  health: 100
+  maxHealth: 100
+  oxygen: 100
+  maxOxygen: 100
+  fuel: 100
+  maxFuel: 100
+  fuelLossRate: 1
+  perfectLandingSound: {fileID: 8300000, guid: c4d1759e8f8d70e638e10daedf3787b0, type: 3}
+  perfectLandingVelocityThreshold: 1
+  perfectLandingAngleThreshold: 5
 --- !u!212 &6620375424993837615
 SpriteRenderer:
   m_ObjectHideFlags: 0

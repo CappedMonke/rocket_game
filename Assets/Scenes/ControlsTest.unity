@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 191514113}
   - component: {fileID: 191514114}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -340,6 +340,14 @@ PrefabInstance:
     - target: {fileID: 6574471747886390514, guid: 1aed3d0268feec8339902216fa0d35c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081554703507867444, guid: 1aed3d0268feec8339902216fa0d35c4, type: 3}
+      propertyPath: oxygenRefillRate
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081554703507867444, guid: 1aed3d0268feec8339902216fa0d35c4, type: 3}
+      propertyPath: oxygenDepletionRate
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -620,6 +628,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3316949999529019019, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
   m_PrefabInstance: {fileID: 7422365206065783299}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1974725814
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499644391902515260, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356321144607267174, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: m_Name
+      value: DesaturationController
+      objectReference: {fileID: 0}
+    - target: {fileID: 7833616361467563950, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
+      propertyPath: inputValue
+      value: 100
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4d0ff174d1526253fb8f9b98fe4d6781, type: 3}
 --- !u!1001 &1674600632840634933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -633,12 +702,24 @@ PrefabInstance:
       value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 3772503922372347637, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
+      propertyPath: fuelLossRate
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772503922372347637, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: centerOfMass.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3772503922372347637, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: centerOfMass.y
       value: -0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772503922372347637, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
+      propertyPath: perfectLandingAngleThreshold
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772503922372347637, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
+      propertyPath: perfectLandingVelocityThreshold
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6552174119397823271, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -830,6 +911,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1624457939719884291, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624457939719884291, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+      propertyPath: oxygen
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624457939719884291, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+      propertyPath: jumpForce
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624457939719884291, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624457939719884291, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+      propertyPath: maxOxygen
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624457939719884291, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3316949999529019019, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.87
@@ -889,4 +994,5 @@ SceneRoots:
   - {fileID: 1674600632840634933}
   - {fileID: 7422365206065783299}
   - {fileID: 4546238548179597512}
+  - {fileID: 1974725814}
   - {fileID: 1218923806}

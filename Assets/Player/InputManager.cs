@@ -15,9 +15,14 @@ public class InputManager : MonoBehaviour
     [SerializeField] private bool enablePlayerControlsOnStart = true;
 
     [Header("References")]
-    [SerializeField] private Player player;
-    [SerializeField] private Rocket rocket;
-    [SerializeField] private CinemachineCamera cinemachineCamera;
+    private Player player;
+    private Rocket rocket;
+    private CinemachineCamera cinemachineCamera;
+    private DesaturationController desaturationController;
+
+    [Header("Oxygen Settings")]
+    [SerializeField] private float oxygenDepletionRate = 1f;
+    [SerializeField] private float oxygenRefillRate = 10f;
 
     public static InputManager Instance { get; private set; }
 
@@ -36,6 +41,7 @@ public class InputManager : MonoBehaviour
         player = FindFirstObjectByType<Player>();
         rocket = FindFirstObjectByType<Rocket>();
         cinemachineCamera = FindFirstObjectByType<CinemachineCamera>();
+        desaturationController = FindFirstObjectByType<DesaturationController>();
 
         playerMap = inputActions.FindActionMap("Player", true);
         rocketMap = inputActions.FindActionMap("Rocket", true);
@@ -47,6 +53,40 @@ public class InputManager : MonoBehaviour
         else
         {
             EnableRocketControls();
+        }
+    }
+
+    private void Update()
+    {
+        HandleOxygenManagement();
+    }
+
+    private void HandleOxygenManagement()
+    {
+        if (player != null)
+        {
+            float oxygenLoss = oxygenDepletionRate * Time.deltaTime;
+
+            if (player.gameObject.activeSelf)
+            {
+                player.SetOxygen(player.oxygen - oxygenLoss);
+            }
+            else if (rocket != null && rocket.gameObject.activeSelf)
+            {
+                if (rocket.oxygen > 0 && player.oxygen < player.maxOxygen)
+                {
+                    float oxygenToRefill = oxygenRefillRate * Time.deltaTime;
+                    float actualRefill = Mathf.Min(oxygenToRefill, rocket.oxygen, player.maxOxygen - player.oxygen);
+                    player.SetOxygen(player.oxygen + actualRefill - oxygenLoss);
+                    rocket.oxygen -= actualRefill;
+                }
+                else
+                {
+                    player.SetOxygen(player.oxygen - oxygenLoss);
+                }
+            }
+
+            desaturationController.inputValue = player.oxygen;
         }
     }
 

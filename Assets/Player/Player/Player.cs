@@ -15,11 +15,13 @@ public class Player : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
+    private float speedMultiplier = 1f;
+
     [Header("Stats")]
     public int health = 100;
     public int maxHealth = 100;
-    public int oxygen = 100;
-    public int maxOxygen = 100;
+    public float oxygen = 100f;
+    public float maxOxygen = 100f;
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -35,7 +37,7 @@ public class Player : MonoBehaviour
         CheckGrounded();
         HandleJump();
         HandleEnterRocket();
-        UiManager.Instance.UpdatePlayerUi(health, maxHealth, oxygen, maxOxygen);
+        UiManager.Instance.UpdatePlayerUi(health, maxHealth, Mathf.RoundToInt(oxygen), Mathf.RoundToInt(maxOxygen));
     }
 
     void FixedUpdate()
@@ -47,7 +49,7 @@ public class Player : MonoBehaviour
     {
         float moveInput = moveAction.action.ReadValue<float>();
         Vector2 velocity = rb.linearVelocity;
-        velocity.x = moveInput * moveSpeed;
+        velocity.x = moveInput * moveSpeed * speedMultiplier;
         rb.linearVelocity = velocity;
     }
 
@@ -103,5 +105,35 @@ public class Player : MonoBehaviour
             Gizmos.color = isGrounded ? Color.green : Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
+    }
+
+    public void SetHealth(int newHealth)
+    {
+        health = Mathf.Clamp(newHealth, 0, maxHealth);
+        UiManager.Instance.UpdatePlayerUi(health, maxHealth, Mathf.RoundToInt(oxygen), Mathf.RoundToInt(maxOxygen));
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void SetOxygen(float newOxygen)
+    {
+        oxygen = Mathf.Clamp(newOxygen, 0f, maxOxygen);
+        UiManager.Instance.UpdatePlayerUi(health, maxHealth, Mathf.RoundToInt(oxygen), Mathf.RoundToInt(maxOxygen));
+        if (oxygen <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = multiplier;
+    }
+
+    void Die()
+    {
+        Debug.Log("Player has died.");
     }
 }
