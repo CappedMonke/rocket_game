@@ -58,6 +58,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  health: 100
+  maxHealth: 100
+  oxygen: 100
+  maxOxygen: 100
 --- !u!212 &6815573473743920689
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -147,7 +151,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00018297136, y: 0.00036260486}
+  m_Offset: {x: -0.00018297136, y: 0.00095036626}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -157,7 +161,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.102081686, y: 0.161452}
+  m_Size: {x: 0.102081686, y: 0.16027647}
   m_EdgeRadius: 0
 --- !u!50 &5011833742382933994
 Rigidbody2D:
