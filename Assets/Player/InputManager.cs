@@ -106,5 +106,10 @@ public class InputManager : MonoBehaviour
         UiManager.Instance.ShowRocketUi();
         cinemachineCamera.Follow = rocket.transform;
         DOTween.To(() => cinemachineCamera.Lens.OrthographicSize, x => cinemachineCamera.Lens.OrthographicSize = x, 10f, 0.5f);
+
+        if (player != null)
+        {
+            player.gameObject.SetActive(false); // Ensure player is disabled when entering the rocket
+        }
     }
 }

@@ -223,7 +223,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 0}
+  m_LocalScale: {x: 200, y: 200, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -834,14 +834,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocket
       objectReference: {fileID: 0}
-    - target: {fileID: 3772503922372347637, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: damageSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 97d96569dc38873e38b3b47d6528a734, type: 3}
-    - target: {fileID: 3772503922372347637, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: landingSound
-      value: 
-      objectReference: {fileID: 8300000, guid: b2f5c7817847a351985bad88cb994460, type: 3}
     - target: {fileID: 6552174119397823271, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.028
@@ -1056,6 +1048,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1624457939719884291, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+      propertyPath: enterRocketAction
+      value: 
+      objectReference: {fileID: -8558815986564564893, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
     - target: {fileID: 3316949999529019019, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.87

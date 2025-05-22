@@ -1,21 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
 {
     [Header("Input")]
     public InputActionReference moveAction;
     public InputActionReference jumpAction;
+
+    [Header("Interaction")]
     public InputActionReference enterRocketAction;
-
-    [Header("Movement")]
-    public float moveSpeed = 5f;
-    public float jumpForce = 10f;
-    public Transform groundCheck;
-    public float groundCheckRadius = 0.2f;
-    public LayerMask groundLayer;
-
-    private float speedMultiplier = 1f;
 
     [Header("Stats")]
     public int health = 100;
@@ -23,117 +17,68 @@ public class Player : MonoBehaviour
     public float oxygen = 100f;
     public float maxOxygen = 100f;
 
-    private Rigidbody2D rb;
-    private bool isGrounded;
-    private bool canEnterRocket = false;
+    private PlayerMovement movement;
 
     void Awake()
     {
-        rb = GetComponentInChildren<Rigidbody2D>();
+        movement = GetComponent<PlayerMovement>();
+    }
+
+    void OnEnable()
+    {
+        jumpAction.action.performed += ctx => movement.OnJumpInput();
+        jumpAction.action.canceled += ctx => movement.OnJumpUpInput();
+        enterRocketAction.action.performed += ctx => HandleEnterRocket();
+    }
+
+    void OnDisable()
+    {
+        jumpAction.action.performed -= ctx => movement.OnJumpInput();
+        jumpAction.action.canceled -= ctx => movement.OnJumpUpInput();
+        enterRocketAction.action.performed -= ctx => HandleEnterRocket();
     }
 
     void Update()
     {
-        CheckGrounded();
-        HandleJump();
-        HandleEnterRocket();
+        Vector2 input = new Vector2(moveAction.action.ReadValue<float>(), 0f);
+        movement.SetMoveInput(input);
+
         UiManager.Instance.UpdatePlayerUi(health, maxHealth, Mathf.RoundToInt(oxygen), Mathf.RoundToInt(maxOxygen));
-    }
-
-    void FixedUpdate()
-    {
-        HandleMovement();
-    }
-
-    private void HandleMovement()
-    {
-        float moveInput = moveAction.action.ReadValue<float>();
-        Vector2 velocity = rb.linearVelocity;
-        velocity.x = moveInput * moveSpeed * speedMultiplier;
-        rb.linearVelocity = velocity;
-    }
-
-    private void HandleJump()
-    {
-        if (isGrounded && jumpAction.action.WasPressedThisFrame())
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-    }
-
-    private void CheckGrounded()
-    {
-        if (groundCheck != null)
-        {
-            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        }
-        else
-        {
-            isGrounded = true;
-        }
-    }
-
-    private void HandleEnterRocket()
-    {
-        if (canEnterRocket && enterRocketAction.action.WasPressedThisFrame())
-        {
-            InputManager.Instance.EnableRocketControls();
-            gameObject.SetActive(false);
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("RocketDoor"))
-        {
-            canEnterRocket = true;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("RocketDoor"))
-        {
-            canEnterRocket = false;
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        if (groundCheck != null)
-        {
-            Gizmos.color = isGrounded ? Color.green : Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
     }
 
     public void SetHealth(int newHealth)
     {
         health = Mathf.Clamp(newHealth, 0, maxHealth);
         UiManager.Instance.UpdatePlayerUi(health, maxHealth, Mathf.RoundToInt(oxygen), Mathf.RoundToInt(maxOxygen));
-        if (health <= 0)
-        {
-            Die();
-        }
+        if (health <= 0) Die();
     }
 
     public void SetOxygen(float newOxygen)
     {
         oxygen = Mathf.Clamp(newOxygen, 0f, maxOxygen);
         UiManager.Instance.UpdatePlayerUi(health, maxHealth, Mathf.RoundToInt(oxygen), Mathf.RoundToInt(maxOxygen));
-        if (oxygen <= 0)
-        {
-            Die();
-        }
+        if (oxygen <= 0) Die();
     }
 
     public void SetSpeedMultiplier(float multiplier)
     {
-        speedMultiplier = multiplier;
+        movement.data.runMaxSpeed *= multiplier;
+        movement.data.runAcceleration *= multiplier;
     }
 
     void Die()
     {
         Debug.Log("Player has died.");
+    }
+
+    private void HandleEnterRocket()
+    {
+        Rocket rocket = FindFirstObjectByType<Rocket>();
+        if (rocket != null && Vector2.Distance(transform.position, rocket.doorTransform.position) < 1f)
+        {
+            InputManager.Instance.EnableRocketControls();
+            gameObject.SetActive(false);
+            AudioSource.PlayClipAtPoint(rocket.launchSound, rocket.transform.position);
+        }
     }
 }

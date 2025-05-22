@@ -10,6 +10,8 @@ public class Rocket : MonoBehaviour
     public InputActionReference thrustAction;
     public InputActionReference exitRocketAction;
 
+    [Header("Interaction")]
+
     [Header("Movement")]
     public float rotationSpeed = 10f;
     public float thrustSpeed = 10f;

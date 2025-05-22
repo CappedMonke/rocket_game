@@ -53,6 +53,7 @@ MonoBehaviour:
   rotateAction: {fileID: 1228669280722681338, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
   thrustAction: {fileID: 5436587370598760623, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
   exitRocketAction: {fileID: 2736861577597536437, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
+  enterRocketAction: {fileID: 0}
   rotationSpeed: 50
   thrustSpeed: 16
   doorTransform: {fileID: 2525444162580969122}
@@ -69,8 +70,8 @@ MonoBehaviour:
   thrustSound: {fileID: 8300000, guid: 47cae03ecb6b03f6683f7f3c75809e6b, type: 3}
   launchSound: {fileID: 8300000, guid: 8c885e577ab4bd34885f7c418356e137, type: 3}
   explosionSound: {fileID: 8300000, guid: 6cbf556173b5f506fab5d2660f9d758b, type: 3}
-  damageSound: {fileID: 8300000, guid: 0f97905b8036dac8aa758a4237e5394b, type: 3}
-  landingSound: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: 97d96569dc38873e38b3b47d6528a734, type: 3}
+  landingSound: {fileID: 8300000, guid: b2f5c7817847a351985bad88cb994460, type: 3}
   perfectLandingVelocityThreshold: 0.1
   perfectLandingAngleThreshold: 2
 --- !u!212 &6620375424993837615

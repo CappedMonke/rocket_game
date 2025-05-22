@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3316949999529019019}
   - component: {fileID: 1624457939719884291}
+  - component: {fileID: 3585478965220407632}
   - component: {fileID: 6815573473743920689}
   - component: {fileID: 905137295937980183}
   - component: {fileID: 5011833742382933994}
@@ -50,18 +51,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: 7522223601791249772, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
   jumpAction: {fileID: 6242571714152985269, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
-  enterRocketAction: {fileID: -8558815986564564893, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
-  moveSpeed: 4
-  jumpForce: 3
-  groundCheck: {fileID: 8636382385876878179}
-  groundCheckRadius: 0.1
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   health: 100
   maxHealth: 100
   oxygen: 100
   maxOxygen: 100
+--- !u!114 &3585478965220407632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4354470688907346475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5978a817b8c8d76cb6a74e37bb313be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: b2b48274f40c5f18f81e396e2f1bab01, type: 2}
+  groundCheck: {fileID: 8636382385876878179}
+  groundCheckSize: {x: 0.1, y: 0.16}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!212 &6815573473743920689
 SpriteRenderer:
   m_ObjectHideFlags: 0
