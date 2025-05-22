@@ -52,15 +52,16 @@ public class PlayerMovement : MonoBehaviour
         if (isJumping && rb.linearVelocity.y < 0)
             isJumping = false;
 
-        if (CanJump() && lastPressedJumpTime > 0)
-        {
-            Jump();
-        }
+        
     }
 
     private void FixedUpdate()
     {
         Run();
+        if (CanJump() && lastPressedJumpTime > 0)
+        {
+            Jump();
+        }
         ApplyGravity();
     }
 
