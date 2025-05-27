@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4354470688907346475}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.87, y: -4.416, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: 7522223601791249772, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
   jumpAction: {fileID: 6242571714152985269, guid: 82bfa357f37722901886c0cb3ca88af3, type: 3}
+  enterRocketAction: {fileID: 0}
   health: 100
   maxHealth: 100
   oxygen: 100
@@ -117,7 +118,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1113467131062840280, guid: 47ec2bed674d3ad43bc6a087c511f637, type: 3}
+  m_Sprite: {fileID: -2900647962306260050, guid: 3174390305cf0d433b2f6149ac2fa7f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -162,17 +163,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00018297136, y: 0.00095036626}
+  m_Offset: {x: 0.018332068, y: -0.005870968}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.12, y: 0.18}
+    oldSize: {x: 0.18, y: 0.22}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.102081686, y: 0.16027647}
+  m_Size: {x: 0.11962225, y: 0.21029955}
   m_EdgeRadius: 0
 --- !u!50 &5011833742382933994
 Rigidbody2D:

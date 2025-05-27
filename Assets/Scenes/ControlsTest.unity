@@ -835,12 +835,20 @@ PrefabInstance:
       value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 6552174119397823271, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552174119397823271, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552174119397823271, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.028
+      value: -0.016
       objectReference: {fileID: 0}
     - target: {fileID: 6552174119397823271, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.474
+      value: -3.199
       objectReference: {fileID: 0}
     - target: {fileID: 6552174119397823271, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.z
