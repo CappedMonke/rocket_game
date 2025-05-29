@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Rocket : MonoBehaviour
@@ -29,7 +30,6 @@ public class Rocket : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private AudioClip ExitRocketSound;
     [SerializeField] private AudioClip EnterRocketSound;
-    [SerializeField] private AudioClip LiftoffSound;
     [SerializeField] private AudioClip LandingSound;
     [SerializeField] private AudioClip PerfectLandingSound;
     [SerializeField] private AudioClip DamageSound;
@@ -48,6 +48,15 @@ public class Rocket : MonoBehaviour
     [SerializeField] private ParticleSystem EngineDamageEffect;
     [SerializeField] private ParticleSystem EngineRepairEffect;
     [SerializeField] private ParticleSystem RocketDustEffect;
+
+    [Header("Camera")]
+    [SerializeField] private float landingShakeStrength = 1f;
+    [SerializeField] private float damageShakeStrength = 1f;
+    [SerializeField] private float explosionShakeStrength = 1f;
+    [SerializeField] private float damageAmountShakeMultiplier = 1f;
+
+    private CinemachineImpulseSource impulseSource;
+
 
     [Header("References")]
     [SerializeField] private AudioSource audioSource;
@@ -71,6 +80,7 @@ public class Rocket : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
         astronaut = FindFirstObjectByType<Astronaut>();
 
         flyingSoundDefaultVolume = audioSource.volume;
@@ -186,8 +196,6 @@ public class Rocket : MonoBehaviour
             return;
         }
 
-        Debug.Log("Collision detected with " + collision.gameObject.name);
-
         float impactForce = collision.relativeVelocity.magnitude;
 
         landingNormal = collision.contacts[0].normal;
@@ -198,11 +206,13 @@ public class Rocket : MonoBehaviour
 
         if (angle < perfectLandingMaxAngle && !impactForceTooHigh && isFlying) // Perfect landing
         {
+            impulseSource.GenerateImpulse(landingShakeStrength);
             audioSource.PlayOneShot(PerfectLandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
         }
         else if (angle < safeLandingMaxAngle && !impactForceTooHigh && isFlying) // Safe landing
         {
+            impulseSource.GenerateImpulse(landingShakeStrength);
             audioSource.PlayOneShot(LandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
         }
@@ -243,6 +253,13 @@ public class Rocket : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            controls.Rocket.Disable();
+            audioSource.PlayOneShot(ExplosionSound);
+            impulseSource.GenerateImpulse(explosionShakeStrength * damage * damageAmountShakeMultiplier);
+        }
+        else
+        {
+            impulseSource.GenerateImpulse(damageShakeStrength * damage * damageAmountShakeMultiplier);
         }
     }
 
