@@ -1,207 +1,280 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections;
-using Unity.Cinemachine;
+using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    [Header("Input")]
-    public InputActionReference rotateAction;
-    public InputActionReference thrustAction;
-    public InputActionReference exitRocketAction;
-
-    [Header("Interaction")]
-
     [Header("Movement")]
-    public float rotationSpeed = 10f;
-    public float thrustSpeed = 10f;
-
-    [Header("References")]
-    public Transform doorTransform;
-    private Player player;
-    public CinemachineImpulseSource impulseSource;
+    [SerializeField] private float thrustAcceleration = 1f;
+    [SerializeField] private float maxSpeed = 1f;
+    [SerializeField] private float rotationSpeed = 1f;
+    [SerializeField] private float minThrustStrength = 1f;
+    [SerializeField] private float thrustAdjustmentSpeed = 1f;
+    [SerializeField] private float liftoffCooldown = 1f;
 
     [Header("Stats")]
-    public int health = 100;
-    public int maxHealth = 100;
-    public float oxygen = 100f;
-    public float maxOxygen = 100f;
-    public float fuel = 100f;
-    public float maxFuel = 100f;
-    public float fuelLossRate = 1f;
+    [SerializeField] private int health = 100;
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int fuel = 100;
+    [SerializeField] private int maxFuel = 100;
+    [SerializeField] private int oxygen = 100;
+    [SerializeField] private int maxOxygen = 100;
+
+    [Header("Collision Settings")]
+    [SerializeField] private float impactForceDamageMultiplier = 1f;
+    [SerializeField] private float impactAngleDamageMultiplier = 1f;
+    [SerializeField] private float perfectLandingMaxAngle = 1f;
+    [SerializeField] private float safeLandingMaxAngle = 1f;
+    [SerializeField] private float safeLandingMaxImpactForce = 1f;
 
     [Header("Sounds")]
-    public AudioClip perfectLandingSound;
-    public AudioClip exitRocketSound;
-    public AudioClip thrustSound;
-    public AudioClip launchSound;
-    public AudioClip explosionSound;
-    public AudioClip damageSound;
-    public AudioClip landingSound;
+    [SerializeField] private AudioClip ExitRocketSound;
+    [SerializeField] private AudioClip EnterRocketSound;
+    [SerializeField] private AudioClip LiftoffSound;
+    [SerializeField] private AudioClip LandingSound;
+    [SerializeField] private AudioClip PerfectLandingSound;
+    [SerializeField] private AudioClip DamageSound;
+    [SerializeField] private AudioClip ExplosionSound;
+    [SerializeField] private AudioClip DamagedEngineSound;
+    [SerializeField] private AudioClip RepairSound;
+    [SerializeField] private AudioClip DustSound;
 
-    [Header("Landing")]
-    public float perfectLandingVelocityThreshold = 1f;
-    public float perfectLandingAngleThreshold = 5f;
+    [Header("Visual Effects")]
+    [SerializeField] private ParticleSystem DustEffect;
+    [SerializeField] private ParticleSystem LiftoffEffect;
+    [SerializeField] private ParticleSystem LandingEffect;
+    [SerializeField] private ParticleSystem ExplosionEffect;
+    [SerializeField] private ParticleSystem DamageEffect;
+    [SerializeField] private ParticleSystem RepairEffect;
+    [SerializeField] private ParticleSystem EngineDamageEffect;
+    [SerializeField] private ParticleSystem EngineRepairEffect;
+    [SerializeField] private ParticleSystem RocketDustEffect;
 
+    [Header("References")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource flyingSoundSource;
     private Rigidbody2D rb;
-    private bool hasFlown = false;
-    private const float minVelocityThreshold = 0.1f;
-    private const float speedBoostDuration = 5f;
-    private const float speedBoostMultiplier = 2f;
-    private float flightTime = 0f;
-    private bool hasRotated = false;
-    private bool canThrust = true;
-    private AudioSource thrustAudioSource;
+    private Astronaut astronaut;
+    private Controls controls;
+    private bool isFlying = false;
+    private bool canFly = true;
+    private bool canRotate = true;
+    private bool isThrusting = false;
+    private bool wasThrusting = false;
+    private float thrustStrength = 1f;
+    private float thrustInput = 0f;
+    private float rotateInput = 0f;
+    private Vector2 landingNormal;
 
-    void Awake()
+    private Coroutine flyingSoundFadeCoroutine;
+    private float flyingSoundDefaultVolume = 1f;
+
+    private void Awake()
     {
-        rb = GetComponentInChildren<Rigidbody2D>();
-        player = FindFirstObjectByType<Player>();
-        thrustAudioSource = gameObject.AddComponent<AudioSource>();
-        thrustAudioSource.clip = thrustSound;
-        thrustAudioSource.loop = true;
-        thrustAudioSource.playOnAwake = false;
+        rb = GetComponent<Rigidbody2D>();
+        astronaut = FindFirstObjectByType<Astronaut>();
+
+        flyingSoundDefaultVolume = audioSource.volume;
+
+        controls = new Controls();
+        controls.Rocket.ExitRocket.performed += ctx => ExitRocket();
+        controls.Rocket.Thrust.started += ctx => { isThrusting = true; StopFlyingSoundFadeout(); };
+        controls.Rocket.Thrust.canceled += ctx => isThrusting = false;
+        controls.Rocket.AdjustThrust.started += ctx => thrustInput = ctx.ReadValue<float>();
+        controls.Rocket.AdjustThrust.canceled += ctx => thrustInput = 0f;
+        controls.Rocket.Rotate.started += ctx => rotateInput = ctx.ReadValue<float>();
+        controls.Rocket.Rotate.canceled += ctx => rotateInput = 0f;
     }
 
-    void Update()
+    private void OnEnable()
     {
-        HandleExitRocket();
-        UiManager.Instance.UpdateRocketUi(health, maxHealth, Mathf.RoundToInt(oxygen), Mathf.RoundToInt(maxOxygen), Mathf.RoundToInt(fuel), Mathf.RoundToInt(maxFuel));
-        if (hasFlown)
+        controls.Rocket.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Rocket.Disable();
+    }
+
+    private void Update()
+    {
+        if (thrustInput != 0f)
         {
-            flightTime += Time.deltaTime;
+            thrustStrength += thrustInput * Time.deltaTime * thrustAdjustmentSpeed;
+            thrustStrength = Mathf.Clamp(thrustStrength, minThrustStrength, 1f);
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        HandleRotation();
-        HandleThrust();
-    }
-
-    private void HandleRotation()
-    {
-        float rotateInput = rotateAction.action.ReadValue<float>();
-        if (Mathf.Abs(rotateInput) > 0.1f)
+        if (canFly)
         {
-            hasRotated = true;
-        }
-        rb.MoveRotation(rb.rotation - rotateInput * rotationSpeed * Time.fixedDeltaTime);
-    }
-
-    private void HandleThrust()
-    {
-        if (!canThrust) return;
-
-        float thrustInput = thrustAction.action.ReadValue<float>();
-        if (thrustInput > 0 && fuel > 0)
-        {
-            if (!thrustAudioSource.isPlaying || thrustAudioSource.volume < 1f)
+            if (isThrusting)
             {
-                thrustAudioSource.volume = 1f; // Reset volume in case it was fading out
-                thrustAudioSource.Play();
-            }
-            hasFlown = true;
-            Vector2 thrustVector = thrustInput * thrustSpeed * rb.transform.up;
-            rb.AddForce(thrustVector);
-            fuel -= fuelLossRate * thrustInput * Time.fixedDeltaTime;
-            fuel = Mathf.Clamp(fuel, 0f, maxFuel);
-        }
-        else if (thrustAudioSource.isPlaying)
-        {
-            StartCoroutine(FadeOutThrustSound());
-        }
-    }
-
-    private IEnumerator FadeOutThrustSound()
-    {
-        float startVolume = thrustAudioSource.volume;
-
-        for (float t = 0; t < 0.2f; t += Time.deltaTime)
-        {
-            thrustAudioSource.volume = Mathf.Lerp(startVolume, 0, t / 0.2f);
-            yield return null;
-        }
-
-        thrustAudioSource.Stop();
-        thrustAudioSource.volume = startVolume; // Reset volume for next use
-    }
-
-    private void HandleExitRocket()
-    {
-        if (player != null && exitRocketAction.action.WasPressedThisFrame())
-        {
-            InputManager.Instance.EnablePlayerControls();
-            player.gameObject.SetActive(true);
-            player.transform.position = doorTransform.position;
-            AudioSource.PlayClipAtPoint(exitRocketSound, transform.position);
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && hasFlown)
-        {
-            float landingVelocity = rb.linearVelocity.magnitude;
-            float landingAngle = Mathf.Abs(rb.rotation % 360);
-
-            if (landingAngle > 180) landingAngle = 360 - landingAngle;
-
-            bool isPerfectLanding = landingVelocity <= perfectLandingVelocityThreshold &&
-                                    landingAngle <= perfectLandingAngleThreshold &&
-                                    flightTime >= 2f &&
-                                    hasRotated;
-
-            if (isPerfectLanding)
-            {
-                AudioSource.PlayClipAtPoint(perfectLandingSound, transform.position);
-                StartCoroutine(ApplyPlayerSpeedBoost());
-            }
-            else
-            {
-                if (hasFlown)
-                {
-                    impulseSource.GenerateImpulse();
-                    AudioSource.PlayClipAtPoint(landingSound, transform.position);
-                }
+                Thrust();
             }
 
-            StartCoroutine(DisableThrustTemporarily());
+            if (canRotate && rotateInput != 0f)
+            {
+                Rotate(rotateInput);
+            }
+
+            rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxSpeed);
         }
-    }
 
-    private IEnumerator DisableThrustTemporarily()
-    {
-        canThrust = false;
-        yield return new WaitForSeconds(0.5f);
-        canThrust = true;
-    }
-
-    private IEnumerator ApplyPlayerSpeedBoost()
-    {
-        if (player != null)
+        if (canFly && isThrusting && !wasThrusting)
         {
-            player.SetSpeedMultiplier(speedBoostMultiplier);
-            yield return new WaitForSeconds(speedBoostDuration);
-            player.SetSpeedMultiplier(1f);
+            StopFlyingSoundFadeout();
+            flyingSoundSource.loop = true;
+            flyingSoundSource.volume = flyingSoundDefaultVolume * thrustStrength;
+            flyingSoundSource.Play();
+        }
+        else if (!isThrusting && wasThrusting)
+        {
+            if (flyingSoundSource.isPlaying)
+            {
+                StartFlyingSoundFadeout();
+            }
+        }
+
+        if (isThrusting)
+        {
+            flyingSoundSource.volume = flyingSoundDefaultVolume * thrustStrength;
+        }
+
+        wasThrusting = isThrusting;
+    }
+
+    private void Thrust()
+    {
+        Vector2 thrustForce = thrustAcceleration * thrustStrength * Time.fixedDeltaTime * transform.up;
+        rb.AddForce(thrustForce);
+
+        rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxSpeed);
+
+        isFlying = true;
+        canRotate = true;
+    }
+
+    private void Rotate(float v)
+    {
+        float rotationAmount = v * rotationSpeed * Time.fixedDeltaTime;
+        rb.MoveRotation(rb.rotation + rotationAmount);
+    }
+
+    private void ExitRocket()
+    {
+        audioSource.PlayOneShot(ExitRocketSound);
+
+        if (astronaut != null)
+        {
+            controls.Rocket.Disable();
+            astronaut.OnExitRocket();
         }
     }
 
-    public void TakeDamage(int damage)
+    public void OnEnterRocket()
+    {
+        audioSource.PlayOneShot(EnterRocketSound);
+
+        controls.Rocket.Enable();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isFlying)
+        {
+            return;
+        }
+
+        Debug.Log("Collision detected with " + collision.gameObject.name);
+
+        float impactForce = collision.relativeVelocity.magnitude;
+
+        landingNormal = collision.contacts[0].normal;
+
+        float angle = Vector2.Angle(landingNormal, transform.up);
+
+        bool impactForceTooHigh = impactForce > safeLandingMaxImpactForce;
+
+        if (angle < perfectLandingMaxAngle && !impactForceTooHigh && isFlying) // Perfect landing
+        {
+            audioSource.PlayOneShot(PerfectLandingSound);
+            StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
+        }
+        else if (angle < safeLandingMaxAngle && !impactForceTooHigh && isFlying) // Safe landing
+        {
+            audioSource.PlayOneShot(LandingSound);
+            StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
+        }
+        else // Crash
+        {
+            audioSource.PlayOneShot(DamageSound);
+            float forceDamage = impactForce * impactForceDamageMultiplier;
+            float angleDamage = angle * impactAngleDamageMultiplier;
+            int totalDamage = Mathf.RoundToInt(forceDamage + angleDamage);
+            TakeDamage(totalDamage);
+        }
+    }
+
+    private IEnumerator DisableAndEnableFlight(float delay)
+    {
+        isFlying = false;
+        canFly = false;
+        canRotate = false;
+
+        StartFlyingSoundFadeout();
+
+        yield return new WaitForSeconds(delay);
+
+        canFly = true;
+
+        if (isThrusting)
+        {
+            isFlying = true;
+            StopFlyingSoundFadeout();
+            flyingSoundSource.loop = true;
+            flyingSoundSource.volume = flyingSoundDefaultVolume;
+            flyingSoundSource.Play();
+        }
+    }
+
+    private void TakeDamage(int damage)
     {
         health -= damage;
-        health = Mathf.Clamp(health, 0, maxHealth);
-        AudioSource.PlayClipAtPoint(damageSound, transform.position);
         if (health <= 0)
         {
-            Explode();
         }
     }
-    
-    private void Explode()
+
+    private void StartFlyingSoundFadeout()
     {
-        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
-        // Add explosion effect here
-        Destroy(gameObject);
+        StopFlyingSoundFadeout();
+        flyingSoundFadeCoroutine = StartCoroutine(FadeOutFlyingSound(0.1f));
+    }
+
+    private void StopFlyingSoundFadeout()
+    {
+        if (flyingSoundFadeCoroutine != null)
+        {
+            StopCoroutine(flyingSoundFadeCoroutine);
+            flyingSoundFadeCoroutine = null;
+            flyingSoundSource.volume = flyingSoundDefaultVolume;
+        }
+    }
+
+    private IEnumerator FadeOutFlyingSound(float duration)
+    {
+        float startVolume = flyingSoundSource.volume;
+        float time = 0f;
+        while (time < duration)
+        {
+            flyingSoundSource.volume = Mathf.Lerp(startVolume, 0f, time / duration);
+            time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        flyingSoundSource.volume = 0f;
+        flyingSoundSource.Stop();
+        flyingSoundSource.loop = false;
+        flyingSoundFadeCoroutine = null;
     }
 }
