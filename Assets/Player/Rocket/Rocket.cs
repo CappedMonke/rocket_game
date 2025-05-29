@@ -39,15 +39,16 @@ public class Rocket : MonoBehaviour
     [SerializeField] private AudioClip DustSound;
 
     [Header("Visual Effects")]
-    [SerializeField] private ParticleSystem DustEffect;
-    [SerializeField] private ParticleSystem LiftoffEffect;
+    [SerializeField] private ParticleSystem ThrustEffect;
+    private float initialThrustEffectLifetime;
+    [SerializeField] private ParticleSystem DustFrontEffect;
+    [SerializeField] private ParticleSystem DustBackEffect;
     [SerializeField] private ParticleSystem LandingEffect;
     [SerializeField] private ParticleSystem ExplosionEffect;
     [SerializeField] private ParticleSystem DamageEffect;
     [SerializeField] private ParticleSystem RepairEffect;
     [SerializeField] private ParticleSystem EngineDamageEffect;
     [SerializeField] private ParticleSystem EngineRepairEffect;
-    [SerializeField] private ParticleSystem RocketDustEffect;
 
     [Header("Camera")]
     [SerializeField] private float landingShakeStrength = 1f;
@@ -82,6 +83,8 @@ public class Rocket : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         astronaut = FindFirstObjectByType<Astronaut>();
+
+        initialThrustEffectLifetime = ThrustEffect.main.startLifetime.constant;
 
         flyingSoundDefaultVolume = audioSource.volume;
 
@@ -121,6 +124,14 @@ public class Rocket : MonoBehaviour
             if (isThrusting)
             {
                 Thrust();
+                if (!ThrustEffect.isPlaying)
+                {
+                    ThrustEffect.Play();
+                }
+            }
+            else if (ThrustEffect.isPlaying)
+            {
+                ThrustEffect.Stop();
             }
 
             if (canRotate && rotateInput != 0f)
@@ -158,6 +169,10 @@ public class Rocket : MonoBehaviour
     {
         Vector2 thrustForce = thrustAcceleration * thrustStrength * Time.fixedDeltaTime * transform.up;
         rb.AddForce(thrustForce);
+
+        var thrustEffectMain = ThrustEffect.main;
+        float thrustEffectLifetime = Mathf.Lerp(0, initialThrustEffectLifetime, thrustStrength);
+        thrustEffectMain.startLifetime = thrustEffectLifetime;
 
         rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxSpeed);
 
