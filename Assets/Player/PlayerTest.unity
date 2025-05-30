@@ -238,39 +238,55 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 366109891576454405, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.37
+      value: -2.961
       objectReference: {fileID: 0}
     - target: {fileID: 366109891576454405, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.5
+      value: -4.499
       objectReference: {fileID: 0}
-    - target: {fileID: 1250781387294768711, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+    - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3600001
+      value: -2.941
       objectReference: {fileID: 0}
-    - target: {fileID: 1250781387294768711, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+    - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8700001
+      value: -4.399
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: orthographic size
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_Name
-      value: PlayerAndRocket
+      value: AstronautAndRocket
       objectReference: {fileID: 0}
-    - target: {fileID: 4008761576387585202, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+    - target: {fileID: 4963350583935687017, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: ReactionSettings.m_NoiseOffsets.x
+      value: -321.96915
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963350583935687017, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: ReactionSettings.m_NoiseOffsets.y
+      value: -964.0951
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963350583935687017, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: ReactionSettings.m_NoiseOffsets.z
+      value: -693.72534
+      objectReference: {fileID: 0}
+    - target: {fileID: 7153229672982572336, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0100002
+      value: -2.941
       objectReference: {fileID: 0}
-    - target: {fileID: 4008761576387585202, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+    - target: {fileID: 7153229672982572336, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.53
+      value: -4.399
       objectReference: {fileID: 0}
-    - target: {fileID: 4511491944272424158, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+    - target: {fileID: 7427816376718409857, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4.048
       objectReference: {fileID: 0}
-    - target: {fileID: 4511491944272424158, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+    - target: {fileID: 7427816376718409857, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.872
       objectReference: {fileID: 0}
     - target: {fileID: 7749674468526702368, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
@@ -314,11 +330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8179710869905724201, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.38
+      value: -4.068
       objectReference: {fileID: 0}
     - target: {fileID: 8179710869905724201, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.97
+      value: -2.972
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

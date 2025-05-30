@@ -8,13 +8,13 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        if (astronautCam.Follow == null)
+        if (astronautCam.Follow == null && FindFirstObjectByType<Astronaut>() != null)
         {
-            Debug.LogError("Astronaut Camera is missing a target. Please assign the astronaut GameObject to the camera's target.");
+            astronautCam.Follow = FindFirstObjectByType<Astronaut>().transform;
         }
-        if (rocketCam.Follow == null)
+        if (rocketCam.Follow == null && FindFirstObjectByType<Rocket>() != null)
         {
-            Debug.LogError("Rocket Camera is missing a target. Please assign the rocket GameObject to the camera's target.");
+            rocketCam.Follow = FindFirstObjectByType<Rocket>().transform;
         }
     }
 
