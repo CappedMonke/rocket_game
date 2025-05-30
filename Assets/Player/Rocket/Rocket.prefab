@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2413016934873283428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7437792802261562225}
+  m_Layer: 8
+  m_Name: DoorPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7437792802261562225
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413016934873283428}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.119, y: -0.568, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5780318802914449691}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4056059041169852462
 GameObject:
   m_ObjectHideFlags: 0
@@ -39,6 +70,8 @@ Transform:
   - {fileID: 2784329355014166018}
   - {fileID: 105415165774938187}
   - {fileID: 5193029299823910191}
+  - {fileID: 4191284674531128434}
+  - {fileID: 7437792802261562225}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3556419929684031698
@@ -53,13 +86,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711bb8a532287d766a0c0c73edf4be9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startWithControlsEnabled: 1
   thrustAcceleration: 1200
   maxSpeed: 50
   rotationSpeed: 50
   minThrustStrength: 0.2
   thrustAdjustmentSpeed: 0.2
   liftoffCooldown: 2
-  health: 1000
+  health: 100
   maxHealth: 100
   fuel: 100
   maxFuel: 100
@@ -90,10 +124,11 @@ MonoBehaviour:
   EngineRepairEffect: {fileID: 0}
   landingShakeStrength: 0.2
   damageShakeStrength: 0.2
-  explosionShakeStrength: 0.5
+  explosionShakeStrength: 10
   damageAmountShakeMultiplier: 0.3
   audioSource: {fileID: 4465076305473834581}
   flyingSoundSource: {fileID: 8920541991866284966}
+  doorPosition: {fileID: 2413016934873283428}
 --- !u!50 &1604893972777885288
 Rigidbody2D:
   serializedVersion: 5
@@ -433,6 +468,84 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: 0, z: 0}
+--- !u!1 &8930419096145726404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4191284674531128434}
+  - component: {fileID: 242250441871487354}
+  m_Layer: 9
+  m_Name: DoorCollision
+  m_TagString: RocketDoor
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4191284674531128434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930419096145726404}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.113, y: -0.559, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5780318802914449691}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &242250441871487354
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930419096145726404}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.0066847503, y: 0.0477866}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.15284967, y: 0.19705011}
+  m_EdgeRadius: 0
 --- !u!1 &9085641226285668923
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Astronaut : MonoBehaviour
 {
+    [Header("Controls")]
+    [SerializeField] private bool startWithControlsEnabled = true;
+
     [Header("References")]
     private Rigidbody2D rb;
     private Rocket rocket;
@@ -23,16 +26,15 @@ public class Astronaut : MonoBehaviour
         controls.Astronaut.Jump.canceled += ctx => movement.OnJumpUpInput();
         controls.Astronaut.Move.performed += ctx => movement.SetMoveInput(ctx.ReadValue<Vector2>());
         controls.Astronaut.Move.canceled += ctx => movement.SetMoveInput(Vector2.zero);
-    }
 
-    private void OnEnable()
-    {
-        controls.Astronaut.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Astronaut.Disable();
+        if (startWithControlsEnabled)
+        {
+            controls.Astronaut.Enable();
+        }
+        else
+        {
+            controls.Astronaut.Disable();
+        }
     }
 
     private void FixedUpdate()
@@ -47,23 +49,38 @@ public class Astronaut : MonoBehaviour
 
     public void EnterRocket()
     {
+        Debug.Log("Entering Rocket, canEnterRocket: " + canEnterRocket);
+
         if (rocket != null && canEnterRocket)
         {
             controls.Astronaut.Disable();
             rocket.OnEnterRocket();
+            gameObject.SetActive(false);
         }
     }
 
-    public void OnExitRocket()
+    public void OnExitRocket(Vector2 spawnPosition)
     {
+        gameObject.SetActive(true);
+        transform.position = spawnPosition;
+        rb.linearVelocity = Vector2.zero;
+        
         controls.Astronaut.Enable();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("RocketDoor"))
         {
             canEnterRocket = true;
-        } 
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("RocketDoor"))
+        {
+            canEnterRocket = false;
+        }
     }
 }

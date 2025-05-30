@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    [Header("Controls")]
+    [SerializeField] private bool startWithControlsEnabled = true;
+
     [Header("Movement")]
     [SerializeField] private float thrustAcceleration = 1f;
     [SerializeField] private float maxSpeed = 1f;
@@ -62,12 +65,13 @@ public class Rocket : MonoBehaviour
     [Header("References")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource flyingSoundSource;
+    [SerializeField] private GameObject doorPosition;
     private Rigidbody2D rb;
     private Astronaut astronaut;
     private Controls controls;
     private bool isFlying = false;
     private bool canFly = true;
-    private bool canRotate = true;
+    private bool canRotate = false;
     private bool isThrusting = false;
     private bool wasThrusting = false;
     private float thrustStrength = 1f;
@@ -96,16 +100,15 @@ public class Rocket : MonoBehaviour
         controls.Rocket.AdjustThrust.canceled += ctx => thrustInput = 0f;
         controls.Rocket.Rotate.started += ctx => rotateInput = ctx.ReadValue<float>();
         controls.Rocket.Rotate.canceled += ctx => rotateInput = 0f;
-    }
 
-    private void OnEnable()
-    {
-        controls.Rocket.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Rocket.Disable();
+        if (startWithControlsEnabled)
+        {
+            controls.Rocket.Enable();
+        }
+        else
+        {
+            controls.Rocket.Disable();
+        }
     }
 
     private void Update()
@@ -193,7 +196,7 @@ public class Rocket : MonoBehaviour
         if (astronaut != null)
         {
             controls.Rocket.Disable();
-            astronaut.OnExitRocket();
+            astronaut.OnExitRocket(doorPosition.transform.position);
         }
     }
 
