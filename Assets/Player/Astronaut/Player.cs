@@ -73,12 +73,12 @@ public class Player : MonoBehaviour
 
     private void HandleEnterRocket()
     {
-        Rocket rocket = FindFirstObjectByType<Rocket>();
-        if (rocket != null && Vector2.Distance(transform.position, rocket.doorTransform.position) < 1f)
-        {
-            InputManager.Instance.EnableRocketControls();
-            gameObject.SetActive(false);
-            AudioSource.PlayClipAtPoint(rocket.launchSound, rocket.transform.position);
-        }
+        // Rocket rocket = FindFirstObjectByType<Rocket>();
+        // if (rocket != null && Vector2.Distance(transform.position, rocket.doorTransform.position) < 1f)
+        // {
+        //     InputManager.Instance.EnableRocketControls();
+        //     gameObject.SetActive(false);
+        //     AudioSource.PlayClipAtPoint(rocket.launchSound, rocket.transform.position);
+        // }
     }
 }

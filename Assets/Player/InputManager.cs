@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 
     [Header("References")]
     private Player player;
-    private Rocket rocket;
+    // private Rocket rocket;
     private CinemachineCamera cinemachineCamera;
     private DesaturationController desaturationController;
 
@@ -38,8 +38,8 @@ public class InputManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        player = FindFirstObjectByType<Player>();
-        rocket = FindFirstObjectByType<Rocket>();
+        // player = FindFirstObjectByType<Player>();
+        // rocket = FindFirstObjectByType<Rocket>();
         cinemachineCamera = FindFirstObjectByType<CinemachineCamera>();
         desaturationController = FindFirstObjectByType<DesaturationController>();
 
@@ -71,20 +71,20 @@ public class InputManager : MonoBehaviour
             {
                 player.SetOxygen(player.oxygen - oxygenLoss);
             }
-            else if (rocket != null && rocket.gameObject.activeSelf)
-            {
-                if (rocket.oxygen > 0 && player.oxygen < player.maxOxygen)
-                {
-                    float oxygenToRefill = oxygenRefillRate * Time.deltaTime;
-                    float actualRefill = Mathf.Min(oxygenToRefill, rocket.oxygen, player.maxOxygen - player.oxygen);
-                    player.SetOxygen(player.oxygen + actualRefill - oxygenLoss);
-                    rocket.oxygen -= actualRefill;
-                }
-                else
-                {
-                    player.SetOxygen(player.oxygen - oxygenLoss);
-                }
-            }
+            // else if (rocket != null && rocket.gameObject.activeSelf)
+            // {
+            //     if (rocket.oxygen > 0 && player.oxygen < player.maxOxygen)
+            //     {
+            //         float oxygenToRefill = oxygenRefillRate * Time.deltaTime;
+            //         float actualRefill = Mathf.Min(oxygenToRefill, rocket.oxygen, player.maxOxygen - player.oxygen);
+            //         player.SetOxygen(player.oxygen + actualRefill - oxygenLoss);
+            //         rocket.oxygen -= actualRefill;
+            //     }
+            //     else
+            //     {
+            //         player.SetOxygen(player.oxygen - oxygenLoss);
+            //     }
+            // }
 
             desaturationController.inputValue = player.oxygen;
         }
@@ -104,7 +104,7 @@ public class InputManager : MonoBehaviour
         playerMap.Disable();
         rocketMap.Enable();
         UiManager.Instance.ShowRocketUi();
-        cinemachineCamera.Follow = rocket.transform;
+        // cinemachineCamera.Follow = rocket.transform;
         DOTween.To(() => cinemachineCamera.Lens.OrthographicSize, x => cinemachineCamera.Lens.OrthographicSize = x, 10f, 0.5f);
 
         if (player != null)

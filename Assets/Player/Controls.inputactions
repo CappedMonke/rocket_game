@@ -2,11 +2,11 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "Player",
+            "name": "Astronaut",
             "id": "ce2ea8a6-39d1-4c29-bfe2-ef9d4a593762",
             "actions": [
                 {
-                    "name": "Movement",
+                    "name": "Move",
                     "type": "Value",
                     "id": "a1da3627-fdc9-46aa-a58b-603c6586c713",
                     "expectedControlType": "Axis",
@@ -52,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Move",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -63,7 +63,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "Movement",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -74,7 +74,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "Movement",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -114,6 +114,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AdjustThrust",
+                    "type": "Value",
+                    "id": "2b1b29a6-7857-4887-9831-67d537fdf52b",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "ExitRocket",
                     "type": "Button",
                     "id": "6415a883-1edb-4814-b44c-5755a51f9352",
@@ -138,7 +147,7 @@
                 {
                     "name": "negative",
                     "id": "41156942-922d-4427-9d06-526a2a445ad0",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
@@ -149,7 +158,7 @@
                 {
                     "name": "positive",
                     "id": "c87804ad-587d-42ca-9bc8-05453cf47162",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
@@ -178,21 +187,42 @@
                     "action": "ExitRocket",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "47d285c5-85d4-479d-91d8-6b3a2c2419b0",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdjustThrust",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "c3e90689-f926-4c3e-b63a-d0848eafb762",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdjustThrust",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "a51e7b14-7782-406d-9dda-928cea044e30",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdjustThrust",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
     ],
-    "controlSchemes": [
-        {
-            "name": "Keyboard",
-            "bindingGroup": "Keyboard",
-            "devices": [
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        }
-    ]
+    "controlSchemes": []
 }
