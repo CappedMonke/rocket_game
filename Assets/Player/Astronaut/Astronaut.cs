@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class Astronaut : MonoBehaviour
     private Rocket rocket;
     private AstronautMovement movement;
     private Controls controls;
+    private CameraManager cameraManager;
 
     private bool canEnterRocket = false;
 
@@ -19,6 +21,7 @@ public class Astronaut : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         movement = GetComponent<AstronautMovement>();
         rocket = FindFirstObjectByType<Rocket>();
+        cameraManager = FindFirstObjectByType<CameraManager>();
 
         controls = new Controls();
         controls.Astronaut.EnterRocket.performed += ctx => EnterRocket();
@@ -30,6 +33,11 @@ public class Astronaut : MonoBehaviour
         if (startWithControlsEnabled)
         {
             controls.Astronaut.Enable();
+
+            if (cameraManager != null)
+            {
+                cameraManager.SwitchToAstronautCam();
+            }
         }
         else
         {
@@ -49,13 +57,16 @@ public class Astronaut : MonoBehaviour
 
     public void EnterRocket()
     {
-        Debug.Log("Entering Rocket, canEnterRocket: " + canEnterRocket);
-
         if (rocket != null && canEnterRocket)
         {
             controls.Astronaut.Disable();
             rocket.OnEnterRocket();
             gameObject.SetActive(false);
+
+            if (cameraManager != null)
+            {
+                cameraManager.SwitchToRocketCam();
+            }
         }
     }
 

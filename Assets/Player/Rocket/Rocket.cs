@@ -69,6 +69,8 @@ public class Rocket : MonoBehaviour
     private Rigidbody2D rb;
     private Astronaut astronaut;
     private Controls controls;
+    private CameraManager cameraManager;
+
     private bool isFlying = false;
     private bool canFly = true;
     private bool canRotate = false;
@@ -87,6 +89,7 @@ public class Rocket : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         astronaut = FindFirstObjectByType<Astronaut>();
+        cameraManager = FindFirstObjectByType<CameraManager>();
 
         initialThrustEffectLifetime = ThrustEffect.main.startLifetime.constant;
 
@@ -104,6 +107,11 @@ public class Rocket : MonoBehaviour
         if (startWithControlsEnabled)
         {
             controls.Rocket.Enable();
+
+            if (cameraManager != null)
+            {
+                cameraManager.SwitchToRocketCam();
+            }
         }
         else
         {
@@ -191,12 +199,22 @@ public class Rocket : MonoBehaviour
 
     private void ExitRocket()
     {
+        if (isFlying)
+        {
+            return;
+        }
+
         audioSource.PlayOneShot(ExitRocketSound);
 
         if (astronaut != null)
         {
             controls.Rocket.Disable();
             astronaut.OnExitRocket(doorPosition.transform.position);
+
+            if (cameraManager != null)
+            {
+                cameraManager.SwitchToAstronautCam();
+            }
         }
     }
 
