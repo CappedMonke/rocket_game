@@ -1,14 +1,19 @@
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class Astronaut : MonoBehaviour
 {
     [Header("References")]
+    private Rigidbody2D rb;
     private Rocket rocket;
     private AstronautMovement movement;
     private Controls controls;
 
+    private bool canEnterRocket = false;
+
     private void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
         movement = GetComponent<AstronautMovement>();
         rocket = FindFirstObjectByType<Rocket>();
 
@@ -30,19 +35,19 @@ public class Astronaut : MonoBehaviour
         controls.Astronaut.Disable();
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
-
-    }
-
-    private void Update()
-    {
-
+        if (Mathf.Abs(rb.linearVelocity.x) > 0.1f)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Sign(rb.linearVelocity.x) * Mathf.Abs(scale.x);
+            transform.localScale = scale;
+        }
     }
 
     public void EnterRocket()
     {
-        if (rocket != null)
+        if (rocket != null && canEnterRocket)
         {
             controls.Astronaut.Disable();
             rocket.OnEnterRocket();
@@ -52,5 +57,13 @@ public class Astronaut : MonoBehaviour
     public void OnExitRocket()
     {
         controls.Astronaut.Enable();
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("RocketDoor"))
+        {
+            canEnterRocket = true;
+        } 
     }
 }
