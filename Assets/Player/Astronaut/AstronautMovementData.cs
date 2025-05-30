@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Player/Player Data")]
-public class PlayerData : ScriptableObject
+[CreateAssetMenu(menuName = "Player/Astronaut Data")]
+public class AstronautMovementData : ScriptableObject
 {
     [Header("Gravity")]
     [HideInInspector] public float gravityStrength;
@@ -30,7 +30,7 @@ public class PlayerData : ScriptableObject
         gravityStrength = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
         gravityScale = gravityStrength / Physics2D.gravity.y;
 
-        runAccelAmount = (50 * runAcceleration) / runMaxSpeed;
+        runAccelAmount = 50 * runAcceleration / runMaxSpeed;
         jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
 
         runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);

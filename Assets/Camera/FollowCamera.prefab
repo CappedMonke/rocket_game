@@ -59,7 +59,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 1.6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDistance: 10
+  CameraDistance: 2
   DeadZoneDepth: 0
   Composition:
     ScreenPosition: {x: 0, y: 0}
@@ -101,11 +101,11 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: -8}
-  Damping: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0.02, y: 0.1, z: -8}
+  Damping: {x: 0.1, y: 0.1, z: 0.1}
   Lookahead:
     Enabled: 1
-    Time: 0.1
+    Time: 0.005
     Smoothing: 0
     IgnoreY: 0
 --- !u!114 &5166128360697483009

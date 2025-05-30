@@ -127,14 +127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 905137295937980183, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 905137295937980183, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 0.22
-      objectReference: {fileID: 0}
     - target: {fileID: 3316949999529019019, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.147
@@ -177,19 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4354470688907346475, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6815573473743920689, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
-      propertyPath: m_Size.x
-      value: 0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 6815573473743920689, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
-      propertyPath: m_Size.y
-      value: 0.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 6815573473743920689, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
+      value: Astronaut
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -213,7 +193,7 @@ GameObject:
   - component: {fileID: 60404028}
   - component: {fileID: 60404027}
   - component: {fileID: 60404026}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,10 +352,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1261950179227430408, guid: 1ebeada8445d980a0820e281f083f6de, type: 3}
-      propertyPath: Lens.OrthographicSize
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1261950179227430408, guid: 1ebeada8445d980a0820e281f083f6de, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 21225366}
@@ -385,11 +361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3870074168280420524, guid: 1ebeada8445d980a0820e281f083f6de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.147
+      value: -0.127
       objectReference: {fileID: 0}
     - target: {fileID: 3870074168280420524, guid: 1ebeada8445d980a0820e281f083f6de, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.499
+      value: -1.3989999
       objectReference: {fileID: 0}
     - target: {fileID: 3870074168280420524, guid: 1ebeada8445d980a0820e281f083f6de, type: 3}
       propertyPath: m_LocalPosition.z
@@ -423,12 +399,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7071232517014830106, guid: 1ebeada8445d980a0820e281f083f6de, type: 3}
-      propertyPath: CameraDistance
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6312962389746476557, guid: 1ebeada8445d980a0820e281f083f6de, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -844,7 +815,7 @@ Transform:
   m_GameObject: {fileID: 2093601545}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.147, y: -1.499, z: -10}
+  m_LocalPosition: {x: -0.127, y: -1.3989999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

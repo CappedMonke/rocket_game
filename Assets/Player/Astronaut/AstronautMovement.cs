@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class AstronautMovement : MonoBehaviour
 {
-    public PlayerData data;
+    public AstronautMovementData data;
     private Rigidbody2D rb;
 
     private Vector2 moveInput;
@@ -51,8 +51,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (isJumping && rb.linearVelocity.y < 0)
             isJumping = false;
-
-        
     }
 
     private void FixedUpdate()
