@@ -221,13 +221,15 @@ public class Rocket : MonoBehaviour
 
         if (angle < perfectLandingMaxAngle && !impactForceTooHigh && isFlying) // Perfect landing
         {
-            impulseSource.GenerateImpulse(landingShakeStrength);
+            Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
+            impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
             audioSource.PlayOneShot(PerfectLandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
         }
         else if (angle < safeLandingMaxAngle && !impactForceTooHigh && isFlying) // Safe landing
         {
-            impulseSource.GenerateImpulse(landingShakeStrength);
+            Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
+            impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
             audioSource.PlayOneShot(LandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
         }
@@ -248,6 +250,7 @@ public class Rocket : MonoBehaviour
         isFlying = false;
         canFly = false;
         canRotate = false;
+        ThrustEffect.Stop();
 
         StartFlyingSoundFadeout();
 
@@ -273,11 +276,11 @@ public class Rocket : MonoBehaviour
             ExplosionEffect.Play();
             controls.Rocket.Disable();
             audioSource.PlayOneShot(ExplosionSound);
-            impulseSource.GenerateImpulse(explosionShakeStrength * damage * damageAmountShakeMultiplier);
+            impulseSource.GenerateImpulse(explosionShakeStrength * damage * damageAmountShakeMultiplier * Random.onUnitSphere);
         }
         else
         {
-            impulseSource.GenerateImpulse(damageShakeStrength * damage * damageAmountShakeMultiplier);
+            impulseSource.GenerateImpulse(damageShakeStrength * damage * damageAmountShakeMultiplier * Random.onUnitSphere);
         }
     }
 

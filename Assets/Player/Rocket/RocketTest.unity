@@ -788,77 +788,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3556419929684031698, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: minThrustEffectStartSpeed.m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3556419929684031698, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: minThrustEffectStartSpeed.m_ConstantMax
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3556419929684031698, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: minThrustEffectStartSpeed.m_ConstantMin
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590504674438216597, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590504674438216597, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: VelocityModule.x.scalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590504674438216597, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: VelocityModule.y.scalar
-      value: -0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590504674438216597, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: VelocityModule.x.minScalar
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590504674438216597, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590504674438216597, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590504674438216597, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: InitialModule.startSpeed.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4056059041169852462, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_Name
       value: Rocket
-      objectReference: {fileID: 0}
-    - target: {fileID: 5650343159235700895, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5650343159235700895, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: VelocityModule.x.scalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5650343159235700895, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: VelocityModule.y.scalar
-      value: -0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 5650343159235700895, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: VelocityModule.x.minScalar
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5650343159235700895, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5650343159235700895, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5650343159235700895, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: InitialModule.startSpeed.minMaxState
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5780318802914449691, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.x
