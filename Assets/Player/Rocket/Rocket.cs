@@ -206,7 +206,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isFlying && health > 0)
+        if (!isFlying || health <= 0)
         {
             return;
         }
