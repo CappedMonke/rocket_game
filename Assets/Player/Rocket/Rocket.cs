@@ -206,7 +206,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isFlying)
+        if (!isFlying && health > 0)
         {
             return;
         }
@@ -233,6 +233,8 @@ public class Rocket : MonoBehaviour
         }
         else // Crash
         {
+            DamageEffect.transform.position = collision.contacts[0].point;
+            DamageEffect.Play();
             audioSource.PlayOneShot(DamageSound);
             float forceDamage = impactForce * impactForceDamageMultiplier;
             float angleDamage = angle * impactAngleDamageMultiplier;
@@ -268,6 +270,7 @@ public class Rocket : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            ExplosionEffect.Play();
             controls.Rocket.Disable();
             audioSource.PlayOneShot(ExplosionSound);
             impulseSource.GenerateImpulse(explosionShakeStrength * damage * damageAmountShakeMultiplier);
