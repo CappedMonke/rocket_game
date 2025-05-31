@@ -50,20 +50,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MissingBlockTile: {fileID: 11400000, guid: 79faad4172ec4a04fb2695f5f6e5b26a, type: 2}
   BlockTiles:
-  - blockKind: 0
-    tiles:
+  - BlockKind: 0
+    Tiles:
     - {fileID: 0}
-  - blockKind: 1
-    tiles:
+  - BlockKind: 1
+    Tiles:
     - {fileID: 11400000, guid: 169702942853d5041b24ebcfa218aa96, type: 2}
-  - blockKind: 2
-    tiles:
+  - BlockKind: 2
+    Tiles:
     - {fileID: 11400000, guid: daf730ec7d7bcbc4e80bc5dea3081c3f, type: 2}
-  - blockKind: 3
-    tiles:
+  - BlockKind: 3
+    Tiles:
     - {fileID: 11400000, guid: bd9e915414b4f6045a368aa10ae8415d, type: 2}
-  - blockKind: 4
-    tiles:
+  - BlockKind: 4
+    Tiles:
     - {fileID: 11400000, guid: 7b23997562b848e4188eeade45fb827b, type: 2}
   GlobalSeed: 1337
 --- !u!1839735485 &7510569476627807561

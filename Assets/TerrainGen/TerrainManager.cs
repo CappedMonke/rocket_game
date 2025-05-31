@@ -14,8 +14,8 @@ using static Unity.Collections.AllocatorManager;
 [Serializable]
 public sealed class BlockEntry
 {
-    public BlockKind blockKind;
-    public TileBase[] tiles;
+    public BlockKind BlockKind;
+    public TileBase[] Tiles;
 }
 public sealed class TerrainManager : MonoSingleton<TerrainManager>
 {
@@ -28,23 +28,64 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
     private ConcurrentDictionary<BlockKind, TileBase[]> _blockMap = new();
     private ConcurrentDictionary<Vector2Int, Chunk> _loadedChunks = new();
     private ConcurrentQueue<GeneratedChunkInfo> _finishedChunks = new();
-    private ConcurrentQueue<Vector2Int> _dyingChunks = new();
+    private List<(Vector2 Pos, Vector2Int ChunksAround)> _loadedAreas = new();
+    private List<Vector2Int> _chunksToUnload = new();
+    private Vector2Int _loadedMax;
+    private Vector2Int _loadedMin;
+
     private TileBase[] _emptyTiles;
 
 
     private void Awake()
     {
+        _loadedMin = new Vector2Int(int.MaxValue, int.MaxValue);
+        _loadedMax = new Vector2Int(int.MinValue, int.MinValue);
         _emptyTiles = new TileBase[Chunk.ChunkArea];
         //I hate unity so fucking much bro..
         foreach (var entry in BlockTiles)
         {
-            _blockMap[entry.blockKind] = entry.tiles;
+            _blockMap[entry.BlockKind] = entry.Tiles;
         }
         _generator = new TerrainGenerator(new TerrainGeneratorSettings(GlobalSeed));
         _tilemap = GetComponent<Tilemap>();
     }
 
-
+    private void LateUpdate()
+    {
+        foreach (var entry in _loadedChunks)
+        {
+            var chunkCoord = entry.Key;
+            bool isLoaded = false;
+            for (int i = 0; i < _loadedAreas.Count; i++)
+            {
+                (Vector2 position, Vector2Int chunksAround) = _loadedAreas[i];
+                Vector2Int centerChunk = CellToChunk((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
+                var pos = new Vector2Int(centerChunk.x - chunksAround.x - 2, centerChunk.y - chunksAround.y - 2);
+                var size = new Vector2Int((chunksAround.x + 2) * 2, (chunksAround.y + 2) * 2);
+                var visibleBounds = new RectInt(pos, size);
+                if (visibleBounds.Contains(chunkCoord))
+                {
+                    isLoaded = true;
+                    break;
+                }
+            }
+            if (!isLoaded)
+            {
+                _chunksToUnload.Add(chunkCoord);
+            }
+        }
+        foreach (var chunkCoord in _chunksToUnload)
+        {
+            _loadedChunks.Remove(chunkCoord, out var chunk);
+            BoundsInt bounds = GetBoundsFromChunkCoord(chunkCoord);
+            _tilemap.SetTilesBlock(bounds, _emptyTiles);
+            //Save chunk
+        }
+        _loadedMin = new Vector2Int(int.MaxValue, int.MaxValue);
+        _loadedMax = new Vector2Int(int.MinValue, int.MinValue);
+        _loadedAreas.Clear();
+        _chunksToUnload.Clear();
+    }
 
     /// <summary>
     /// Loads an area around the specified position
@@ -53,44 +94,23 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
     /// <param name="chunksAround">How large is the loaded area, in chunks</param>
     public void LoadArea(Vector2 position, Vector2Int chunksAround)
     {
+        _loadedAreas.Add((position, chunksAround));
         Vector2Int centerChunk = CellToChunk((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
-
+        _loadedMin = Vector2Int.Min(centerChunk - chunksAround - new Vector2Int(2, 2), _loadedMin);
+        _loadedMax = Vector2Int.Max(centerChunk + chunksAround + new Vector2Int(2, 2), _loadedMax);
         Parallel.For(-chunksAround.y - 1, chunksAround.y + 1, (y) =>
         {
             for (int x = -chunksAround.x - 1; x < chunksAround.x + 1; x++)
             {
-                Vector2Int chunkCoord = new Vector2Int(centerChunk.x + x, centerChunk.y + y);
+                var chunkCoord = new Vector2Int(centerChunk.x + x, centerChunk.y + y);
 
                 if (_loadedChunks.ContainsKey(chunkCoord))
                 {
                     continue; // Already loaded
                 }
-
                 LoadChunk(chunkCoord);
             }
         });
-
-
-        Parallel.ForEach(_loadedChunks, (data) =>
-        {
-            var pos = new Vector3Int(centerChunk.x - chunksAround.x - 2, centerChunk.y - chunksAround.y - 2, 0);
-            var size = new Vector3Int((chunksAround.x + 2) * 2, (chunksAround.y + 2) * 2, 1);
-            var visibleBounds = new BoundsInt(pos, size);
-            if (!visibleBounds.Contains((Vector3Int)data.Key))
-            {
-                _dyingChunks.Enqueue(data.Key);
-            }
-        });
-
-
-        while (_dyingChunks.TryDequeue(out var chunkCoord))
-        {
-            _loadedChunks.Remove(chunkCoord, out var chunk);
-            BoundsInt bounds = GetBoundsFromChunkCoord(chunkCoord);
-            _tilemap.SetTilesBlock(bounds, _emptyTiles);
-
-            //TODO: Save old chunk to disk
-        }
 
 
         while (_finishedChunks.TryDequeue(out var result))
