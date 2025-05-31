@@ -78,7 +78,7 @@ Transform:
   m_GameObject: {fileID: 9207443283527796413}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.5320024, y: -4.399001, z: -10}
+  m_LocalPosition: {x: -4.048, y: -2.872, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -119,7 +119,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1.6
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -229,11 +229,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2741322615641170583, guid: 63818ffe030686e958989eb71b7e46a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.5320024
+      value: -2.941
       objectReference: {fileID: 0}
     - target: {fileID: 2741322615641170583, guid: 63818ffe030686e958989eb71b7e46a2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.399001
+      value: -4.399
       objectReference: {fileID: 0}
     - target: {fileID: 2741322615641170583, guid: 63818ffe030686e958989eb71b7e46a2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -306,11 +306,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5232555233919379126, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.09
+      value: -4.048
       objectReference: {fileID: 0}
     - target: {fileID: 5232555233919379126, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.19
+      value: -2.872
       objectReference: {fileID: 0}
     - target: {fileID: 5232555233919379126, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -343,26 +343,6 @@ PrefabInstance:
     - target: {fileID: 5232555233919379126, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168190721097206100, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
-      propertyPath: CenterOnActivate
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168190721097206100, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
-      propertyPath: Composition.DeadZone.Size.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168190721097206100, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
-      propertyPath: Composition.HardLimits.Size.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168190721097206100, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
-      propertyPath: Composition.HardLimits.Size.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168190721097206100, guid: d3ce0ad47b2198616b87134d9abf6ca2, type: 3}
-      propertyPath: Composition.HardLimits.Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
