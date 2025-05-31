@@ -66,6 +66,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource flyingSoundSource;
     [SerializeField] private GameObject doorPosition;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private Astronaut astronaut;
     private Controls controls;
@@ -339,5 +340,15 @@ public class Rocket : MonoBehaviour
         flyingSoundSource.Stop();
         flyingSoundSource.loop = false;
         flyingSoundFadeCoroutine = null;
+    }
+
+    public void EnableOutline()
+    {
+        spriteRenderer.material.SetFloat("_OutlineEnabled", 1f);
+    }
+
+    public void DisableOutline()
+    {
+        spriteRenderer.material.SetFloat("_OutlineEnabled", 0f);
     }
 }

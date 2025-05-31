@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711bb8a532287d766a0c0c73edf4be9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWithControlsEnabled: 1
+  startWithControlsEnabled: 0
   thrustAcceleration: 1200
   maxSpeed: 50
   rotationSpeed: 50
@@ -129,6 +129,7 @@ MonoBehaviour:
   audioSource: {fileID: 4465076305473834581}
   flyingSoundSource: {fileID: 8920541991866284966}
   doorPosition: {fileID: 2413016934873283428}
+  spriteRenderer: {fileID: 6108804842760049139}
 --- !u!50 &1604893972777885288
 Rigidbody2D:
   serializedVersion: 5
@@ -534,7 +535,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0066847503, y: 0.0477866}
+  m_Offset: {x: 0.004026726, y: 0.04626784}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -544,7 +545,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.15284967, y: 0.19705011}
+  m_Size: {x: 0.2006931, y: 0.25324684}
   m_EdgeRadius: 0
 --- !u!1 &9085641226285668923
 GameObject:
@@ -601,7 +602,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 6285a8ab828d8185ebb159a93d865268, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

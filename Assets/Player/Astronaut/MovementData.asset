@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityStrength: -25
   gravityScale: 2.54842
-  fallGravityMult: 2
-  maxFallSpeed: 2.5
+  fallGravityMult: 1.5
+  maxFallSpeed: 5
   jumpCutGravityMult: 2
-  runMaxSpeed: 4
+  runMaxSpeed: 3
   runAcceleration: 3
-  runAccelAmount: 37.5
+  runAccelAmount: 50
   accelInAir: 1
   jumpHeight: 0.5
   jumpTimeToApex: 0.2
   jumpForce: 5
   coyoteTime: 0.1
   jumpInputBufferTime: 0.1
-  perfectLandingSpeedBoostMultiplier: 1.3
-  perfectLandingSpeedBoostDuration: 4
+  perfectLandingSpeedBoostMultiplier: 1.75
+  perfectLandingSpeedBoostDuration: 10

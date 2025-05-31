@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class Astronaut : MonoBehaviour
 {
+    [Header("Stats")]
+    [SerializeField] private int health = 100;
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int oxygen = 100;
+    [SerializeField] private int maxOxygen = 100;
+
     [Header("Controls")]
     [SerializeField] private bool startWithControlsEnabled = true;
 
     [Header("References")]
+    [SerializeField] private AudioClip heartbeatSound;
+    [SerializeField] private AudioClip heavyBreathingSound;
     private Rigidbody2D rb;
     private Rocket rocket;
     private AstronautMovement movement;
@@ -84,6 +92,10 @@ public class Astronaut : MonoBehaviour
         if (collision.gameObject.CompareTag("RocketDoor"))
         {
             canEnterRocket = true;
+            if (rocket != null)
+            {
+                rocket.EnableOutline();
+            }
         }
     }
 
@@ -92,6 +104,10 @@ public class Astronaut : MonoBehaviour
         if (collision.gameObject.CompareTag("RocketDoor"))
         {
             canEnterRocket = false;
+            if (rocket != null)
+            {
+                rocket.DisableOutline();
+            }
         }
     }
 
