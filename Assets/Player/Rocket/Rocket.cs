@@ -242,6 +242,10 @@ public class Rocket : MonoBehaviour
 
         if (angle < perfectLandingMaxAngle && !impactForceTooHigh && isFlying) // Perfect landing
         {
+            if (astronaut != null)
+            {
+                astronaut.ApplyPerfectLandingBoost();
+            }
             Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
             impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
             audioSource.PlayOneShot(PerfectLandingSound);

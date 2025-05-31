@@ -75,7 +75,7 @@ public class Astronaut : MonoBehaviour
         gameObject.SetActive(true);
         transform.position = spawnPosition;
         rb.linearVelocity = Vector2.zero;
-        
+
         controls.Astronaut.Enable();
     }
 
@@ -93,5 +93,10 @@ public class Astronaut : MonoBehaviour
         {
             canEnterRocket = false;
         }
+    }
+
+    public void ApplyPerfectLandingBoost()
+    {
+        movement.ApplyPerfectLandingBoost();
     }
 }

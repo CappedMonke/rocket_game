@@ -26,3 +26,5 @@ MonoBehaviour:
   jumpForce: 5
   coyoteTime: 0.1
   jumpInputBufferTime: 0.1
+  perfectLandingSpeedBoostMultiplier: 1.3
+  perfectLandingSpeedBoostDuration: 4

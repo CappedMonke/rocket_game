@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class AstronautMovement : MonoBehaviour
 {
@@ -132,5 +133,14 @@ public class AstronautMovement : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
         }
+    }
+
+    public void ApplyPerfectLandingBoost()
+    {
+        float originalMaxSpeed = data.runMaxSpeed;
+
+        data.runMaxSpeed *= data.perfectLandingSpeedBoostMultiplier;
+
+        DOTween.To(() => data.runMaxSpeed, x => data.runMaxSpeed = x, originalMaxSpeed, data.perfectLandingSpeedBoostDuration).SetEase(Ease.OutQuad);
     }
 }

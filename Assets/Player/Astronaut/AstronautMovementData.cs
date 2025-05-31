@@ -25,6 +25,10 @@ public class AstronautMovementData : ScriptableObject
     public float coyoteTime = 0.2f;
     public float jumpInputBufferTime = 0.2f;
 
+    [Header("Buffs")]
+    public float perfectLandingSpeedBoostMultiplier = 1f;
+    public float perfectLandingSpeedBoostDuration = 1f;
+
     private void OnValidate()
     {
         gravityStrength = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
