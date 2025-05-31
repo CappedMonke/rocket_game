@@ -29,6 +29,7 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
     private ConcurrentDictionary<Vector2Int, Chunk> _loadedChunks = new();
     private ConcurrentQueue<GeneratedChunkInfo> _finishedChunks = new();
     private List<(Vector2 Pos, Vector2Int ChunksAround)> _loadedAreas = new();
+    private List<Vector2Int> _chunksToUnload = new();
     private Vector2Int _loadedMax;
     private Vector2Int _loadedMin;
 
@@ -37,6 +38,8 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
 
     private void Awake()
     {
+        _loadedMin = new Vector2Int(int.MaxValue, int.MaxValue);
+        _loadedMax = new Vector2Int(int.MinValue, int.MinValue);
         _emptyTiles = new TileBase[Chunk.ChunkArea];
         //I hate unity so fucking much bro..
         foreach (var entry in BlockTiles)
@@ -49,38 +52,39 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
 
     private void LateUpdate()
     {
-        for (int y = _loadedMin.y; y < _loadedMax.y; y++)
+        foreach (var entry in _loadedChunks)
         {
-            for (int x = _loadedMin.x; x < _loadedMax.x; x++)
+            var chunkCoord = entry.Key;
+            bool isLoaded = false;
+            for (int i = 0; i < _loadedAreas.Count; i++)
             {
-                Vector2Int chunkCoord = new Vector2Int(x, y);
-                bool isLoaded = false;
-                for (int i = 0; i < _loadedAreas.Count; i++)
+                (Vector2 position, Vector2Int chunksAround) = _loadedAreas[i];
+                Vector2Int centerChunk = CellToChunk((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
+                var pos = new Vector2Int(centerChunk.x - chunksAround.x - 2, centerChunk.y - chunksAround.y - 2);
+                var size = new Vector2Int((chunksAround.x + 2) * 2, (chunksAround.y + 2) * 2);
+                var visibleBounds = new RectInt(pos, size);
+                if (visibleBounds.Contains(chunkCoord))
                 {
-                    (Vector2 position, Vector2Int chunksAround) = _loadedAreas[i];
-                    Vector2Int centerChunk = CellToChunk((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
-                    var pos = new Vector2Int(centerChunk.x - chunksAround.x - 2, centerChunk.y - chunksAround.y - 2);
-                    var size = new Vector2Int((chunksAround.x + 2) * 2, (chunksAround.y + 2) * 2);
-                    var visibleBounds = new RectInt(pos, size);
-                    if (visibleBounds.Contains(chunkCoord))
-                    {
-                        isLoaded = true; break;
-                    }
-                }
-
-                if (!isLoaded)
-                {
-                    _loadedChunks.Remove(chunkCoord, out var chunk);
-                    BoundsInt bounds = GetBoundsFromChunkCoord(chunkCoord);
-                    _tilemap.SetTilesBlock(bounds, _emptyTiles);
-
-                    //Save chunk
+                    isLoaded = true;
+                    break;
                 }
             }
+            if (!isLoaded)
+            {
+                _chunksToUnload.Add(chunkCoord);
+            }
+        }
+        foreach (var chunkCoord in _chunksToUnload)
+        {
+            _loadedChunks.Remove(chunkCoord, out var chunk);
+            BoundsInt bounds = GetBoundsFromChunkCoord(chunkCoord);
+            _tilemap.SetTilesBlock(bounds, _emptyTiles);
+            //Save chunk
         }
         _loadedMin = new Vector2Int(int.MaxValue, int.MaxValue);
         _loadedMax = new Vector2Int(int.MinValue, int.MinValue);
         _loadedAreas.Clear();
+        _chunksToUnload.Clear();
     }
 
     /// <summary>
@@ -98,7 +102,7 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
         {
             for (int x = -chunksAround.x - 1; x < chunksAround.x + 1; x++)
             {
-                Vector2Int chunkCoord = new Vector2Int(centerChunk.x + x, centerChunk.y + y);
+                var chunkCoord = new Vector2Int(centerChunk.x + x, centerChunk.y + y);
 
                 if (_loadedChunks.ContainsKey(chunkCoord))
                 {
