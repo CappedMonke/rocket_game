@@ -14,8 +14,8 @@ using static Unity.Collections.AllocatorManager;
 [Serializable]
 public sealed class BlockEntry
 {
-    public BlockKind blockKind;
-    public TileBase[] tiles;
+    public BlockKind BlockKind;
+    public TileBase[] Tiles;
 }
 public sealed class TerrainManager : MonoSingleton<TerrainManager>
 {
@@ -38,7 +38,7 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
         //I hate unity so fucking much bro..
         foreach (var entry in BlockTiles)
         {
-            _blockMap[entry.blockKind] = entry.tiles;
+            _blockMap[entry.BlockKind] = entry.Tiles;
         }
         _generator = new TerrainGenerator(new TerrainGeneratorSettings(GlobalSeed));
         _tilemap = GetComponent<Tilemap>();
