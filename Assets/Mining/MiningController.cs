@@ -1,29 +1,29 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MiningController : MonoBehaviour
 {
     public float miningSpeed = 1.0f;
-    public Tilemap tilemap;
 
-    private Vector2Int _lookDirection;
-    private Rigidbody2D _rb;
     private Vector3Int _currentMiningTarget;
+    private Tilemap _tilemap;
     private float _miningTimer = 0.0f;
 
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        StartCoroutine(LateStart());
+    }
+
+    private IEnumerator LateStart()
+    {
+        yield return null;
+        _tilemap = FindAnyObjectByType<Tilemap>();
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.A)) _lookDirection = Vector2Int.left;
-        if (Input.GetKey(KeyCode.D)) _lookDirection = Vector2Int.right;
-        if (Input.GetKey(KeyCode.W)) _lookDirection = Vector2Int.up;
-        if (Input.GetKey(KeyCode.S)) _lookDirection = Vector2Int.down;
-
         if (IsMiningInputHeld())
         {
             HandleMining();
@@ -63,16 +63,17 @@ public class MiningController : MonoBehaviour
     private Vector3Int GetTargetTilePositionByMouse()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return tilemap.WorldToCell(mouseWorldPos);
+        return _tilemap.WorldToCell(mouseWorldPos);
     }
 
     private void MineTileIfExists(Vector3Int position)
     {
-        TileBase tile = tilemap.GetTile(position);
+        Vector3Int adjustedPos = new Vector3Int(position.x, position.y, 0);
+        TileBase tile = _tilemap.GetTile(adjustedPos);
         if (tile != null)
         {
             Debug.Log("Retrieved: 1x" + tile.name);
-            tilemap.SetTile(position, null);
+            _tilemap.SetTile(adjustedPos, null);
         }
     }
 
