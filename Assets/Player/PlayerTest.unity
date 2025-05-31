@@ -236,6 +236,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.399
+      objectReference: {fileID: 0}
+    - target: {fileID: 1218518318977413856, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: explosionStrength.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1218518318977413856, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: explosionStrength.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: orthographic size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_Name
       value: AstronautAndRocket

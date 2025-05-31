@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Rocket : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float perfectLandingMaxAngle = 1f;
     [SerializeField] private float safeLandingMaxAngle = 1f;
     [SerializeField] private float safeLandingMaxImpactForce = 1f;
+    [SerializeField] private Vector2 explosionStrength = new(1f, 1f);
 
     [Header("Sounds")]
     [SerializeField] private AudioClip ExitRocketSound;
@@ -59,14 +61,17 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float explosionShakeStrength = 1f;
     [SerializeField] private float damageAmountShakeMultiplier = 1f;
 
-    private CinemachineImpulseSource impulseSource;
-
+    [Header("Events")]
+    public UnityEvent OnRocketDestroyed;
 
     [Header("References")]
+    private CinemachineImpulseSource impulseSource;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource flyingSoundSource;
     [SerializeField] private GameObject doorPosition;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject Sprite;
+    [SerializeField] private GameObject RocketExplosionPrefab;
     private Rigidbody2D rb;
     private Astronaut astronaut;
     private Controls controls;
@@ -303,6 +308,22 @@ public class Rocket : MonoBehaviour
             controls.Rocket.Disable();
             audioSource.PlayOneShot(ExplosionSound);
             impulseSource.GenerateImpulse(explosionShakeStrength * damage * damageAmountShakeMultiplier * Random.onUnitSphere);
+            OnRocketDestroyed.Invoke();
+            GameObject rocketExplosionInstance = Instantiate(RocketExplosionPrefab, transform.position, transform.rotation);
+            rocketExplosionInstance.transform.localScale = transform.localScale;
+            
+            foreach (Transform child in rocketExplosionInstance.transform)
+            {
+                Rigidbody2D rb2d = child.GetComponent<Rigidbody2D>();
+                Vector2 vChildParent = child.position - transform.position;
+                if (rb2d != null)
+                {
+                    rb2d.AddForce(Random.Range(explosionStrength.x, explosionStrength.y) * rb.linearVelocity.magnitude * vChildParent.normalized, ForceMode2D.Impulse);
+                }
+            }
+
+            Sprite.SetActive(false);
+            rb.linearVelocity = Vector2.zero;
         }
         else
         {

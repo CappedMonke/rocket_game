@@ -59,7 +59,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 20
+    OrthographicSize: 10
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
       Size: {x: 0, y: 0.046799053}
     HardLimits:
       Enabled: 1
-      Size: {x: 0.02, y: 0.1}
+      Size: {x: 0.01, y: 0.1}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
   TargetOffset: {x: 0.02, y: 0.1, z: -8}
