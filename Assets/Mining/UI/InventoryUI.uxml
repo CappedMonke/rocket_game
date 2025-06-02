@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Mining/UI/InventoryUI.uss?fileID=7433441132597879392&amp;guid=22c3f26ef0058fb4d997e145c897f9a6&amp;type=3#InventoryUI" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; -unity-background-image-tint-color: rgb(61, 61, 61); background-color: rgba(0, 0, 0, 0.35);" />
+    <ui:VisualElement name="Menu" style="flex-grow: 1; position: absolute; width: 60%; height: 50%; top: 0; left: 0; right: 0; bottom: 0; align-self: stretch; align-items: center; justify-content: space-around; align-content: center; margin-top: 20%; margin-right: 20%; margin-bottom: 20%; margin-left: 20%; background-color: rgba(0, 0, 0, 0.8);">
+        <ui:ScrollView name="item-list" style="width: 100%; height: 100%; font-size: 20px; color: rgb(136, 136, 136); -unity-font-definition: resource(&apos;PressStart2P-vaV7&apos;);" />
+    </ui:VisualElement>
+</ui:UXML>
