@@ -867,6 +867,25 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1313679254 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1871807309167657500, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+  m_PrefabInstance: {fileID: 2101383890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1313679262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313679254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07cd292cfc9352499c0ba2ed1b7baa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgrades: []
+  availableUpgrades: []
 --- !u!1 &1592473139
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,8 +981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7dd279f2e04f414aaa60a19edd660be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableItems: []
   slots: []
+  availableItems: []
 --- !u!1001 &2101383890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -974,15 +993,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.941
+      value: -4.0479994
       objectReference: {fileID: 0}
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.399
+      value: -2.8719997
       objectReference: {fileID: 0}
     - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: orthographic size
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_Name
@@ -1039,6 +1058,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       insertIndex: -1
       addedObject: {fileID: 544560917}
+    - targetCorrespondingSourceObject: {fileID: 1871807309167657500, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1313679262}
     - targetCorrespondingSourceObject: {fileID: 1689610136763455909, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2064955374}

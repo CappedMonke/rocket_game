@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField]
     public List<InventorySlot> slots = new();
-    
+
     public List<ItemData> availableItems;
 
     void Awake()
@@ -56,6 +56,36 @@ public class Inventory : MonoBehaviour
         }
 
         Debug.Log($"Retrieved: {amount} x {item.name}");
+    }
+
+    public void RemoveItem(ItemData item, int amount)
+    {
+        int remainingToRemove = amount;
+
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].item == item)
+            {
+                if (slots[i].quantity <= remainingToRemove)
+                {
+                    remainingToRemove -= slots[i].quantity;
+                    slots.RemoveAt(i);
+                    i--; // Adjust index after removal
+                }
+                else
+                {
+                    slots[i].quantity -= remainingToRemove;
+                    return;
+                }
+            }
+
+            if (remainingToRemove <= 0)
+            {
+                return;
+            }
+        }
+
+        Debug.LogWarning($"Tried to remove {amount} x {item.name}, but only {amount - remainingToRemove} were available.");
     }
 
 }

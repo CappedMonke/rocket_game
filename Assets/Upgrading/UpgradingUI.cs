@@ -7,10 +7,12 @@ public class UpgradingUI : MonoBehaviour
     private ScrollView _itemList;
     private ScrollView _upgradeList;
     private Inventory _inventory;
+    private UpgradeController _upgradeController;
 
     void OnEnable()
     {
         _inventory = FindAnyObjectByType<Inventory>();
+        _upgradeController = FindAnyObjectByType<UpgradeController>();
 
         UIDocument uiDocument = GetComponent<UIDocument>();
         _root = uiDocument.rootVisualElement;
@@ -46,5 +48,83 @@ public class UpgradingUI : MonoBehaviour
             itemLabel.AddToClassList("item-entry");
             _itemList.Add(itemLabel);
         }
+
+        _upgradeList.Clear();
+
+        foreach (var upgrade in _upgradeController.availableUpgrades)
+        {
+            if (upgrade == null) continue;
+
+            Button upgradeButton = new Button(() => OnUpgradeSelected(upgrade))
+            {
+                text = upgrade.displayName
+            };
+            upgradeButton.AddToClassList("upgrade-entry");
+
+            // Check prerequisites
+            bool canAfford = true;
+            if (upgrade.cost == null || upgrade.cost.Count == 0)
+            {
+                canAfford = true;
+            }
+            else
+            {
+                foreach (var cost in upgrade.cost)
+                {
+                    if (!_inventory.slots.Exists(slot => slot.item == cost.Key && slot.quantity >= cost.Value))
+                    {
+                        canAfford = false;
+                        break;
+                    }
+                }
+            }
+            
+            if (!canAfford)
+            {
+                upgradeButton.AddToClassList("disabled");
+            }
+
+            _upgradeList.Add(upgradeButton);
+        }
+    }
+
+    private void OnUpgradeSelected(Upgrade upgrade)
+    {
+        if (upgrade == null) return;
+
+        bool canAfford = true;
+        if (upgrade.cost == null || upgrade.cost.Count == 0)
+        {
+            canAfford = true;
+        }
+        else
+        {
+            foreach (var cost in upgrade.cost)
+            {
+                if (!_inventory.slots.Exists(slot => slot.item == cost.Key && slot.quantity >= cost.Value))
+                {
+                    canAfford = false;
+                    break;
+                }
+            }
+        }
+
+        if (!canAfford)
+        {
+            Debug.LogWarning($"Cannot afford upgrade: {upgrade.displayName}");
+            return;
+        }
+
+        // Deduct costs from inventory
+        if (upgrade.cost != null && upgrade.cost.Count > 0)
+        {
+            foreach (var cost in upgrade.cost)
+            {
+                _inventory.RemoveItem(cost.Key, cost.Value);
+            }
+        }
+
+        _upgradeController.AddUpgrade(upgrade);
+        Debug.Log($"Upgrade applied: {upgrade.displayName}");
     }
 }
