@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Upgrading/UI/UpgradingUI.uss?fileID=7433441132597879392&amp;guid=2f8a6da34a5527c4d90b76c645121cc8&amp;type=3#UpgradingUI" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; -unity-background-image-tint-color: rgb(61, 61, 61); background-color: rgba(0, 0, 0, 0.35);" />
+    <ui:ScrollView name="item-list" style="position: absolute; height: 80%; width: 40%; align-self: flex-start; margin-top: 5%; margin-right: 0%; padding-right: 0; margin-left: 10%; background-color: rgba(0, 0, 0, 0.84); -unity-font-definition: resource(&apos;PressStart2P-vaV7&apos;);" />
+    <ui:ScrollView name="upgrade-list" style="position: absolute; height: 80%; width: 666px; align-self: flex-end; margin-top: 5%; margin-right: 10%; padding-right: 0%; margin-left: 0%; left: 839px; background-color: rgba(0, 0, 0, 0.84); -unity-font-definition: resource(&apos;PressStart2P-vaV7&apos;);" />
+</ui:UXML>

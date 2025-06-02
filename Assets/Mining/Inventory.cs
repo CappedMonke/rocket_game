@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<ItemData> availableItems;
+    [SerializeField]
     public List<InventorySlot> slots = new();
+    
+    public List<ItemData> availableItems;
 
     void Awake()
     {
