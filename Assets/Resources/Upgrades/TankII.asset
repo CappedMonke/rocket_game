@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2c6ce1072795d418434ac888a46c45, type: 3}
-  m_Name: Ore1
+  m_Script: {fileID: 11500000, guid: a66a1a645db16cc4a86da3a01ec99c69, type: 3}
+  m_Name: TankII
   m_EditorClassIdentifier: 
-  itemName: Ore 1
-  icon: {fileID: 0}
-  maxStack: 99
+  id: 1
+  displayName: Tank Mk. II
+  prerequisites: []
+  costItems:
+  - {fileID: 11400000, guid: b192c8a1d2e11054f938cb4c2a113ffb, type: 2}
+  costAmounts: 05000000

@@ -12,16 +12,9 @@ public class MiningController : MonoBehaviour
     private float _miningTimer = 0.0f;
     private Inventory _inventory;
 
-
     void Start()
     {
         _inventory = GetComponent<Inventory>();
-        StartCoroutine(LateStart());
-    }
-
-    private IEnumerator LateStart()
-    {
-        yield return null;
         _tilemap = FindAnyObjectByType<Tilemap>();
     }
 
@@ -87,6 +80,7 @@ public class MiningController : MonoBehaviour
         if (tile != null)
         {
             _tilemap.SetTile(adjustedPos, null);
+            Debug.Log(tile.name);
             _inventory.AddItemByTileName(tile.name);
         }
     }
