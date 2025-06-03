@@ -56,6 +56,7 @@ MonoBehaviour:
   - BlockKind: 1
     Tiles:
     - {fileID: 11400000, guid: 169702942853d5041b24ebcfa218aa96, type: 2}
+    - {fileID: 11400000, guid: ac70d27a2a5bd8f47b0d94932845186c, type: 2}
   - BlockKind: 2
     Tiles:
     - {fileID: 11400000, guid: daf730ec7d7bcbc4e80bc5dea3081c3f, type: 2}

@@ -39,6 +39,16 @@ public sealed class Chunk
     {
         Blocks = blocks;
     }
+
+    public BlockKind GetBlock(Vector2Int pos)
+    {
+        return Blocks[pos.y * ChunkSizeX + pos.x];
+    }
+
+    public void SetBlock(Vector2Int pos, BlockKind blockKind)
+    {
+        Blocks[pos.y * ChunkSizeX + pos.x] = blockKind;
+    }
 }
 
 struct BiomeSettings

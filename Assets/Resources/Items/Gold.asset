@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2c6ce1072795d418434ac888a46c45, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  itemName: Gold
-  icon: {fileID: 0}
-  maxStack: 99
+  BlockKind: 4
+  Icon: {fileID: 0}
+  MaxStack: 99

@@ -15,12 +15,12 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Loaded {availableItems.Count} items.");
     }
 
-    public void AddItemByTileName(string tileName, int amount = 1)
+    public void AddItemByBlockKind(BlockKind blockKind, int amount = 1)
     {
-        ItemData item = availableItems.Find(i => i.itemName == tileName);
+        ItemData item = availableItems.Find(i => i.BlockKind == blockKind);
         if (item == null)
         {
-            Debug.LogWarning($"No item found for: {tileName} !");
+            Debug.LogWarning($"No item found for: {blockKind} !");
             return;
         }
 
@@ -33,9 +33,9 @@ public class Inventory : MonoBehaviour
 
         foreach (var slot in slots)
         {
-            if (slot.item == item && slot.quantity <= item.maxStack)
+            if (slot.item == item && slot.quantity <= item.MaxStack)
             {
-                int spaceLeft = item.maxStack - slot.quantity;
+                int spaceLeft = item.MaxStack - slot.quantity;
                 int toAdd = Mathf.Min(spaceLeft, remainingToAdd);
 
                 slot.quantity += toAdd;
@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
 
         while (remainingToAdd > 0)
         {
-            int toAdd = Mathf.Min(item.maxStack, remainingToAdd);
+            int toAdd = Mathf.Min(item.MaxStack, remainingToAdd);
             slots.Add(new InventorySlot(item, toAdd));
             remainingToAdd -= toAdd;
         }
@@ -99,9 +99,9 @@ public class InventorySlot
     public InventorySlot(ItemData item, int quantity)
     {
         this.item = item;
-        if (quantity > item.maxStack)
+        if (quantity > item.MaxStack)
         {
-            this.quantity = item.maxStack;
+            this.quantity = item.MaxStack;
         }
     }
 }

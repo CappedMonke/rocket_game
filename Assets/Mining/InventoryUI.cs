@@ -39,9 +39,9 @@ public class InventoryUI : MonoBehaviour
             Debug.Log("Cheat code activated: Adding resources to inventory.");
             for(int i = 0; i < 99; i++)
             {
-                _inventory.AddItemByTileName("Gold");
-                _inventory.AddItemByTileName("Oxygenium");
-                _inventory.AddItemByTileName("Kerosene");
+                _inventory.AddItemByBlockKind(BlockKind.Gold);
+                _inventory.AddItemByBlockKind(BlockKind.Oxygenium);
+                _inventory.AddItemByBlockKind(BlockKind.Kerosene);
             }
             RefreshUI();
         }
@@ -62,8 +62,10 @@ public class InventoryUI : MonoBehaviour
         _itemList.Clear();
 
         foreach (var slot in _inventory.slots)
-        {
-            Label itemLabel = new Label($"{slot.item.itemName} x{slot.quantity + 1}"); // Don't know where the 1 gets lost lol
+        { 
+            Debug.Log(slot.item);
+            // Don't know where the 1 gets lost lol
+            Label itemLabel = new Label($"{slot.item.BlockKind} x{slot.quantity + 1}");
             itemLabel.AddToClassList("item-entry");
             _itemList.Add(itemLabel);
         }

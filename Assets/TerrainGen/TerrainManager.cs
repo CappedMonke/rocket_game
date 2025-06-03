@@ -56,7 +56,7 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
             for (int i = 0; i < _loadedAreas.Count; i++)
             {
                 (Vector2 position, Vector2Int chunksAround) = _loadedAreas[i];
-                Vector2Int centerChunk = CellToChunk((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
+                Vector2Int centerChunk = GetChunkPos((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
                 var pos = new Vector2Int(centerChunk.x - chunksAround.x - 2, centerChunk.y - chunksAround.y - 2);
                 var size = new Vector2Int((chunksAround.x + 2) * 2, (chunksAround.y + 2) * 2);
                 var visibleBounds = new RectInt(pos, size);
@@ -97,7 +97,7 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
     public void LoadArea(Vector2 position, Vector2Int chunksAround)
     {
         _loadedAreas.Add((position, chunksAround));
-        Vector2Int centerChunk = CellToChunk((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
+        Vector2Int centerChunk = GetChunkPos((Vector2Int)_tilemap.WorldToCell(new Vector3(position.x, position.y, 1)));
         _loadedMin = Vector2Int.Min(centerChunk - chunksAround - new Vector2Int(2, 2), _loadedMin);
         _loadedMax = Vector2Int.Max(centerChunk + chunksAround + new Vector2Int(2, 2), _loadedMax);
         Parallel.For(-chunksAround.y - 1, chunksAround.y + 1, (y) =>
@@ -129,7 +129,31 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
         return new System.Random(unchecked(Environment.TickCount * 31 + Environment.CurrentManagedThreadId));
     });
 
-    private TileBase GetTileForBlock(BlockKind blockKind)
+    public BlockKind GetBlockKind(Vector2Int worldPos)
+    {
+        var chunkPos = GetChunkPos(worldPos);
+        var tilePos = GetTileOffset(worldPos);
+        if (!_loadedChunks.TryGetValue(chunkPos, out var chunk))
+        {
+            return BlockKind.Air;
+        }
+        return chunk.GetBlock(tilePos);
+    }
+
+    public void SetBlockKind(Vector2Int worldPos, BlockKind blockKind)
+    {
+        var chunkPos = GetChunkPos(worldPos);
+        var tilePos = GetTileOffset(worldPos);
+        if (!_loadedChunks.TryGetValue(chunkPos, out var chunk))
+        {
+            Debug.LogWarning($"Chunk not loaded {chunkPos}");
+            return;
+        }
+        chunk.SetBlock(tilePos, blockKind);
+        _tilemap.SetTile(new Vector3Int(worldPos.x, worldPos.y, 0), GetTileForBlock(blockKind));
+    }
+
+    public TileBase GetTileForBlock(BlockKind blockKind)
     {
         if (_blockMap.TryGetValue(blockKind, out var blocks))
         {
@@ -173,7 +197,12 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
         _finishedChunks.Enqueue(new(chunkCoord, chunk, tiles));
     }
 
-    private static BoundsInt GetBoundsFromChunkCoord(Vector2Int chunkCoord)
+    public Vector2Int WorldToTile(Vector2 worldPos)
+    {
+        return (Vector2Int)_tilemap.WorldToCell(worldPos);
+    }
+
+    public static BoundsInt GetBoundsFromChunkCoord(Vector2Int chunkCoord)
     {
         var min = new Vector3Int(chunkCoord.x * Chunk.ChunkSizeX, chunkCoord.y * Chunk.ChunkSizeY, 0);
         var size = new Vector3Int(Chunk.ChunkSizeX, Chunk.ChunkSizeY, 1);
@@ -181,12 +210,24 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
         return bounds;
     }
 
-    private static Vector2Int CellToChunk(Vector2Int cellPos)
+    public static Vector2Int GetChunkPos(Vector2Int tilePosition)
     {
+        int subX = tilePosition.x < 0 ? -1 : 0;
+        int subY = tilePosition.y < 0 ? -1 : 0;
         return new Vector2Int(
-            Mathf.FloorToInt(cellPos.x / Chunk.ChunkSizeX),
-            Mathf.FloorToInt(cellPos.y / Chunk.ChunkSizeY)
+            Mathf.FloorToInt(tilePosition.x / Chunk.ChunkSizeX) + subX,
+            Mathf.FloorToInt(tilePosition.y / Chunk.ChunkSizeY) + subY
         );
+    }
+
+    public static Vector2Int GetTileOffset(Vector2Int tilePosition)
+    {
+        var chunkPos = GetChunkPos(tilePosition);
+        // (-2,-4) -> (-1, -1) , (-32, -32) - (-2, -4)
+        var pos = chunkPos * Chunk.ChunkSizes - tilePosition;
+        tilePosition = new Vector2Int(Math.Abs(pos.x), Math.Abs(pos.y));
+
+        return tilePosition;
     }
 }
 
