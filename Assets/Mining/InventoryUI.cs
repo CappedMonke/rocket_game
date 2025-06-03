@@ -22,7 +22,7 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I) && !RocketControlsEnabled())
         {
             bool isVisible = _root.style.display != DisplayStyle.None;
             _root.style.display = isVisible ? DisplayStyle.None : DisplayStyle.Flex;
@@ -32,6 +32,29 @@ public class InventoryUI : MonoBehaviour
                 RefreshUI();
             }
         }
+
+        // Debug Cheat Code
+        if (Input.GetKeyDown(KeyCode.O) && Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("Cheat code activated: Adding resources to inventory.");
+            for(int i = 0; i < 99; i++)
+            {
+                _inventory.AddItemByTileName("Gold");
+                _inventory.AddItemByTileName("Oxygenium");
+                _inventory.AddItemByTileName("Kerosene");
+            }
+            RefreshUI();
+        }
+    }
+
+    private bool RocketControlsEnabled()
+    {
+        var rocket = FindAnyObjectByType<Rocket>();
+        if (rocket != null)
+        {
+            return rocket.GetControls().Rocket.enabled;
+        }
+        return false;
     }
 
     private void RefreshUI()

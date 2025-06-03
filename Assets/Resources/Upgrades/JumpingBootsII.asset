@@ -19,3 +19,4 @@ MonoBehaviour:
   costItems:
   - {fileID: 11400000, guid: b192c8a1d2e11054f938cb4c2a113ffb, type: 2}
   costAmounts: 14000000
+  upgradeBuff: {fileID: 11400000, guid: 90f1a0bae52818d46a70d21480eb8024, type: 2}
