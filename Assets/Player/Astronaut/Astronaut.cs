@@ -115,4 +115,12 @@ public class Astronaut : MonoBehaviour
     {
         movement.ApplyPerfectLandingBoost();
     }
+
+    public void ApplyStats(UpgradeBuff buff)
+    {
+        if (buff == null) return;
+
+        movement.data.jumpHeight = buff.jumpHeight;
+        maxOxygen = buff.maxOxygenAstronaut;
+    }
 }

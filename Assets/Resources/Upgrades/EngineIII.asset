@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5472c36407d8f6e4b946e369abb66e0c, type: 2}
   costItems:
   - {fileID: 11400000, guid: b192c8a1d2e11054f938cb4c2a113ffb, type: 2}
-  - {fileID: 11400000, guid: 92ecc5f8107b71548a02e62c9b11e991, type: 2}
   - {fileID: 11400000, guid: 5aa568cbdc940a541bb29f0850d6b3bc, type: 2}
+  - {fileID: 11400000, guid: 92ecc5f8107b71548a02e62c9b11e991, type: 2}
   costAmounts: 1e0000001e0000001e000000
+  upgradeBuff: {fileID: 11400000, guid: 82a8240abd59a4348aa3f6da186036c9, type: 2}

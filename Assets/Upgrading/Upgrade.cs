@@ -9,10 +9,12 @@ public class Upgrade : ScriptableObject
 
     [Tooltip("Upgrades, die freigeschaltet sein müssen.")]
     public List<Upgrade> prerequisites;
-
     [Tooltip("Benötigte Ressourcen (Item, Menge). Einfach so tun als wären die Listen ein Dictionary.")]
     public List<ItemData> costItems;
     public List<int> costAmounts;
+
+    [Tooltip("Upgrade Buffs")]
+    public UpgradeBuff upgradeBuff;
 
     public Dictionary<ItemData, int> GetCostDictionary()
     {

@@ -377,4 +377,14 @@ public class Rocket : MonoBehaviour
     {
         return controls;
     }
+
+    public void ApplyStats(UpgradeBuff buff)
+    {
+        if (buff == null) return;
+
+        maxFuel = Mathf.Max(maxFuel, buff.maxFuelRocket);
+        maxOxygen = Mathf.Max(maxOxygen, buff.maxOxygenRocket);
+        thrustAcceleration = Mathf.Max(thrustAcceleration, buff.accelerationRocket);
+        maxSpeed = Mathf.Max(maxSpeed, buff.maxSpeedRocket);
+    }
 }

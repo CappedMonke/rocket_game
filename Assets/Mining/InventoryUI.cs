@@ -32,6 +32,19 @@ public class InventoryUI : MonoBehaviour
                 RefreshUI();
             }
         }
+
+        // Debug Cheat Code
+        if (Input.GetKeyDown(KeyCode.O) && Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("Cheat code activated: Adding resources to inventory.");
+            for(int i = 0; i < 99; i++)
+            {
+                _inventory.AddItemByTileName("Gold");
+                _inventory.AddItemByTileName("Oxygenium");
+                _inventory.AddItemByTileName("Kerosene");
+            }
+            RefreshUI();
+        }
     }
 
     private bool RocketControlsEnabled()
