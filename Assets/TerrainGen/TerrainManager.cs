@@ -31,7 +31,7 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
     private Vector2Int _loadedMin;
 
     private TileBase[] _emptyTiles;
-
+    private ConcurrentDictionary<Vector2Int, Chunk> _generatedChunks = new();
 
     private void Awake()
     {
@@ -76,12 +76,17 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
             _loadedChunks.Remove(chunkCoord, out var chunk);
             BoundsInt bounds = GetBoundsFromChunkCoord(chunkCoord);
             _tilemap.SetTilesBlock(bounds, _emptyTiles);
-            //Save chunk
+            SaveChunk(chunkCoord, chunk);
         }
         _loadedMin = new Vector2Int(int.MaxValue, int.MaxValue);
         _loadedMax = new Vector2Int(int.MinValue, int.MinValue);
         _loadedAreas.Clear();
         _chunksToUnload.Clear();
+    }
+
+    private void SaveChunk(Vector2Int chunkPos, Chunk chunk)
+    {
+        _generatedChunks.AddOrUpdate(chunkPos, _ => { return chunk; }, (_, _) => { return chunk; });
     }
 
     /// <summary>
@@ -139,8 +144,23 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
 
     private void LoadChunk(Vector2Int chunkCoord)
     {
-        Chunk chunk = _generator.GenerateChunk(chunkCoord);
         var tiles = ArrayPool<TileBase>.Shared.Rent(Chunk.ChunkArea);
+        if (_generatedChunks.TryGetValue(chunkCoord, out var savedChunk))
+        {
+            for (int y = 0; y < Chunk.ChunkSizeY; y++)
+            {
+                for (int x = 0; x < Chunk.ChunkSizeX; x++)
+                {
+                    var block = savedChunk.Blocks[x + y * Chunk.ChunkSizeX];
+
+                    tiles[x + y * Chunk.ChunkSizeX] = GetTileForBlock(block);
+                }
+            }
+            _finishedChunks.Enqueue(new(chunkCoord, savedChunk, tiles));
+            return;
+        }
+
+        Chunk chunk = _generator.GenerateChunk(chunkCoord);
         for (int y = 0; y < Chunk.ChunkSizeY; y++)
         {
             for (int x = 0; x < Chunk.ChunkSizeX; x++)
