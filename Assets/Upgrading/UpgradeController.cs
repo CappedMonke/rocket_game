@@ -117,6 +117,11 @@ public class UpgradeController : MonoBehaviour
         }
     }
 
+    public List<Upgrade> GetAcquiredUpgrades()
+    {
+        return _upgrades;
+    }
+
     private void QueueAstronautUpgradeBuffs(UpgradeBuff buff)
     {
         if (_queuedAstronautBuff == null)

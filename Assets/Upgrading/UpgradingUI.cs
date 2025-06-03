@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -61,15 +62,25 @@ public class UpgradingUI : MonoBehaviour
 
         _upgradeList.Clear();
 
-        foreach (var upgrade in _upgradeController.availableUpgrades)
+        foreach (var upgrade in _upgradeController.availableUpgrades
+            .Where(u => u != null)
+            .OrderBy(u => u.id))
         {
-            if (upgrade == null) continue;
-
             Button upgradeButton = new Button(() => OnUpgradeSelected(upgrade))
             {
                 text = upgrade.displayName
             };
             upgradeButton.AddToClassList("upgrade-entry");
+            upgradeButton.tooltip = $"Cost: {string.Join(", ", upgrade.GetCostDictionary().Select(kvp => $"{kvp.Value} x {kvp.Key.BlockKind}"))}";
+
+            // Check if the upgrade is already acquired
+            if (_upgradeController.GetAcquiredUpgrades().Contains(upgrade))
+            {
+                upgradeButton.style.backgroundColor = new Color(0.4f, 0.5f, 0.4f, 1f);
+                upgradeButton.SetEnabled(false);
+                _upgradeList.Add(upgradeButton);
+                continue;
+            }
 
             // Check prerequisites
             bool canAfford = true;
@@ -88,13 +99,30 @@ public class UpgradingUI : MonoBehaviour
                     }
                 }
             }
-            
-            if (!canAfford)
+
+            bool requirementsMet = false;
+
+            if (upgrade.prerequisites == null || upgrade.prerequisites.Count == 0)
+            {
+                requirementsMet = true;
+            }
+            else
+            {
+                var acquired = _upgradeController.GetAcquiredUpgrades();
+                requirementsMet = upgrade.prerequisites.All(prereq => acquired.Contains(prereq));
+            }
+
+            if (!canAfford || !requirementsMet)
             {
                 upgradeButton.AddToClassList("disabled");
+                upgradeButton.SetEnabled(false);
             }
 
             _upgradeList.Add(upgradeButton);
+            Label costLabel = new Label($"{string.Join(", ", upgrade.GetCostDictionary().Select(kvp => $"{kvp.Value} x {kvp.Key.BlockKind}"))}");
+            costLabel.AddToClassList("upgrade-cost");
+            costLabel.style.fontSize = 12;
+            _upgradeList.Add(costLabel);
         }
     }
 
@@ -125,6 +153,24 @@ public class UpgradingUI : MonoBehaviour
             return;
         }
 
+        bool requirementsMet = false;
+
+        if (upgrade.prerequisites == null || upgrade.prerequisites.Count == 0)
+        {
+            requirementsMet = true;
+        }
+        else
+        {
+            var acquired = _upgradeController.GetAcquiredUpgrades();
+            requirementsMet = upgrade.prerequisites.All(prereq => acquired.Contains(prereq));
+        }
+
+        if (!requirementsMet)
+        {
+            Debug.LogWarning($"Upgrade prerequisites not met for: {upgrade.displayName}");
+            return;
+        }
+
         // Deduct costs from inventory
         if (upgrade.GetCostDictionary() != null && upgrade.GetCostDictionary().Count > 0)
         {
@@ -136,5 +182,6 @@ public class UpgradingUI : MonoBehaviour
 
         _upgradeController.AddUpgrade(upgrade);
         Debug.Log($"Upgrade applied: {upgrade.displayName}");
+        RefreshUI();
     }
 }
