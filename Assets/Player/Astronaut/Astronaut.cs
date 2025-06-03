@@ -120,7 +120,7 @@ public class Astronaut : MonoBehaviour
     {
         if (buff == null) return;
 
-        movement.data.jumpHeight = buff.jumpHeight;
-        maxOxygen = buff.maxOxygenAstronaut;
+        movement.data.jumpHeight = Mathf.Max(movement.data.jumpHeight, buff.jumpHeight);
+        maxOxygen = Mathf.Max(maxOxygen, buff.maxOxygenAstronaut);
     }
 }

@@ -8,6 +8,11 @@ public class UpgradeController : MonoBehaviour
     [SerializeField]
     private List<Upgrade> _upgrades = new();
 
+    private UpgradeBuff _queuedAstronautBuff;
+    private UpgradeBuff _queuedRocketBuff;
+    private bool _hasQueuedAstronautBuff = false;
+    private bool _hasQueuedRocketBuff = false;
+
     public List<Upgrade> availableUpgrades;
 
     void Awake()
@@ -21,6 +26,32 @@ public class UpgradeController : MonoBehaviour
     void Start()
     {
         ApplyUpgradeBuffs();
+    }
+
+    void LateUpdate()
+    {
+        if (_hasQueuedAstronautBuff)
+        {
+            Astronaut astronaut = FindFirstObjectByType<Astronaut>();
+            if (astronaut != null)
+            {
+                astronaut.ApplyStats(_queuedAstronautBuff);
+                _queuedAstronautBuff = null;
+                _hasQueuedAstronautBuff = false;
+                Debug.Log("Applied queued astronaut upgrade buffs.");
+            }
+        }
+        if (_hasQueuedRocketBuff)
+        {
+            Rocket rocket = FindFirstObjectByType<Rocket>();
+            if (rocket != null)
+            {
+                rocket.ApplyStats(_queuedRocketBuff);
+                _queuedRocketBuff = null;
+                _hasQueuedRocketBuff = false;
+                Debug.Log("Applied queued rocket upgrade buffs.");
+            }
+        }
     }
 
     public void AddUpgrade(Upgrade upgrade)
@@ -65,14 +96,54 @@ public class UpgradeController : MonoBehaviour
 
         Astronaut astronaut = FindFirstObjectByType<Astronaut>();
         Rocket rocket = FindFirstObjectByType<Rocket>();
-        if (astronaut != null && rocket != null)
+        if (astronaut != null)
         {
             astronaut.ApplyStats(totalBuff);
+        }
+        else
+        {
+            Debug.LogWarning("Astronaut not found to apply upgrade buffs. Queueing upgrade buffs for later.");
+            QueueAstronautUpgradeBuffs(totalBuff);
+        }
+
+        if (rocket != null)
+        {
             rocket.ApplyStats(totalBuff);
         }
         else
         {
-            Debug.LogWarning("Astronaut or Rocket not found to apply upgrade buffs.");
+            Debug.LogWarning("Rocket not found to apply upgrade buffs. Queueing upgrade buffs for later.");
+            QueueRocketUpgradeBuffs(totalBuff);
         }
+    }
+
+    private void QueueAstronautUpgradeBuffs(UpgradeBuff buff)
+    {
+        if (_queuedAstronautBuff == null)
+        {
+            _queuedAstronautBuff = buff;
+        }
+        else
+        {
+            _queuedAstronautBuff.jumpHeight = Mathf.Max(_queuedAstronautBuff.jumpHeight, buff.jumpHeight);
+            _queuedAstronautBuff.maxOxygenAstronaut = Mathf.Max(_queuedAstronautBuff.maxOxygenAstronaut, buff.maxOxygenAstronaut);
+        }
+        _hasQueuedAstronautBuff = true;
+    }
+
+    private void QueueRocketUpgradeBuffs(UpgradeBuff buff)
+    {
+        if (_queuedRocketBuff == null)
+        {
+            _queuedRocketBuff = buff;
+        }
+        else
+        {
+            _queuedRocketBuff.maxOxygenRocket = Mathf.Max(_queuedRocketBuff.maxOxygenRocket, buff.maxOxygenRocket);
+            _queuedRocketBuff.maxFuelRocket = Mathf.Max(_queuedRocketBuff.maxFuelRocket, buff.maxFuelRocket);
+            _queuedRocketBuff.maxSpeedRocket = Mathf.Max(_queuedRocketBuff.maxSpeedRocket, buff.maxSpeedRocket);
+            _queuedRocketBuff.accelerationRocket = Mathf.Max(_queuedRocketBuff.accelerationRocket, buff.accelerationRocket);
+        }
+        _hasQueuedRocketBuff = true;
     }
 }
