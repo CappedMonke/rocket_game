@@ -682,29 +682,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3556419929684031698, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: safeLandingMaxAngle
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3556419929684031698, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: perfectLandingMaxAngle
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3556419929684031698, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
-      propertyPath: startWithControlsEnabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4056059041169852462, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_Name
       value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 5780318802914449691, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.11
+      value: 12.78
       objectReference: {fileID: 0}
     - target: {fileID: 5780318802914449691, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.09
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5780318802914449691, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.z
