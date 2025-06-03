@@ -22,7 +22,7 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I) && !RocketControlsEnabled())
         {
             bool isVisible = _root.style.display != DisplayStyle.None;
             _root.style.display = isVisible ? DisplayStyle.None : DisplayStyle.Flex;
@@ -32,6 +32,16 @@ public class InventoryUI : MonoBehaviour
                 RefreshUI();
             }
         }
+    }
+
+    private bool RocketControlsEnabled()
+    {
+        var rocket = FindAnyObjectByType<Rocket>();
+        if (rocket != null)
+        {
+            return rocket.GetControls().Rocket.enabled;
+        }
+        return false;
     }
 
     private void RefreshUI()

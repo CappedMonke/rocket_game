@@ -311,7 +311,7 @@ public class Rocket : MonoBehaviour
             OnRocketDestroyed.Invoke();
             GameObject rocketExplosionInstance = Instantiate(RocketExplosionPrefab, transform.position, transform.rotation);
             rocketExplosionInstance.transform.localScale = transform.localScale;
-            
+
             foreach (Transform child in rocketExplosionInstance.transform)
             {
                 Rigidbody2D rb2d = child.GetComponent<Rigidbody2D>();
@@ -371,5 +371,10 @@ public class Rocket : MonoBehaviour
     public void DisableOutline()
     {
         spriteRenderer.material.SetFloat("_OutlineEnabled", 0f);
+    }
+
+    public Controls GetControls()
+    {
+        return controls;
     }
 }

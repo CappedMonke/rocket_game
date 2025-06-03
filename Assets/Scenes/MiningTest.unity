@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miningSpeed: 1
-  maxMiningDistance: 5
+  maxMiningDistance: 15
 --- !u!114 &2064955375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,15 +370,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.941
+      value: -4.0479994
       objectReference: {fileID: 0}
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.399
+      value: -2.8719997
       objectReference: {fileID: 0}
     - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: orthographic size
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_Name
