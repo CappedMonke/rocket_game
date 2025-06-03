@@ -1,14 +1,17 @@
 using System;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Astronaut : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] private int health = 100;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private int oxygen = 100;
-    [SerializeField] private int maxOxygen = 100;
+    [SerializeField] private float oxygen = 100;
+    [SerializeField] private float maxOxygen = 100;
+    [SerializeField] private float oxygenDepletionRate = 1f;
 
     [Header("Controls")]
     [SerializeField] private bool startWithControlsEnabled = true;
@@ -16,6 +19,7 @@ public class Astronaut : MonoBehaviour
     [Header("References")]
     [SerializeField] private AudioClip heartbeatSound;
     [SerializeField] private AudioClip heavyBreathingSound;
+    private HUD hud;
     private Rigidbody2D rb;
     private Rocket rocket;
     private AstronautMovement movement;
@@ -53,6 +57,32 @@ public class Astronaut : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        hud = FindFirstObjectByType<HUD>();
+
+        if (hud != null && startWithControlsEnabled)
+        {
+            hud.EnableAstronautUI();
+        }
+
+        InitializeHUD();
+    }
+
+    private void OnEnable()
+    {
+        InitializeHUD();
+    }
+
+    private void InitializeHUD()
+    {
+        if (hud != null)
+        {
+            hud.astronautUI.SetHealth(health, maxHealth);
+            hud.astronautUI.SetOxygen(oxygen, maxOxygen);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (Mathf.Abs(rb.linearVelocity.x) > 0.1f)
@@ -63,11 +93,22 @@ public class Astronaut : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        SetOxygen(oxygen - oxygenDepletionRate * Time.deltaTime);
+    }
+
     public void EnterRocket()
     {
         if (rocket != null && canEnterRocket)
         {
             controls.Astronaut.Disable();
+
+            if (hud != null)
+            {
+                hud.DisableAstronautUI();
+            }
+
             rocket.OnEnterRocket();
             gameObject.SetActive(false);
 
@@ -85,6 +126,7 @@ public class Astronaut : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         controls.Astronaut.Enable();
+        InitializeHUD();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -121,6 +163,46 @@ public class Astronaut : MonoBehaviour
         if (buff == null) return;
 
         movement.data.jumpHeight = Mathf.Max(movement.data.jumpHeight, buff.jumpHeight);
-        maxOxygen = Mathf.Max(maxOxygen, buff.maxOxygenAstronaut);
+        SetMaxOxygen(Mathf.Max(maxOxygen, buff.maxOxygenAstronaut));
+    }
+
+    private void SetOxygen(float value)
+    {
+        oxygen = Mathf.Clamp(value, 0, maxOxygen);
+
+        if (hud != null)
+        {
+            hud.astronautUI.SetOxygen(value, maxOxygen);
+        }
+
+        if (oxygen <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    private void SetMaxOxygen(float value)
+    {
+        maxOxygen = Mathf.Max(value, 0);
+
+        if (hud != null)
+        {
+            hud.astronautUI.SetOxygen(oxygen, maxOxygen);
+        }
+    }
+
+    public void RefillOxygen(float amount)
+    {
+        SetOxygen(oxygen + amount - oxygenDepletionRate * Time.deltaTime);
+    }
+
+    public bool IsOxygenFull()
+    {
+        return Mathf.Approximately(oxygen, maxOxygen);
+    }
+
+    public float GetOxygenDepletionRate()
+    {
+        return oxygenDepletionRate;
     }
 }

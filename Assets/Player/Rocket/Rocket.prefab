@@ -86,13 +86,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711bb8a532287d766a0c0c73edf4be9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWithControlsEnabled: 1
+  startWithControlsEnabled: 0
+  winAltitude: 1000
   thrustAcceleration: 1200
   maxSpeed: 50
   rotationSpeed: 50
   minThrustStrength: 0.2
   thrustAdjustmentSpeed: 0.2
-  liftoffCooldown: 2
+  liftoffCooldown: 1
+  rotationTimeoutAfterLiftoff: 0.15
   health: 100
   maxHealth: 100
   fuel: 100

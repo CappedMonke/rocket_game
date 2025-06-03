@@ -1,0 +1,21 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Player/Rocket/Rocket.uss?fileID=7433441132597879392&amp;guid=4a6f4ce2ef6a7fa48ae1c4d68562daba&amp;type=3" />
+    <ui:VisualElement class="PlayerUI" style="width: 20%; height: auto; background-image: url(&quot;project://database/Assets/Ui/UiElements.png?fileID=842433393653722749&amp;guid=816d7d5ddefad52818dbd5fe00365925&amp;type=3#UiElements_4&quot;); -unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; padding-top: 6px; padding-right: 10px; padding-bottom: 12px; padding-left: 10px; -unity-slice-scale: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; top: auto; left: auto; flex-shrink: 1;">
+        <ui:VisualElement class="StatRow" style="flex-grow: 1; flex-direction: row;">
+            <ui:VisualElement class="StatIcon" style="background-image: url(&quot;project://database/Assets/Ui/UiElements.png?fileID=-1372297356048971817&amp;guid=816d7d5ddefad52818dbd5fe00365925&amp;type=3#UiElements_0&quot;);" />
+            <ui:VisualElement class="OuterBar" style="flex-grow: 1;">
+                <ui:VisualElement class="StatProgressBar" style="flex-grow: 1;">
+                    <ui:VisualElement name="Health" class="Bar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(140, 47, 66); width: 100%;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="StatRow" style="flex-grow: 1; flex-direction: row;">
+            <ui:VisualElement class="StatIcon" style="background-image: url(&quot;project://database/Assets/Ui/UiElements.png?fileID=501973282609801304&amp;guid=816d7d5ddefad52818dbd5fe00365925&amp;type=3#UiElements_2&quot;);" />
+            <ui:VisualElement class="OuterBar" style="flex-grow: 1;">
+                <ui:VisualElement class="StatProgressBar" style="flex-grow: 1;">
+                    <ui:VisualElement name="Oxygen" class="Bar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(68, 81, 96);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

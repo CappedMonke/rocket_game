@@ -2,27 +2,36 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
     [Header("Controls")]
     [SerializeField] private bool startWithControlsEnabled = true;
 
+    [Header("Win Conditions")]
+    [SerializeField] private float winAltitude = 1000f;
+
     [Header("Movement")]
     [SerializeField] private float thrustAcceleration = 1f;
     [SerializeField] private float maxSpeed = 1f;
     [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private float minThrustStrength = 1f;
+    [SerializeField] private float thrustStrength = 1f;
     [SerializeField] private float thrustAdjustmentSpeed = 1f;
     [SerializeField] private float liftoffCooldown = 1f;
+    [SerializeField] private float rotationTimeoutAfterLiftoff = 1f;
+    private const float maxThrustStrength = 1f;
 
     [Header("Stats")]
     [SerializeField] private int health = 100;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private int fuel = 100;
-    [SerializeField] private int maxFuel = 100;
-    [SerializeField] private int oxygen = 100;
-    [SerializeField] private int maxOxygen = 100;
+    [SerializeField] private float fuel = 100;
+    [SerializeField] private float maxFuel = 100;
+    [SerializeField] private float fuelDepletionRate = 1f;
+    [SerializeField] private float oxygen = 100;
+    [SerializeField] private float maxOxygen = 100;
+    [SerializeField] private float playerOxygenRefillSpeed = 1f;
 
     [Header("Collision Settings")]
     [SerializeField] private float impactForceDamageMultiplier = 1f;
@@ -72,6 +81,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject Sprite;
     [SerializeField] private GameObject RocketExplosionPrefab;
+    private HUD hud;
     private Rigidbody2D rb;
     private Astronaut astronaut;
     private Controls controls;
@@ -82,13 +92,14 @@ public class Rocket : MonoBehaviour
     private bool canRotate = false;
     private bool isThrusting = false;
     private bool wasThrusting = false;
-    private float thrustStrength = 1f;
     private float thrustInput = 0f;
     private float rotateInput = 0f;
     private Vector2 landingNormal;
 
     private Coroutine flyingSoundFadeCoroutine;
     private float flyingSoundDefaultVolume = 1f;
+
+    private bool isAstronautInside = false;
 
     private void Awake()
     {
@@ -125,12 +136,81 @@ public class Rocket : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        hud = FindFirstObjectByType<HUD>();
+
+        if (hud != null && startWithControlsEnabled)
+        {
+            hud.EnableAstronautUI();
+        }
+
+        InitializeHUD();
+    }
+
+    private void OnEnable()
+    {
+        InitializeHUD();
+    }
+
+    private void InitializeHUD()
+    {
+        if (hud != null)
+        {
+            hud.rocketUI.SetHealth(health, maxHealth);
+            hud.rocketUI.SetFuel(fuel, maxFuel);
+            hud.rocketUI.SetOxygen(oxygen, maxOxygen);
+            hud.rocketUI.SetThrustStrength(thrustStrength, minThrustStrength, maxThrustStrength);
+            hud.rocketUI.SetAltitude(transform.position.y, winAltitude);
+        }
+    }
+
     private void Update()
     {
         if (thrustInput != 0f)
         {
-            thrustStrength += thrustInput * Time.deltaTime * thrustAdjustmentSpeed;
-            thrustStrength = Mathf.Clamp(thrustStrength, minThrustStrength, 1f);
+            float newThrustStrength = thrustStrength + thrustInput * Time.deltaTime * thrustAdjustmentSpeed;
+            SetThrustStrength(newThrustStrength);
+        }
+
+        if (isFlying)
+        {
+            SetAltitude(transform.position.y);
+        }
+
+        if (isThrusting && canFly)
+        {
+            SetFuel(fuel - fuelDepletionRate * thrustStrength * Time.deltaTime);
+
+            if (fuel <= 0)
+            {
+                isThrusting = false;
+            }
+        }
+
+        if (isAstronautInside && astronaut != null)
+        {
+            float oxygenRefilled = playerOxygenRefillSpeed * Time.deltaTime;
+            float oxygenTransferred = Mathf.Min(oxygenRefilled, oxygen);
+
+            float astronautOxygenDepletion = astronaut.GetOxygenDepletionRate() * Time.deltaTime;
+
+            if (oxygen > 0)
+            {
+                if (astronaut.IsOxygenFull())
+                {
+                    SetOxygen(oxygen - astronautOxygenDepletion);
+                }
+                else
+                {
+                    SetOxygen(oxygen - oxygenTransferred);
+                    astronaut.RefillOxygen(oxygenTransferred);
+                }
+            }
+            else
+            {
+                astronaut.RefillOxygen(-astronautOxygenDepletion);
+            }
         }
     }
 
@@ -182,25 +262,59 @@ public class Rocket : MonoBehaviour
         wasThrusting = isThrusting;
     }
 
+    private IEnumerator DisableRotationTemporarily(float delay)
+    {
+        canRotate = false;
+        yield return new WaitForSeconds(delay);
+        canRotate = true;
+    }
+
     private void Thrust()
     {
-        Vector2 thrustForce = thrustAcceleration * thrustStrength * Time.fixedDeltaTime * transform.up;
-        rb.AddForce(thrustForce);
+        if (fuel > 0)
+        {
+            Vector2 thrustForce = thrustAcceleration * thrustStrength * Time.fixedDeltaTime * transform.up;
+            rb.AddForce(thrustForce);
 
-        var thrustEffectMain = ThrustEffect.main;
-        float thrustEffectLifetime = Mathf.Lerp(0, initialThrustEffectLifetime, thrustStrength);
-        thrustEffectMain.startLifetime = thrustEffectLifetime;
+            var thrustEffectMain = ThrustEffect.main;
+            float thrustEffectLifetime = Mathf.Lerp(0, initialThrustEffectLifetime, thrustStrength);
+            thrustEffectMain.startLifetime = thrustEffectLifetime;
 
-        rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxSpeed);
+            rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxSpeed);
 
-        isFlying = true;
-        canRotate = true;
+            isFlying = true;
+        }
+
+        if (!canRotate)
+        {
+            StartCoroutine(DisableRotationTemporarily(rotationTimeoutAfterLiftoff));
+        }
     }
 
     private void Rotate(float v)
     {
+        if (fuel <= 0)
+        {
+            return;
+        }
+
         float rotationAmount = v * rotationSpeed * Time.fixedDeltaTime;
         rb.MoveRotation(rb.rotation + rotationAmount);
+    }
+
+    public void OnEnterRocket()
+    {
+        audioSource.PlayOneShot(EnterRocketSound);
+
+        controls.Rocket.Enable();
+
+        if (hud != null)
+        {
+            hud.EnableRocketUI();
+        }
+
+        InitializeHUD();
+        isAstronautInside = true;
     }
 
     private void ExitRocket()
@@ -208,6 +322,11 @@ public class Rocket : MonoBehaviour
         if (isFlying)
         {
             return;
+        }
+
+        if (hud != null)
+        {
+            hud.EnableAstronautUI();
         }
 
         audioSource.PlayOneShot(ExitRocketSound);
@@ -222,13 +341,8 @@ public class Rocket : MonoBehaviour
                 cameraManager.SwitchToAstronautCam();
             }
         }
-    }
 
-    public void OnEnterRocket()
-    {
-        audioSource.PlayOneShot(EnterRocketSound);
-
-        controls.Rocket.Enable();
+        isAstronautInside = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -262,6 +376,17 @@ public class Rocket : MonoBehaviour
             Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
             impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
             audioSource.PlayOneShot(LandingSound);
+            StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
+        }
+        else if (angle < safeLandingMaxAngle && impactForceTooHigh && isFlying) // Crash landing
+        {
+            DamageEffect.transform.position = collision.contacts[0].point;
+            DamageEffect.Play();
+            audioSource.PlayOneShot(DamageSound);
+            float forceDamage = impactForce * impactForceDamageMultiplier;
+            float angleDamage = angle * impactAngleDamageMultiplier;
+            int totalDamage = Mathf.RoundToInt(forceDamage + angleDamage);
+            TakeDamage(totalDamage);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
         }
         else // Crash
@@ -301,7 +426,8 @@ public class Rocket : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        health -= damage;
+        SetHealth(health - damage);
+
         if (health <= 0)
         {
             ExplosionEffect.Play();
@@ -382,9 +508,87 @@ public class Rocket : MonoBehaviour
     {
         if (buff == null) return;
 
-        maxFuel = Mathf.Max(maxFuel, buff.maxFuelRocket);
-        maxOxygen = Mathf.Max(maxOxygen, buff.maxOxygenRocket);
+        SetMaxFuel(Mathf.Max(maxFuel, buff.maxFuelRocket));
+        SetMaxOxygen(Mathf.Max(maxOxygen, buff.maxOxygenRocket));
+
         thrustAcceleration = Mathf.Max(thrustAcceleration, buff.accelerationRocket);
+        
         maxSpeed = Mathf.Max(maxSpeed, buff.maxSpeedRocket);
+    }
+
+    private void SetHealth(int value)
+    {
+        health = Mathf.Clamp(value, 0, maxHealth);
+        if (hud != null)
+        {
+            hud.rocketUI.SetHealth(health, maxHealth);
+        }
+    }
+
+    private void SetMaxHealth(int value)
+    {
+        maxHealth = Mathf.Max(value, 0);
+        if (hud != null)
+        {
+            hud.rocketUI.SetHealth(health, maxHealth);
+        }
+    }
+
+    private void SetFuel(float value)
+    {
+        fuel = Mathf.Clamp(value, 0, maxFuel);
+        if (hud != null)
+        {
+            hud.rocketUI.SetFuel(fuel, maxFuel);
+        }
+    }
+
+    private void SetMaxFuel(float value)
+    {
+        maxFuel = Mathf.Max(value, 0);
+        if (hud != null)
+        {
+            hud.rocketUI.SetFuel(fuel, maxFuel);
+        }
+    }
+
+    private void SetOxygen(float value)
+    {
+        oxygen = Mathf.Clamp(value, 0, maxOxygen);
+        if (hud != null)
+        {
+            hud.rocketUI.SetOxygen(oxygen, maxOxygen);
+        }
+    }
+
+    private void SetMaxOxygen(float value)
+    {
+        maxOxygen = Mathf.Max(value, 0);
+        if (hud != null)
+        {
+            hud.rocketUI.SetOxygen(oxygen, maxOxygen);
+        }
+    }
+    
+    private void SetThrustStrength(float value)
+    {
+        thrustStrength = Mathf.Clamp(value, minThrustStrength, maxThrustStrength);
+        if (hud != null)
+        {
+            hud.rocketUI.SetThrustStrength(thrustStrength, minThrustStrength, maxThrustStrength);
+        }
+    }
+
+    private void SetAltitude(float value)
+    {
+        if (hud != null)
+        {
+            hud.rocketUI.SetAltitude(Mathf.Clamp(value, 0, winAltitude), winAltitude);
+        }
+
+        if (value >= winAltitude)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
