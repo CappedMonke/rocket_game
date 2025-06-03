@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a66a1a645db16cc4a86da3a01ec99c69, type: 3}
-  m_Name: TankII
+  m_Name: JumpingBootsII
   m_EditorClassIdentifier: 
-  id: 1
-  displayName: Tank Mk. II
-  prerequisites: []
+  id: 3
+  displayName: Jumping Boots Mk. II
+  prerequisites:
+  - {fileID: 11400000, guid: dbc531c6e37d515408d4ecb8c0c779a1, type: 2}
   costItems:
   - {fileID: 11400000, guid: b192c8a1d2e11054f938cb4c2a113ffb, type: 2}
-  costAmounts: 05000000
+  costAmounts: 14000000

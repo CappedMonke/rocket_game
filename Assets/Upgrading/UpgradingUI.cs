@@ -63,13 +63,13 @@ public class UpgradingUI : MonoBehaviour
 
             // Check prerequisites
             bool canAfford = true;
-            if (upgrade.cost == null || upgrade.cost.Count == 0)
+            if (upgrade.GetCostDictionary() == null || upgrade.GetCostDictionary().Count == 0)
             {
                 canAfford = true;
             }
             else
             {
-                foreach (var cost in upgrade.cost)
+                foreach (var cost in upgrade.GetCostDictionary())
                 {
                     if (!_inventory.slots.Exists(slot => slot.item == cost.Key && slot.quantity >= cost.Value))
                     {
@@ -93,13 +93,13 @@ public class UpgradingUI : MonoBehaviour
         if (upgrade == null) return;
 
         bool canAfford = true;
-        if (upgrade.cost == null || upgrade.cost.Count == 0)
+        if (upgrade.GetCostDictionary() == null || upgrade.GetCostDictionary().Count == 0)
         {
             canAfford = true;
         }
         else
         {
-            foreach (var cost in upgrade.cost)
+            foreach (var cost in upgrade.GetCostDictionary())
             {
                 if (!_inventory.slots.Exists(slot => slot.item == cost.Key && slot.quantity >= cost.Value))
                 {
@@ -116,9 +116,9 @@ public class UpgradingUI : MonoBehaviour
         }
 
         // Deduct costs from inventory
-        if (upgrade.cost != null && upgrade.cost.Count > 0)
+        if (upgrade.GetCostDictionary() != null && upgrade.GetCostDictionary().Count > 0)
         {
-            foreach (var cost in upgrade.cost)
+            foreach (var cost in upgrade.GetCostDictionary())
             {
                 _inventory.RemoveItem(cost.Key, cost.Value);
             }
