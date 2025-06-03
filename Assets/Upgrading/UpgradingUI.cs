@@ -44,7 +44,7 @@ public class UpgradingUI : MonoBehaviour
 
         foreach (var slot in _inventory.slots)
         {
-            Label itemLabel = new Label($"{slot.item.itemName} x{slot.quantity + 1}"); // Don't know where the 1 gets lost lol
+            Label itemLabel = new Label($"{slot.item.BlockKind} x{slot.quantity + 1}"); // Don't know where the 1 gets lost lol
             itemLabel.AddToClassList("item-entry");
             _itemList.Add(itemLabel);
         }

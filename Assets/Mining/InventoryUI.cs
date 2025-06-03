@@ -39,8 +39,10 @@ public class InventoryUI : MonoBehaviour
         _itemList.Clear();
 
         foreach (var slot in _inventory.slots)
-        {
-            Label itemLabel = new Label($"{slot.item.itemName} x{slot.quantity + 1}"); // Don't know where the 1 gets lost lol
+        { 
+            Debug.Log(slot.item);
+            // Don't know where the 1 gets lost lol
+            Label itemLabel = new Label($"{slot.item.BlockKind} x{slot.quantity + 1}");
             itemLabel.AddToClassList("item-entry");
             _itemList.Add(itemLabel);
         }

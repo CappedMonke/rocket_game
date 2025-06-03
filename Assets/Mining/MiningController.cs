@@ -1,13 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class MiningController : MonoBehaviour
 {
     public float miningSpeed = 1.0f;
     public float maxMiningDistance = 2.0f;
 
-    private Vector3Int _currentMiningTarget;
+    private Vector2Int _currentMiningTarget;
     private Tilemap _tilemap;
     private float _miningTimer = 0.0f;
     private Inventory _inventory;
@@ -37,9 +38,9 @@ public class MiningController : MonoBehaviour
 
     private void HandleMining()
     {
-        Vector3Int targetTilePos = GetTargetTilePositionByMouse();
-        Vector3Int playerTilePos = _tilemap.WorldToCell(transform.position);
-        float distance = Vector3Int.Distance(targetTilePos, playerTilePos);
+        Vector2Int targetTilePos = GetTargetedTilePos();
+        Vector2Int playerTilePos = TerrainManager.Instance.WorldToTile(transform.position);
+        float distance = Vector2Int.Distance(targetTilePos, playerTilePos);
 
         if (distance > maxMiningDistance)
         {
@@ -62,37 +63,36 @@ public class MiningController : MonoBehaviour
         }
         else
         {
+            ResetMining();
             _currentMiningTarget = targetTilePos;
             _miningTimer = 0.0f;
         }
     }
 
-    private Vector3Int GetTargetTilePositionByMouse()
+    private Vector2Int GetTargetedTilePos()
     {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return _tilemap.WorldToCell(mouseWorldPos);
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return TerrainManager.Instance.WorldToTile(mouseWorldPos);
     }
 
-    private void MineTileIfExists(Vector3Int position)
+    private void MineTileIfExists(Vector2Int tilePos)
     {
-        Vector3Int adjustedPos = new Vector3Int(position.x, position.y, 0);
-        TileBase tile = _tilemap.GetTile(adjustedPos);
-        if (tile != null)
+        var block = TerrainManager.Instance.GetBlockKind(tilePos);
+        if (block != BlockKind.Air)
         {
-            _tilemap.SetTile(adjustedPos, null);
-            Debug.Log(tile.name);
-            _inventory.AddItemByTileName(tile.name);
+            TerrainManager.Instance.SetBlockKind(tilePos, BlockKind.Air);
+            _inventory.AddItemByBlockKind(block);
         }
     }
 
     // Currently just color highlighting, eventually replace with something pretty (animation?)
-    private void HighlightMiningTile(Vector3Int tilePos, float progress)
+    private void HighlightMiningTile(Vector2Int tilePos, float progress)
     {
-        Vector3Int adjustedPos = new Vector3Int(tilePos.x, tilePos.y, 0);
+        Vector3Int adjustedPos = new(tilePos.x, tilePos.y, 0);
         TileBase tile = _tilemap.GetTile(adjustedPos);
         if (tile != null)
         {
-            _tilemap.SetColor(tilePos, Color.Lerp(Color.blue, Color.gray, progress));
+            _tilemap.SetColor(adjustedPos, Color.Lerp(Color.blue, Color.gray, progress));
             if (progress >= 0.95f)
             {
                 _tilemap.SetColor(adjustedPos, Color.white);
@@ -103,9 +103,9 @@ public class MiningController : MonoBehaviour
     private void ResetMining()
     {
         _miningTimer = 0.0f;
-        if (_tilemap != null && _tilemap.GetTile(_currentMiningTarget) != null)
+        if (_tilemap != null && TerrainManager.Instance.GetBlockKind(_currentMiningTarget) != BlockKind.Air)
         {
-            _tilemap.SetColor(_currentMiningTarget, Color.white);
+            _tilemap.SetColor(new Vector3Int(_currentMiningTarget.x, _currentMiningTarget.y, 0), Color.white);
         }
     }
 }
