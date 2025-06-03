@@ -21,9 +21,9 @@ public enum BlockKind : int
 {
     Air,
     Stone,
-    Ore1,
-    Ore2,
-    Ore3,
+    Oxygenium,
+    Kerosene,
+    Gold,
 }
 
 [Serializable]
@@ -266,11 +266,10 @@ public sealed class TerrainGenerator
                 float oreNoise = noise2.GetNoise(worldX * 10, worldY * 10);
                 if (chunkData[x + Chunk.ChunkSizeX * y] == BlockKind.Stone && oreNoise > 0.9f)
                 {
-                    chunkData[x + Chunk.ChunkSizeX * y] = BlockKind.Ore1;
+                    chunkData[x + Chunk.ChunkSizeX * y] = BlockKind.Oxygenium;
                 }
             }
         }
-
 
         //TODO: This is where i would put surface detailing
 

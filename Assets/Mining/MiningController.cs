@@ -12,7 +12,6 @@ public class MiningController : MonoBehaviour
     private float _miningTimer = 0.0f;
     private Inventory _inventory;
 
-
     void Start()
     {
         _inventory = GetComponent<Inventory>();
@@ -81,6 +80,7 @@ public class MiningController : MonoBehaviour
         if (tile != null)
         {
             _tilemap.SetTile(adjustedPos, null);
+            Debug.Log(tile.name);
             _inventory.AddItemByTileName(tile.name);
         }
     }
@@ -88,8 +88,6 @@ public class MiningController : MonoBehaviour
     // Currently just color highlighting, eventually replace with something pretty (animation?)
     private void HighlightMiningTile(Vector3Int tilePos, float progress)
     {
-        Debug.Log(tilePos);
-        Debug.Log(_currentMiningTarget);
         Vector3Int adjustedPos = new Vector3Int(tilePos.x, tilePos.y, 0);
         TileBase tile = _tilemap.GetTile(adjustedPos);
         if (tile != null)

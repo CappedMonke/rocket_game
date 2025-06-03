@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c2c6ce1072795d418434ac888a46c45, type: 3}
-  m_Name: Ore2
+  m_Name: Gold
   m_EditorClassIdentifier: 
-  itemName: Ore 2
+  itemName: Gold
   icon: {fileID: 0}
   maxStack: 99
