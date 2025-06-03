@@ -39,9 +39,9 @@ public class InventoryUI : MonoBehaviour
             Debug.Log("Cheat code activated: Adding resources to inventory.");
             for(int i = 0; i < 99; i++)
             {
-                _inventory.AddItemByTileName("Gold");
-                _inventory.AddItemByTileName("Oxygenium");
-                _inventory.AddItemByTileName("Kerosene");
+                _inventory.AddItemByBlockKind(BlockKind.Gold);
+                _inventory.AddItemByBlockKind(BlockKind.Oxygenium);
+                _inventory.AddItemByBlockKind(BlockKind.Kerosene);
             }
             RefreshUI();
         }
