@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7749674468526702368}
   - component: {fileID: 7781361131380322960}
+  - component: {fileID: 4636612894285519806}
   m_Layer: 0
   m_Name: AstronautAndRocket
   m_TagString: Untagged
@@ -49,6 +50,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a35331572b60e4fa3cb8b4994169e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4636612894285519806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3720165756339031641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7dd279f2e04f414aaa60a19edd660be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: []
+  availableItems: []
 --- !u!1 &6806510264437085965
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,10 +338,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4354470688907346475, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1009569982350449701}
-    - targetCorrespondingSourceObject: {fileID: 4354470688907346475, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2107098091213631391}
+      addedObject: {fileID: 5820795558677213940}
   m_SourcePrefab: {fileID: 100100000, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
 --- !u!4 &366109891576454405 stripped
 Transform:
@@ -338,21 +350,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4354470688907346475, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
   m_PrefabInstance: {fileID: 3106502372646656910}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1009569982350449701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689610136763455909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7dd279f2e04f414aaa60a19edd660be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots: []
-  availableItems: []
---- !u!114 &2107098091213631391
+--- !u!114 &5820795558677213940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -365,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miningSpeed: 1
-  maxMiningDistance: 3
+  maxMiningDistance: 2
 --- !u!1001 &8248238084572899603
 PrefabInstance:
   m_ObjectHideFlags: 0
