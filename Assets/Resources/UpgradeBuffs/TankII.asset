@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeight: 0
   maxOxygenAstronaut: 175
-  maxOxygenRocket: 175
+  maxOxygenRocket: 350
   maxFuelRocket: 175
   maxSpeedRocket: 0
   accelerationRocket: 0

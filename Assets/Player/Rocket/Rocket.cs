@@ -10,7 +10,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private bool startWithControlsEnabled = true;
 
     [Header("Win Conditions")]
-    [SerializeField] private float winAltitude = 1000f;
+    [SerializeField] private float winAltitude = 1500f;
 
     [Header("Movement")]
     [SerializeField] private float thrustAcceleration = 1f;
