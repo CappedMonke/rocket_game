@@ -17,7 +17,7 @@ public class MiningController : MonoBehaviour
 
     void Start()
     {
-        _inventory = GetComponent<Inventory>();
+        _inventory = FindAnyObjectByType<Inventory>();
         _tilemap = FindAnyObjectByType<Tilemap>();
     }
 
@@ -82,9 +82,9 @@ public class MiningController : MonoBehaviour
         var block = TerrainManager.Instance.GetBlockKind(tilePos);
         if (block != BlockKind.Air)
         {
-            TerrainManager.Instance.SetBlockKind(tilePos, BlockKind.Air);
             _inventory.AddItemByBlockKind(block);
             audioSource.PlayOneShot(miningSound);
+            TerrainManager.Instance.SetBlockKind(tilePos, BlockKind.Air);
         }
     }
 

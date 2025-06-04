@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField]
-    public List<InventorySlot> slots = new();
+
+    public List<InventorySlot> slots;
 
     public List<ItemData> availableItems;
 
     void Awake()
     {
+        slots = new();
         availableItems = Resources.LoadAll<ItemData>("Items").ToList();
         Debug.Log($"Loaded {availableItems.Count} items.");
     }

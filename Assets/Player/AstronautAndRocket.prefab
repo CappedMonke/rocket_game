@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9cd04e68490c1b47b23f9ac78d4b6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oxygenPerOre: 60
+  fuelPerOre: 50
 --- !u!1001 &2428560471949560370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -401,9 +403,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4354470688907346475, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5125781456699218171}
-    - targetCorrespondingSourceObject: {fileID: 4354470688907346475, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3662553943102075345}
   m_SourcePrefab: {fileID: 100100000, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
 --- !u!4 &366109891576454405 stripped
 Transform:
@@ -443,20 +442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a35331572b60e4fa3cb8b4994169e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3662553943102075345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689610136763455909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7dd279f2e04f414aaa60a19edd660be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots: []
-  availableItems: []
 --- !u!82 &4405523620772775899 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 1603020980500962389, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
@@ -606,7 +591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5968024323516548233, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5968024323516548233, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: m_BackGroundColor.a
@@ -670,11 +655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8797268151400551640, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.020004272
+      value: 56.62001
       objectReference: {fileID: 0}
     - target: {fileID: 8797268151400551640, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 60.100014
+      value: -49.100002
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6361770736088503070, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
