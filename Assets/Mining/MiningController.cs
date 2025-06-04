@@ -16,6 +16,7 @@ public class MiningController : MonoBehaviour
     void Start()
     {
         _inventory = GetComponent<Inventory>();
+        Debug.Log(_inventory);
         _tilemap = FindAnyObjectByType<Tilemap>();
     }
 

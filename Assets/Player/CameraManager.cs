@@ -16,6 +16,7 @@ public class CameraManager : MonoBehaviour
         {
             rocketCam.Follow = FindFirstObjectByType<Rocket>().transform;
         }
+        SwitchToRocketCam();
     }
 
     public void SwitchToRocketCam()

@@ -1,10 +1,7 @@
 using System;
 using System.Buffers;
 using System.Threading;
-using TreeEditor;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.LightTransport;
 
 public struct TerrainGeneratorSettings
 {

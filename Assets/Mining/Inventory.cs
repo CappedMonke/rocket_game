@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
     public void AddItem(ItemData item, int amount)
     {
         int remainingToAdd = amount;
-
+        Debug.Log("Adding item " + item.BlockKind);
         foreach (var slot in slots)
         {
             if (slot.item == item && slot.quantity <= item.MaxStack)

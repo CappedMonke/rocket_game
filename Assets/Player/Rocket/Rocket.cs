@@ -453,14 +453,21 @@ public class Rocket : MonoBehaviour
                     rb2d.AddForce(Random.Range(explosionStrength.x, explosionStrength.y) * rb.linearVelocity.magnitude * vChildParent.normalized, ForceMode2D.Impulse);
                 }
             }
-
             Sprite.SetActive(false);
             rb.linearVelocity = Vector2.zero;
+            StartCoroutine(WaitAndRestart());
         }
         else
         {
             impulseSource.GenerateImpulse(damageShakeStrength * damage * damageAmountShakeMultiplier * Random.onUnitSphere);
         }
+    }
+
+    IEnumerator WaitAndRestart()
+    {
+        yield return new WaitForSecondsRealtime(10);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void StartFlyingSoundFadeout()
@@ -518,7 +525,7 @@ public class Rocket : MonoBehaviour
         SetMaxOxygen(Mathf.Max(maxOxygen, buff.maxOxygenRocket));
 
         thrustAcceleration = Mathf.Max(thrustAcceleration, buff.accelerationRocket);
-        
+
         maxSpeed = Mathf.Max(maxSpeed, buff.maxSpeedRocket);
     }
 
@@ -575,7 +582,7 @@ public class Rocket : MonoBehaviour
             hud.rocketUI.SetOxygen(oxygen, maxOxygen);
         }
     }
-    
+
     private void SetThrustStrength(float value)
     {
         thrustStrength = Mathf.Clamp(value, minThrustStrength, maxThrustStrength);
