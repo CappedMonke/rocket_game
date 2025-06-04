@@ -151,7 +151,7 @@ public class UpgradingUI : MonoBehaviour
             };
             oxygenButton.AddToClassList("resource-tank-entry");
 
-            bool hasOxygen = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Oxygenium && slot.quantity > 0);
+            bool hasOxygen = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Oxygenium && slot.quantity >= 0); // Check bug why the slot can be 0
             if (!hasOxygen)
             {
                 oxygenButton.SetEnabled(false);
@@ -173,7 +173,7 @@ public class UpgradingUI : MonoBehaviour
             };
             fuelButton.AddToClassList("resource-tank-entry");
 
-            bool hasFuel = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Kerosene && slot.quantity > 0);
+            bool hasFuel = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Kerosene && slot.quantity >= 0); // Check bug why the slot can be 0
             if (!hasFuel)
                 fuelButton.SetEnabled(false);
 
