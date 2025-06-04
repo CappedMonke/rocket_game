@@ -385,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6373713511804744810, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6373713511804744810, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
       propertyPath: startWithControlsEnabled
