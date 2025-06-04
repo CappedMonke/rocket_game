@@ -11,7 +11,7 @@ public class GameEndScreen : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        
     }
 
     private void OnEnable()
