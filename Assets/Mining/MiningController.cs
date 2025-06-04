@@ -7,6 +7,8 @@ public class MiningController : MonoBehaviour
 {
     public float miningSpeed = 1.0f;
     public float maxMiningDistance = 2.0f;
+    public AudioClip miningSound;
+    [SerializeField] private AudioSource audioSource;
 
     private Vector2Int _currentMiningTarget;
     private Tilemap _tilemap;
@@ -16,7 +18,6 @@ public class MiningController : MonoBehaviour
     void Start()
     {
         _inventory = GetComponent<Inventory>();
-        Debug.Log(_inventory);
         _tilemap = FindAnyObjectByType<Tilemap>();
     }
 
@@ -83,6 +84,7 @@ public class MiningController : MonoBehaviour
         {
             TerrainManager.Instance.SetBlockKind(tilePos, BlockKind.Air);
             _inventory.AddItemByBlockKind(block);
+            audioSource.PlayOneShot(miningSound);
         }
     }
 

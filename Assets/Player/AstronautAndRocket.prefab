@@ -238,11 +238,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5780318802914449691, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5780318802914449691, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.972
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5780318802914449691, guid: 57c27f61973bdafc3ad94f2a6577159e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -429,6 +429,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miningSpeed: 1
   maxMiningDistance: 3
+  miningSound: {fileID: 8300000, guid: 3051ea1decf00e3408cdb0377da26787, type: 3}
+  audioSource: {fileID: 4405523620772775899}
 --- !u!114 &5125781456699218171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,6 +457,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots: []
   availableItems: []
+--- !u!82 &4405523620772775899 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1603020980500962389, guid: b8e1de84660afecab90eb697b07d7e32, type: 3}
+  m_PrefabInstance: {fileID: 3106502372646656910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7106457099467054754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -547,11 +554,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1541154068866640274, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.047989
+      value: 0.020004272
       objectReference: {fileID: 0}
     - target: {fileID: 1541154068866640274, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8720016
+      value: 60.100014
       objectReference: {fileID: 0}
     - target: {fileID: 1856563603073219340, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: Priority.m_Value
@@ -663,11 +670,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8797268151400551640, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.047989
+      value: 0.020004272
       objectReference: {fileID: 0}
     - target: {fileID: 8797268151400551640, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8720016
+      value: 60.100014
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6361770736088503070, guid: 56e79da2bed0d41f0ac0de0cb54ab300, type: 3}
