@@ -126,7 +126,6 @@ public class Rocket : MonoBehaviour
 
             if (astronaut != null)
             {
-                astronaut.gameObject.SetActive(false);
                 isAstronautInside = true;
             }
 
