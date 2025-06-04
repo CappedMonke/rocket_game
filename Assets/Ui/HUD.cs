@@ -4,6 +4,7 @@ public class HUD : MonoBehaviour
 {
     public AstronautUI astronautUI;
     public RocketUI rocketUI;
+    public GameEndScreen gameEndScreen;
 
     private void Start()
     {
@@ -16,6 +17,16 @@ public class HUD : MonoBehaviour
         {
             Debug.LogError("RocketUI component not found in children.");
         }
+
+        if (gameEndScreen == null)
+        {
+            Debug.LogError("GameEndScreen component not found in children.");
+        }
+    }
+
+    private void OnEnable()
+    {
+        gameEndScreen.gameObject.SetActive(false);
     }
 
     public void EnableAstronautUI()

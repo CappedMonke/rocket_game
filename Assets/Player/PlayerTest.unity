@@ -129,15 +129,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.048
+      value: -2.941
       objectReference: {fileID: 0}
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8720016
+      value: -4.399002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1218518318977413856, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: startWithControlsEnabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_Name
@@ -181,6 +185,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7749674468526702368, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318001011918221284, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: startWithControlsEnabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

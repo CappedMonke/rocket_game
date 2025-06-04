@@ -271,9 +271,37 @@ public sealed class TerrainGenerator
             {
                 var worldX = x + ChunkPos.x * Chunk.ChunkSizeX;
                 float oreNoise = noise2.GetNoise(worldX * 10, worldY * 10);
-                if (chunkData[x + Chunk.ChunkSizeX * y] == BlockKind.Stone && oreNoise > 0.9f)
+                if (chunkData[x + Chunk.ChunkSizeX * y] == BlockKind.Stone && oreNoise > 0.8f)
                 {
                     chunkData[x + Chunk.ChunkSizeX * y] = BlockKind.Oxygenium;
+                }
+            }
+        }
+        noise2.SetSeed(_settings.Seed + 3);
+        for (int y = 0; y < Chunk.ChunkSizeY; y++)
+        {
+            var worldY = y + ChunkPos.y * Chunk.ChunkSizeY;
+            for (int x = 0; x < Chunk.ChunkSizeX; x++)
+            {
+                var worldX = x + ChunkPos.x * Chunk.ChunkSizeX;
+                float oreNoise = noise2.GetNoise(worldX * 3, worldY * 10);
+                if (chunkData[x + Chunk.ChunkSizeX * y] == BlockKind.Stone && oreNoise > 0.8f)
+                {
+                    chunkData[x + Chunk.ChunkSizeX * y] = BlockKind.Kerosene;
+                }
+            }
+        }
+        noise2.SetSeed(_settings.Seed + 3);
+        for (int y = 0; y < Chunk.ChunkSizeY; y++)
+        {
+            var worldY = y + ChunkPos.y * Chunk.ChunkSizeY;
+            for (int x = 0; x < Chunk.ChunkSizeX; x++)
+            {
+                var worldX = x + ChunkPos.x * Chunk.ChunkSizeX;
+                float oreNoise = noise2.GetNoise(worldX * 11, worldY * 13);
+                if (chunkData[x + Chunk.ChunkSizeX * y] == BlockKind.Stone && oreNoise > 0.9f)
+                {
+                    chunkData[x + Chunk.ChunkSizeX * y] = BlockKind.Gold;
                 }
             }
         }
