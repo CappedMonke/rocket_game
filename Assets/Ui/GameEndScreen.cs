@@ -24,7 +24,7 @@ public class GameEndScreen : MonoBehaviour
         root = GetComponent<UIDocument>().rootVisualElement;
 
         background = root.Q<VisualElement>("Background");
-        messageLabel = root.Q<Label>("GameEndMessage");
+        messageLabel = root.Q<Label>("Message");
         restartButton = root.Q<Button>("RestartButton");
         
         if (restartButton != null)

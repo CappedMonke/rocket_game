@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Astronaut : MonoBehaviour
 {
@@ -174,7 +173,7 @@ public class Astronaut : MonoBehaviour
 
         if (oxygen <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            hud.gameEndScreen.ShowGameEndScreen("Game Over! You ran out of oxygen!");
         }
     }
 

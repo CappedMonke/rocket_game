@@ -2,7 +2,6 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -455,19 +454,12 @@ public class Rocket : MonoBehaviour
             }
             Sprite.SetActive(false);
             rb.linearVelocity = Vector2.zero;
-            StartCoroutine(WaitAndRestart());
+            hud.gameEndScreen.ShowGameEndScreen("Game Over! Rocket Destroyed!");
         }
         else
         {
             impulseSource.GenerateImpulse(damageShakeStrength * damage * damageAmountShakeMultiplier * Random.onUnitSphere);
         }
-    }
-
-    IEnumerator WaitAndRestart()
-    {
-        yield return new WaitForSecondsRealtime(10);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void StartFlyingSoundFadeout()
@@ -601,7 +593,7 @@ public class Rocket : MonoBehaviour
 
         if (value >= winAltitude)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            hud.gameEndScreen.ShowGameEndScreen("Game won! You reached the win altitude!");
         }
     }
 }

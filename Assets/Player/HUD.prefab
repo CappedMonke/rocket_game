@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c85ebec659d2408f38faf7bef6ebeff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 2
 --- !u!1 &1188127396875575847
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   astronautUI: {fileID: 1177541662000133524}
   rocketUI: {fileID: 4038055213220495696}
+  gameEndScreen: {fileID: 7352461680338794515}
 --- !u!1 &9108025773592333997
 GameObject:
   m_ObjectHideFlags: 0
