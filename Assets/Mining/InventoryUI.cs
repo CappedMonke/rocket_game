@@ -64,8 +64,7 @@ public class InventoryUI : MonoBehaviour
         foreach (var slot in _inventory.slots)
         { 
             Debug.Log(slot.item);
-            // Don't know where the 1 gets lost lol
-            Label itemLabel = new Label($"{slot.item.BlockKind} x{slot.quantity + 1}");
+            Label itemLabel = new Label($"{slot.item.BlockKind} x{slot.quantity}");
             itemLabel.AddToClassList("item-entry");
             _itemList.Add(itemLabel);
         }

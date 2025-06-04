@@ -60,7 +60,7 @@ public class UpgradingUI : MonoBehaviour
 
         foreach (var slot in _inventory.slots)
         {
-            Label itemLabel = new Label($"{slot.item.BlockKind} x{slot.quantity + 1}"); // Don't know where the 1 gets lost lol
+            Label itemLabel = new Label($"{slot.item.BlockKind} x{slot.quantity}");
             itemLabel.AddToClassList("item-entry");
             _itemList.Add(itemLabel);
         }
@@ -151,7 +151,7 @@ public class UpgradingUI : MonoBehaviour
             };
             oxygenButton.AddToClassList("resource-tank-entry");
 
-            bool hasOxygen = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Oxygenium && slot.quantity >= 0); // Check bug why the slot can be 0
+            bool hasOxygen = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Oxygenium && slot.quantity > 0);
             if (!hasOxygen)
             {
                 oxygenButton.SetEnabled(false);
@@ -173,7 +173,7 @@ public class UpgradingUI : MonoBehaviour
             };
             fuelButton.AddToClassList("resource-tank-entry");
 
-            bool hasFuel = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Kerosene && slot.quantity >= 0); // Check bug why the slot can be 0
+            bool hasFuel = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Kerosene && slot.quantity > 0);
             if (!hasFuel)
                 fuelButton.SetEnabled(false);
 

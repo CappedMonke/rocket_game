@@ -103,5 +103,9 @@ public class InventorySlot
         {
             this.quantity = item.MaxStack;
         }
+        else
+        {
+            this.quantity = quantity;
+        }
     }
 }
