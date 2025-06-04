@@ -16,5 +16,5 @@ MonoBehaviour:
   maxOxygenAstronaut: 0
   maxOxygenRocket: 0
   maxFuelRocket: 0
-  maxSpeedRocket: 1.7
-  accelerationRocket: 1.7
+  maxSpeedRocket: 1.8
+  accelerationRocket: 1.8
