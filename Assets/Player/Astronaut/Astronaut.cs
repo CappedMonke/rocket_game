@@ -51,6 +51,7 @@ public class Astronaut : MonoBehaviour
         {
             controls.Astronaut.Disable();
         }
+        gameObject.SetActive(false);
     }
 
     private void Start()
