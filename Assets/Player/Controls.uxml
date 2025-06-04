@@ -1,0 +1,21 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Player/Controls.uss?fileID=7433441132597879392&amp;guid=85b9b87b211c52625924cb883211df7e&amp;type=3#Controls" />
+    <ui:VisualElement style="flex-grow: 1; align-content: flex-end; align-self: flex-start; align-items: flex-start; flex-direction: column-reverse; margin-top: 24px; margin-right: 24px; margin-bottom: 24px; margin-left: 24px;">
+        <ui:VisualElement style="flex-grow: 0; margin-top: 12px;">
+            <ui:VisualElement style="flex-grow: 0; -unity-text-align: upper-left; align-items: flex-start; align-content: flex-start;">
+                <ui:Label text="Rocket" class="ControlsLabel" style="-unity-font-style: bold; margin-bottom: 4px;" />
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                    <ui:Label text="A/D&#10;W/S&#10;Space&#10;E&#10;" class="ControlsLabel" />
+                    <ui:Label text="Rotate&#10;Adjust Thrust&#10;Thrust&#10;Exit Rocket" class="ControlsLabel" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0;">
+            <ui:Label text="Player" class="ControlsLabel" style="-unity-font-style: bold; margin-bottom: 4px;" />
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                <ui:Label text="A/D&#10;Space&#10;E&#10;Left Click" class="ControlsLabel" />
+                <ui:Label text="Move&#10;Jump&#10;Enter Rocket&#10;Mine" class="ControlsLabel" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

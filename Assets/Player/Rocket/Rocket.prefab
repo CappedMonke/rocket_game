@@ -91,7 +91,8 @@ MonoBehaviour:
   thrustAcceleration: 1200
   maxSpeed: 50
   rotationSpeed: 50
-  minThrustStrength: 0.2
+  minThrustStrength: 0.5
+  thrustStrength: 1
   thrustAdjustmentSpeed: 0.2
   liftoffCooldown: 1
   rotationTimeoutAfterLiftoff: 0.15
@@ -99,8 +100,10 @@ MonoBehaviour:
   maxHealth: 100
   fuel: 100
   maxFuel: 100
+  fuelDepletionRate: 1
   oxygen: 100
   maxOxygen: 100
+  playerOxygenRefillSpeed: 1
   impactForceDamageMultiplier: 5
   impactAngleDamageMultiplier: 0.2
   perfectLandingMaxAngle: 0.8
