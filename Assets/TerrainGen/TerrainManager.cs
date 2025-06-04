@@ -89,6 +89,12 @@ public sealed class TerrainManager : MonoSingleton<TerrainManager>
         _generatedChunks.AddOrUpdate(chunkPos, _ => { return chunk; }, (_, _) => { return chunk; });
     }
 
+    public void DeleteAll()
+    {
+        _generatedChunks.Clear();
+        _loadedChunks.Clear();
+    }
+
     /// <summary>
     /// Loads an area around the specified position
     /// </summary>

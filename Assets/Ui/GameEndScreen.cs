@@ -11,7 +11,7 @@ public class GameEndScreen : MonoBehaviour
 
     private void Awake()
     {
-        
+
     }
 
     private void OnEnable()
@@ -26,7 +26,7 @@ public class GameEndScreen : MonoBehaviour
         background = root.Q<VisualElement>("Background");
         messageLabel = root.Q<Label>("Message");
         restartButton = root.Q<Button>("RestartButton");
-        
+
         if (restartButton != null)
         {
             restartButton.clicked += OnRestartButtonClicked;
@@ -68,6 +68,7 @@ public class GameEndScreen : MonoBehaviour
 
     private void OnRestartButtonClicked()
     {
+        TerrainManager.Instance.DeleteAll();
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }
