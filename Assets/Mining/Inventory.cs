@@ -90,7 +90,6 @@ public class Inventory : MonoBehaviour
 
 }
 
-[System.Serializable]
 public class InventorySlot
 {
     public ItemData item;
