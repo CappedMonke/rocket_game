@@ -92,6 +92,20 @@ public class Astronaut : MonoBehaviour
     private void Update()
     {
         SetOxygen(oxygen - oxygenDepletionRate * Time.deltaTime);
+
+        if (oxygen < 0.15f * maxOxygen)
+        {
+            if (heavyBreathingSound != null && !GetComponent<AudioSource>().isPlaying)
+            {
+            var audioSource = GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.clip = heavyBreathingSound;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+            }
+        }
     }
 
     public void EnterRocket()
