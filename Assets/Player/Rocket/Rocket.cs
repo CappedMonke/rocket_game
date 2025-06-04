@@ -529,6 +529,16 @@ public class Rocket : MonoBehaviour
         maxSpeed = Mathf.Max(maxSpeed, buff.maxSpeedRocket);
     }
 
+    public void RefillFuel(float amount)
+    {
+        fuel = Mathf.Max(fuel + amount, maxFuel);
+    }
+
+    public void RefillOxygen(float amount)
+    {
+        oxygen = Mathf.Max(oxygen + amount, maxOxygen);
+    }
+
     private void SetHealth(int value)
     {
         health = Mathf.Clamp(value, 0, maxHealth);
