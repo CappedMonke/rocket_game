@@ -523,12 +523,12 @@ public class Rocket : MonoBehaviour
 
     public void RefillFuel(float amount)
     {
-        fuel = Mathf.Max(fuel + amount, maxFuel);
+        SetFuel(fuel + amount);
     }
 
     public void RefillOxygen(float amount)
     {
-        oxygen = Mathf.Max(oxygen + amount, maxOxygen);
+        SetOxygen(oxygen + amount);
     }
 
     private void SetHealth(int value)
