@@ -5,8 +5,8 @@
             <ui:VisualElement style="flex-grow: 0; -unity-text-align: upper-left; align-items: flex-start; align-content: flex-start;">
                 <ui:Label text="Rocket" class="ControlsLabel" style="-unity-font-style: bold; margin-bottom: 4px;" />
                 <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-                    <ui:Label text="A/D&#10;W/S&#10;Space&#10;E&#10;" class="ControlsLabel" />
-                    <ui:Label text="Rotate&#10;Adjust Thrust&#10;Thrust&#10;Exit Rocket" class="ControlsLabel" />
+                    <ui:Label text="A/D&#10;W/S&#10;Space&#10;E&#10;I&#10;" class="ControlsLabel" />
+                    <ui:Label text="Rotate&#10;Adjust Thrust&#10;Thrust&#10;Exit Rocket&#10;Open Inventory" class="ControlsLabel" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
