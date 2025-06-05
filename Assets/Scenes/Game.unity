@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -49.100002
       objectReference: {fileID: 0}
+    - target: {fileID: 1218518318977413856, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: impactForceDamageMultiplier
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: orthographic size
       value: 2

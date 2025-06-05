@@ -365,45 +365,42 @@ public class Rocket : MonoBehaviour
         float angle = Vector2.Angle(landingNormal, transform.up);
 
         bool impactForceTooHigh = impactForce > safeLandingMaxImpactForce;
+        Debug.Log(impactForce);
 
         if (angle < perfectLandingMaxAngle && !impactForceTooHigh && isFlying) // Perfect landing
         {
-            if (astronaut != null)
-            {
+            if (astronaut != null) {
                 astronaut.ApplyPerfectLandingBoost();
             }
             Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
             impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
             audioSource.PlayOneShot(PerfectLandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
-        }
-        else if (angle < safeLandingMaxAngle && !impactForceTooHigh && isFlying) // Safe landing
-        {
+        } else if (angle < safeLandingMaxAngle && !impactForceTooHigh && isFlying) // Safe landing
+          {
             Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
             impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
             audioSource.PlayOneShot(LandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
-        }
-        else if (angle < safeLandingMaxAngle && impactForceTooHigh && isFlying) // Crash landing
-        {
-            DamageEffect.transform.position = collision.contacts[0].point;
-            DamageEffect.Play();
-            audioSource.PlayOneShot(DamageSound);
-            float forceDamage = impactForce * impactForceDamageMultiplier;
+        } else {
+            impactForce -= safeLandingMaxImpactForce;
+            float forceDamage = Mathf.Max(1,impactForce * impactForce * impactForceDamageMultiplier);
             float angleDamage = angle * impactAngleDamageMultiplier;
             int totalDamage = Mathf.RoundToInt(forceDamage + angleDamage);
             TakeDamage(totalDamage);
-            StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
-        }
-        else // Crash
-        {
-            DamageEffect.transform.position = collision.contacts[0].point;
-            DamageEffect.Play();
-            audioSource.PlayOneShot(DamageSound);
-            float forceDamage = impactForce * impactForceDamageMultiplier;
-            float angleDamage = angle * impactAngleDamageMultiplier;
-            int totalDamage = Mathf.RoundToInt(forceDamage + angleDamage);
-            TakeDamage(totalDamage);
+            Debug.Log(totalDamage);
+            if (angle < safeLandingMaxAngle && impactForceTooHigh && isFlying) // Crash landing
+            {
+                DamageEffect.transform.position = collision.contacts[0].point;
+                DamageEffect.Play();
+                audioSource.PlayOneShot(DamageSound);
+                StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
+            } else // Crash
+              {
+                DamageEffect.transform.position = collision.contacts[0].point;
+                DamageEffect.Play();
+                audioSource.PlayOneShot(DamageSound);
+            }
         }
     }
 
