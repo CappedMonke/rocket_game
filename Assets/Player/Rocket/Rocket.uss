@@ -37,10 +37,10 @@
     width: auto;
     flex-grow: 1;
     background-image: url("project://database/Assets/Ui/UiElements.png?fileID=-5008134335625873361&guid=816d7d5ddefad52818dbd5fe00365925&type=3#UiElements_5");
-    -unity-slice-left: 1;
-    -unity-slice-top: 1;
-    -unity-slice-right: 1;
-    -unity-slice-bottom: 1;
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
     -unity-slice-scale: 2px;
     flex-shrink: 0;
     height: 100%;
