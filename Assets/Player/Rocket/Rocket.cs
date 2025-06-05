@@ -127,7 +127,6 @@ public class Rocket : MonoBehaviour
             if (astronaut != null)
             {
                 isAstronautInside = true;
-                astronaut.gameObject.SetActive(false);
             }
 
             if (cameraManager != null)
@@ -143,6 +142,8 @@ public class Rocket : MonoBehaviour
 
     private void Start()
     {
+
+        astronaut.gameObject.SetActive(false);
         hud = FindFirstObjectByType<HUD>();
 
         if (hud != null && startWithControlsEnabled)

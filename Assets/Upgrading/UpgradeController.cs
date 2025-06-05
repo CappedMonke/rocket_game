@@ -15,11 +15,15 @@ public class UpgradeController : MonoBehaviour
 
     public List<Upgrade> availableUpgrades;
 
+    private Astronaut astronaut;
+    private Rocket rocket;
+
     void Awake()
     {
         availableUpgrades = Resources.LoadAll<Upgrade>("Upgrades").ToList();
         Debug.Log($"Loaded {availableUpgrades.Count} upgrades.");
-
+        astronaut = FindFirstObjectByType<Astronaut>();
+        rocket = FindFirstObjectByType<Rocket>();
         // Load upgrades from Save eventually
     }
 
@@ -32,7 +36,6 @@ public class UpgradeController : MonoBehaviour
     {
         if (_hasQueuedAstronautBuff)
         {
-            Astronaut astronaut = FindFirstObjectByType<Astronaut>();
             if (astronaut != null)
             {
                 astronaut.ApplyStats(_queuedAstronautBuff);
@@ -94,8 +97,6 @@ public class UpgradeController : MonoBehaviour
             }
         }
 
-        Astronaut astronaut = FindFirstObjectByType<Astronaut>();
-        Rocket rocket = FindFirstObjectByType<Rocket>();
         if (astronaut != null)
         {
             astronaut.ApplyStats(totalBuff);
