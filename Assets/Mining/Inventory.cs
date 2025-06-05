@@ -19,6 +19,7 @@ public class Inventory : MonoBehaviour
     public void AddItemByBlockKind(BlockKind blockKind, int amount = 1)
     {
         ItemData item = availableItems.Find(i => i.BlockKind == blockKind);
+        if (blockKind == BlockKind.Stone) return;
         if (item == null)
         {
             Debug.LogWarning($"No item found for: {blockKind} !");

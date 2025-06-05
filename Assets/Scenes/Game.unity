@@ -213,19 +213,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.020004272
+      value: 56.62001
       objectReference: {fileID: 0}
     - target: {fileID: 603917826126167499, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 60.100014
+      value: -49.100002
       objectReference: {fileID: 0}
     - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_Name
       value: AstronautAndRocket
+      objectReference: {fileID: 0}
+    - target: {fileID: 7427816376718409857, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.0200043
+      objectReference: {fileID: 0}
+    - target: {fileID: 7427816376718409857, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -44.9
       objectReference: {fileID: 0}
     - target: {fileID: 7749674468526702368, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
@@ -266,6 +274,14 @@ PrefabInstance:
     - target: {fileID: 7749674468526702368, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8179710869905724201, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8179710869905724201, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -45
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3662553943102075345, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
