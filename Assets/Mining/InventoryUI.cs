@@ -22,6 +22,10 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape)) && _root.style.display == DisplayStyle.Flex) {
+            _root.style.display = DisplayStyle.None;
+            RefreshUI();
+        }
         if (Input.GetKeyDown(KeyCode.I) && !RocketControlsEnabled())
         {
             bool isVisible = _root.style.display != DisplayStyle.None;
