@@ -365,7 +365,6 @@ public class Rocket : MonoBehaviour
         float angle = Vector2.Angle(landingNormal, transform.up);
 
         bool impactForceTooHigh = impactForce > safeLandingMaxImpactForce;
-        Debug.Log(impactForce);
 
         if (angle < perfectLandingMaxAngle && !impactForceTooHigh && isFlying) // Perfect landing
         {
@@ -374,12 +373,14 @@ public class Rocket : MonoBehaviour
             }
             Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
             impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
+            audioSource.volume = 1;
             audioSource.PlayOneShot(PerfectLandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
         } else if (angle < safeLandingMaxAngle && !impactForceTooHigh && isFlying) // Safe landing
           {
             Vector3 shakeDirection = new Vector3(Random.Range(-0.1f, 0.1f), 1f, Random.Range(-0.1f, 0.1f)).normalized;
             impulseSource.GenerateImpulse(landingShakeStrength * shakeDirection);
+            audioSource.volume = Mathf.Clamp(impactForce, 0, safeLandingMaxImpactForce);
             audioSource.PlayOneShot(LandingSound);
             StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
         } else {
@@ -388,17 +389,18 @@ public class Rocket : MonoBehaviour
             float angleDamage = angle * impactAngleDamageMultiplier;
             int totalDamage = Mathf.RoundToInt(forceDamage + angleDamage);
             TakeDamage(totalDamage);
-            Debug.Log(totalDamage);
             if (angle < safeLandingMaxAngle && impactForceTooHigh && isFlying) // Crash landing
             {
                 DamageEffect.transform.position = collision.contacts[0].point;
                 DamageEffect.Play();
+                audioSource.volume = Mathf.Clamp(impactForce / 4, 0, 1);
                 audioSource.PlayOneShot(DamageSound);
                 StartCoroutine(DisableAndEnableFlight(liftoffCooldown));
             } else // Crash
               {
                 DamageEffect.transform.position = collision.contacts[0].point;
                 DamageEffect.Play();
+                audioSource.volume = 1;
                 audioSource.PlayOneShot(DamageSound);
             }
         }
