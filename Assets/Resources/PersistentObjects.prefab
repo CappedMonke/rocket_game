@@ -57,16 +57,16 @@ MonoBehaviour:
     - {fileID: 0}
   - BlockKind: 1
     Tiles:
-    - {fileID: 11400000, guid: a92d7322e09c984449d412d509abec37, type: 2}
+    - {fileID: 11400000, guid: 8410e87e8ba9ef844b1bd4ca13d0e01b, type: 2}
   - BlockKind: 2
     Tiles:
-    - {fileID: 11400000, guid: daf730ec7d7bcbc4e80bc5dea3081c3f, type: 2}
+    - {fileID: 11400000, guid: d80459929a0f62640a77be341e52c7b4, type: 2}
   - BlockKind: 3
     Tiles:
-    - {fileID: 11400000, guid: bd9e915414b4f6045a368aa10ae8415d, type: 2}
+    - {fileID: 11400000, guid: 4221b958d6cff8640b64284beecfca03, type: 2}
   - BlockKind: 4
     Tiles:
-    - {fileID: 11400000, guid: 7b23997562b848e4188eeade45fb827b, type: 2}
+    - {fileID: 11400000, guid: 3eab75f064404c74f9bd151f9ebed50c, type: 2}
   GlobalSeed: 1337
 --- !u!1839735485 &7510569476627807561
 Tilemap:
