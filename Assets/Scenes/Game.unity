@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AstronautAndRocket
       objectReference: {fileID: 0}
+    - target: {fileID: 4975947651648961942, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7427816376718409857, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.0200043

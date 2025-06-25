@@ -1,0 +1,4 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="compass-container" style="flex-grow: 1; width: 20%; height: 20%; max-height: 10%; max-width: 10%; align-self: flex-end;" />
+    <ui:Label text="Label" name="distance-label" style="align-self: flex-end; margin-right: 7%; -unity-font-definition: resource(&apos;PressStart2P-vaV7&apos;); color: rgb(233, 233, 233);" />
+</ui:UXML>
