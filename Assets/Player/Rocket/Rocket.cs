@@ -244,7 +244,7 @@ public class Rocket : MonoBehaviour
 
             rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxSpeed);
         }
-
+        
         if (canFly && isThrusting && !wasThrusting)
         {
             StopFlyingSoundFadeout();
@@ -265,7 +265,27 @@ public class Rocket : MonoBehaviour
             flyingSoundSource.volume = flyingSoundDefaultVolume * thrustStrength;
         }
 
+        if (!canRotate)
+        {
+            StartCoroutine(RotateUp(rotationTimeoutAfterLiftoff));
+        }
+
         wasThrusting = isThrusting;
+    }
+
+    private IEnumerator RotateUp(float duration)
+    {
+        float startRotation = rb.rotation;
+        float timeElapsed = 0f;
+
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            float t = timeElapsed / duration;
+            float newRotation = Mathf.LerpAngle(startRotation, 0f, t);
+            rb.MoveRotation(newRotation);
+            yield return null;
+        }
     }
 
     private IEnumerator DisableRotationTemporarily(float delay)
