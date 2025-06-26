@@ -136,21 +136,80 @@ struct SamplingParams2D
 
 public sealed class TerrainGenerator
 {
-    readonly BiomeSettings TestBiome = new BiomeSettings(
+    readonly BiomeSettings[] biomes = new BiomeSettings[]
+{
+    // Test Biome (Original)
+    new BiomeSettings(
         new SamplingParams1D(10, 0, 10, 0),
         new SamplingParams1D(10, 0, 32, 0),
-        new SamplingParams2D(new(3, 3), new(0, 0), 0.25f, 0.75f),
-        new SamplingParams2D(new(1, 1), new(0, 0), 0.5f, 0.5f),
-        new SamplingParams2D(new(4, 4), new(0, 0), 1, 0),
-        new SamplingParams2D(new(3, 3), new(0, 0), 0.5f, 0.5f));
-
-    readonly BiomeSettings TestBiomeFar = new BiomeSettings(
+        new SamplingParams2D(new Vector2(3, 3), new Vector2(0, 0), 0.25f, 0.75f),
+        new SamplingParams2D(new Vector2(1, 1), new Vector2(0, 0), 0.5f, 0.5f),
+        new SamplingParams2D(new Vector2(4, 4), new Vector2(0, 0), 1, 0),
+        new SamplingParams2D(new Vector2(3, 3), new Vector2(0, 0), 0.5f, 0.5f)),
+    
+    // Test Biome Far (Original)
+    new BiomeSettings(
         new SamplingParams1D(5, 0, 10, 0),
         new SamplingParams1D(3, 0, 20, 0),
-        new SamplingParams2D(new(3, 3), new(0, 0), 0.25f, 0.75f),
-        new SamplingParams2D(new(1, 1), new(0, 0), 0.5f, 0.4f),
-        new SamplingParams2D(new(4, 4), new(0, 0), 0.4f, 0),
-        new SamplingParams2D(new(3, 3), new(0, 0), 0.5f, 0.5f));
+        new SamplingParams2D(new Vector2(3, 3), new Vector2(0, 0), 0.25f, 0.75f),
+        new SamplingParams2D(new Vector2(1, 1), new Vector2(0, 0), 0.5f, 0.4f),
+        new SamplingParams2D(new Vector2(4, 4), new Vector2(0, 0), 0.4f, 0),
+        new SamplingParams2D(new Vector2(3, 3), new Vector2(0, 0), 0.5f, 0.5f)),
+    
+    // Desert Biome
+    new BiomeSettings(
+        new SamplingParams1D(15, 2, 5, -5),
+        new SamplingParams1D(8, 1, 25, -3),
+        new SamplingParams2D(new Vector2(2.5f, 2.5f), new Vector2(1, 1), 0.15f, 0.85f),
+        new SamplingParams2D(new Vector2(0.8f, 0.8f), new Vector2(0.5f, 0.5f), 0.3f, 0.6f),
+        new SamplingParams2D(new Vector2(3, 3), new Vector2(0.2f, 0.2f), 0.8f, 0.1f),
+        new SamplingParams2D(new Vector2(2.8f, 2.8f), new Vector2(0.1f, 0.1f), 0.4f, 0.4f)),
+    
+    // Mountain Biome
+    new BiomeSettings(
+        new SamplingParams1D(20, 5, 25, 15),
+        new SamplingParams1D(12, 3, 50, 20),
+        new SamplingParams2D(new Vector2(4, 4), new Vector2(2, 2), 0.4f, 0.6f),
+        new SamplingParams2D(new Vector2(1.2f, 1.2f), new Vector2(1, 1), 0.7f, 0.3f),
+        new SamplingParams2D(new Vector2(5, 5), new Vector2(1, 1), 1.2f, 0.2f),
+        new SamplingParams2D(new Vector2(3.5f, 3.5f), new Vector2(0.5f, 0.5f), 0.6f, 0.3f)),
+    
+    // Forest Biome
+    new BiomeSettings(
+        new SamplingParams1D(12, -2, 8, 2),
+        new SamplingParams1D(6, -1, 30, 5),
+        new SamplingParams2D(new Vector2(2.2f, 2.2f), new Vector2(0.3f, 0.3f), 0.2f, 0.8f),
+        new SamplingParams2D(new Vector2(0.9f, 0.9f), new Vector2(0.2f, 0.2f), 0.45f, 0.55f),
+        new SamplingParams2D(new Vector2(3.5f, 3.5f), new Vector2(0.4f, 0.4f), 0.9f, 0.05f),
+        new SamplingParams2D(new Vector2(2.5f, 2.5f), new Vector2(0.2f, 0.2f), 0.35f, 0.45f)),
+    
+    // Tundra Biome
+    new BiomeSettings(
+        new SamplingParams1D(8, -5, 12, -8),
+        new SamplingParams1D(4, -3, 28, -5),
+        new SamplingParams2D(new Vector2(3.2f, 3.2f), new Vector2(-0.5f, -0.5f), 0.18f, 0.82f),
+        new SamplingParams2D(new Vector2(1.1f, 1.1f), new Vector2(-0.2f, -0.2f), 0.35f, 0.65f),
+        new SamplingParams2D(new Vector2(4.2f, 4.2f), new Vector2(-0.3f, -0.3f), 0.75f, 0.1f),
+        new SamplingParams2D(new Vector2(3.0f, 3.0f), new Vector2(-0.1f, -0.1f), 0.3f, 0.5f)),
+    
+    // Ocean Biome
+    new BiomeSettings(
+        new SamplingParams1D(5, -8, 15, -10),
+        new SamplingParams1D(3, -5, 22, -8),
+        new SamplingParams2D(new Vector2(1.8f, 1.8f), new Vector2(0.4f, 0.4f), 0.12f, 0.88f),
+        new SamplingParams2D(new Vector2(0.7f, 0.7f), new Vector2(0.3f, 0.3f), 0.25f, 0.75f),
+        new SamplingParams2D(new Vector2(2.8f, 2.8f), new Vector2(0.5f, 0.5f), 0.6f, 0.3f),
+        new SamplingParams2D(new Vector2(2.2f, 2.2f), new Vector2(0.3f, 0.3f), 0.25f, 0.6f)),
+    
+    // Volcanic Biome
+    new BiomeSettings(
+        new SamplingParams1D(18, 10, 22, 12),
+        new SamplingParams1D(9, 5, 45, 15),
+        new SamplingParams2D(new Vector2(3.8f, 3.8f), new Vector2(1.5f, 1.5f), 0.35f, 0.65f),
+        new SamplingParams2D(new Vector2(1.3f, 1.3f), new Vector2(0.8f, 0.8f), 0.65f, 0.35f),
+        new SamplingParams2D(new Vector2(4.5f, 4.5f), new Vector2(1.2f, 1.2f), 1.5f, 0.3f),
+        new SamplingParams2D(new Vector2(3.2f, 3.2f), new Vector2(0.7f, 0.7f), 0.55f, 0.4f))
+};
 
 
     readonly ThreadLocal<FastNoiseLite> noise = new ThreadLocal<FastNoiseLite>(() =>
@@ -168,12 +227,68 @@ public sealed class TerrainGenerator
         _settings = settings;
     }
 
+    // Define biome positions in the world (adjust these coordinates as needed)
+    readonly Vector2[] biomePositions = new Vector2[]
+    {
+    new Vector2(0, 0),        // TestBiome (index 0)
+    new Vector2(1000, 0),      // TestBiomeFar (index 1)
+    new Vector2(0, 100),      // Desert (index 2)
+    new Vector2(-500, 0),     // Mountain (index 3)
+    new Vector2(0, -300),     // Forest (index 4)
+    new Vector2(200, 400),     // Tundra (index 5)
+    new Vector2(-200, -300),   // Ocean (index 6)
+    new Vector2(-300, 100)     // Volcanic (index 7)
+    };
+
     BiomeSettings GetBiomeSettings(Vector2 samplePos)
     {
-        var dist = samplePos.magnitude / 1500;
-        //TODO: Interpolate with nearby biomes
-        //TODO: Add more biome types
-        return BiomeSettings.Lerp(TestBiome, TestBiomeFar, dist);
+        // Handle edge cases
+        if (biomes.Length == 0) return default;
+        if (biomes.Length == 1) return biomes[0];
+
+        // Find the two closest biomes
+        int closestIndex = 0;
+        int secondClosestIndex = 1;
+        float closestDist = (biomePositions[0] - samplePos).sqrMagnitude;
+        float secondClosestDist = (biomePositions[1] - samplePos).sqrMagnitude;
+
+        // Ensure proper initial ordering
+        if (closestDist > secondClosestDist)
+        {
+            (closestIndex, secondClosestIndex) = (secondClosestIndex, closestIndex);
+            (closestDist, secondClosestDist) = (secondClosestDist, closestDist);
+        }
+
+        // Find actual closest biomes
+        for (int i = 2; i < biomePositions.Length; i++)
+        {
+            float dist = (biomePositions[i] - samplePos).sqrMagnitude;
+            if (dist < closestDist)
+            {
+                secondClosestIndex = closestIndex;
+                secondClosestDist = closestDist;
+                closestIndex = i;
+                closestDist = dist;
+            }
+            else if (dist < secondClosestDist)
+            {
+                secondClosestIndex = i;
+                secondClosestDist = dist;
+            }
+        }
+
+        // Convert to actual distances
+        float d1 = Mathf.Sqrt(closestDist);
+        float d2 = Mathf.Sqrt(secondClosestDist);
+
+        // Calculate interpolation factor (0 = closest biome, 1 = second closest)
+        float t = d1 / (d1 + d2);
+
+        return BiomeSettings.Lerp(
+            biomes[closestIndex],
+            biomes[secondClosestIndex],
+            t
+        );
     }
 
     float GetNoise(FastNoiseLite noise, Vector2 samplePos, SamplingParams2D samplingParams)
