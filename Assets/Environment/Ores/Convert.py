@@ -1,58 +1,63 @@
-import yaml
-import re
-
-def extract_physics_shapes(content):
-    """Extract all physicsShape entries from YAML content."""
-    physics_shapes = []
-    pattern = re.compile(r'physicsShape:\s*\n(?:\s*-\s*-\s*{x:.*?}\n?)+', re.MULTILINE)
-
-    for match in pattern.finditer(content):
-        yaml_block = match.group(0)
-        parsed = yaml.safe_load(yaml_block)
-        physics_shapes.append(parsed['physicsShape'])
-
-    return physics_shapes
-
-def replace_empty_physics_shapes(b_content, shapes):
-    """Replace empty physicsShape: [] entries in B with those from A."""
-    lines = b_content.splitlines()
-    new_lines = []
-    shape_index = 0
-    i = 0
-
-    while i < len(lines):
-        line = lines[i]
-        if re.match(r'\s*physicsShape:\s*\[\s*\]\s*', line) and shape_index < len(shapes):
-            # Get indentation
-            indent = re.match(r'^(\s*)', line).group(1)
-            # Build new physicsShape block
-            shape_lines = [f"{indent}physicsShape:"]
-            for sublist in shapes[shape_index]:
-                shape_lines.append(f"{indent}  - " + yaml.dump([sublist], default_flow_style=True).strip())
-            new_lines.extend(shape_lines)
-            shape_index += 1
-        else:
-            new_lines.append(line)
-        i += 1
-
-    return '\n'.join(new_lines)
+import sys
+from ruamel.yaml import YAML
 
 def main():
-    with open('file_a.yaml', 'r') as fa:
-        a_content = fa.read()
-
-    with open('file_b.yaml', 'r') as fb:
-        b_content = fb.read()
-
-    # Extract shapes from file A
-    shapes = extract_physics_shapes(a_content)
-
-    # Replace placeholders in file B
-    updated_b = replace_empty_physics_shapes(b_content, shapes)
-
-    # Write back to a new file or overwrite
-    with open('file_b_updated.yaml', 'w') as fout:
-        fout.write(updated_b)
+    if len(sys.argv) != 3:
+        print("Usage: python script.py <fileA> <fileB>")
+        sys.exit(1)
+    
+    fileA_path = sys.argv[1]
+    fileB_path = sys.argv[2]
+    
+    yaml = YAML()
+    yaml.preserve_quotes = True
+    
+    # Load and collect non-empty physicsShapes from fileA
+    with open(fileA_path, 'r') as f:
+        dataA = yaml.load(f)
+    
+    physics_shapes = []
+    
+    def collect_physics_shapes(data):
+        if isinstance(data, dict):
+            for key, value in data.items():
+                if key == "physicsShape":
+                    if isinstance(value, list) and value:
+                        physics_shapes.append(value)
+                else:
+                    collect_physics_shapes(value)
+        elif isinstance(data, list):
+            for item in data:
+                collect_physics_shapes(item)
+    
+    collect_physics_shapes(dataA)
+    
+    # Load fileB and replace empty physicsShapes
+    with open(fileB_path, 'r') as f:
+        dataB = yaml.load(f)
+    
+    idx = 0
+    
+    def replace_physics_shapes(data):
+        nonlocal idx
+        if isinstance(data, dict):
+            for key, value in list(data.items()):
+                if key == "physicsShape":
+                    if isinstance(value, list) and value == []:
+                        if idx < len(physics_shapes):
+                            data[key] = physics_shapes[idx]
+                            idx += 1
+                else:
+                    replace_physics_shapes(value)
+        elif isinstance(data, list):
+            for item in data:
+                replace_physics_shapes(item)
+    
+    replace_physics_shapes(dataB)
+    
+    # Save the modified data back to fileB
+    with open(fileB_path, 'w') as f:
+        yaml.dump(dataB, f)
 
 if __name__ == "__main__":
     main()
