@@ -67,9 +67,13 @@ public class AstronautMovement : MonoBehaviour
     {
         Run();
 
-        if (CanJump() && lastPressedJumpTime > 0)
+        if (CanJump())
         {
-            Jump();
+            isJumpCut = false;
+            if (lastPressedJumpTime > 0)
+            {
+                Jump();
+            }
         }
 
         if (!wasGrounded && IsGrounded())
@@ -125,15 +129,11 @@ public class AstronautMovement : MonoBehaviour
         {
             SetGravityScale(data.gravityScale * data.jumpCutGravityMult);
         }
-        else if (rb.linearVelocity.y < 0)
-        {
-            SetGravityScale(data.gravityScale * data.fallGravityMult);
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -data.maxFallSpeed));
-        }
         else
         {
-            SetGravityScale(data.gravityScale);
+            SetGravityScale(data.gravityScale * data.fallGravityMult);
         }
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, -Mathf.Min(-rb.linearVelocity.y, data.maxFallSpeed));
     }
 
     private bool IsGrounded()

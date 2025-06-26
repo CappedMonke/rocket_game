@@ -235,6 +235,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5485844658584996908, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: UpdateMethod
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6663873365083701309, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_StopNaN
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6663873365083701309, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6663873365083701309, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7427816376718409857, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.0200043

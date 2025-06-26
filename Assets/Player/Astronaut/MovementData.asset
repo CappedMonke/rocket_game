@@ -15,11 +15,11 @@ MonoBehaviour:
   gravityStrength: -21.22449
   gravityScale: 2.1635563
   fallGravityMult: 1.5
-  maxFallSpeed: 5
+  maxFallSpeed: 15
   jumpCutGravityMult: 2
-  runMaxSpeed: 5.7071157
+  runMaxSpeed: 6.215828
   runAcceleration: 3
-  runAccelAmount: 26.282978
+  runAccelAmount: 24.131943
   accelInAir: 1
   jumpHeight: 1.3
   jumpTimeToApex: 0.35
