@@ -25,9 +25,13 @@ public class AstronautMovement : MonoBehaviour
     private float footstepTimer;
     private bool wasGrounded;
 
+    private int jumpCount = 0;
+    private int maxJumps; // Set in Awake to avoid accidental triple jump
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        maxJumps = 2; // Always allow only double jump
     }
 
     private void Start()
@@ -57,7 +61,10 @@ public class AstronautMovement : MonoBehaviour
         lastPressedJumpTime -= Time.deltaTime;
 
         if (IsGrounded())
+        {
             lastOnGroundTime = data.coyoteTime;
+            jumpCount = 0; // Reset jump count when grounded
+        }
 
         if (isJumping && rb.linearVelocity.y < 0)
             isJumping = false;
@@ -120,6 +127,8 @@ public class AstronautMovement : MonoBehaviour
         isJumping = true;
         isJumpCut = false;
 
+        jumpCount++; // Increment jump count for double jump
+
         PlayJumpSound();
     }
 
@@ -143,7 +152,8 @@ public class AstronautMovement : MonoBehaviour
 
     private bool CanJump()
     {
-        return lastOnGroundTime > 0 && !isJumping;
+        // Allow jump if grounded or if jumpCount < maxJumps (for double jump)
+        return (lastOnGroundTime > 0 && !isJumping) || (jumpCount < maxJumps && lastPressedJumpTime > 0 && !IsGrounded());
     }
 
     private bool CanJumpCut()
