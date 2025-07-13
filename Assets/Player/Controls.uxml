@@ -13,7 +13,7 @@
         <ui:VisualElement style="flex-grow: 0;">
             <ui:Label text="Player" class="ControlsLabel" style="-unity-font-style: bold; margin-bottom: 4px;" />
             <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-                <ui:Label text="A/D&#10;Space&#10;E&#10;Left Click&#10;I&#10;L" class="ControlsLabel" />
+                <ui:Label text="A/D&#10;Space&#10;E&#10;Left Click&#10;I&#10;R" class="ControlsLabel" />
                 <ui:Label text="Move&#10;Jump&#10;Enter Rocket&#10;Mine&#10;Open Inventory&#10;Restart" class="ControlsLabel" />
             </ui:VisualElement>
         </ui:VisualElement>
