@@ -86,7 +86,7 @@ public class Rocket : MonoBehaviour
     private Controls controls;
     private CameraManager cameraManager;
 
-    private bool isFlying = true;
+    private bool isFlying = false;
     private bool canFly = true;
     private bool canRotate = false;
     private bool isThrusting = false;
