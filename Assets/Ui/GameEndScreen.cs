@@ -55,6 +55,9 @@ public class GameEndScreen : MonoBehaviour
     {
         gameObject.SetActive(true);
 
+        // Pause the game
+        Time.timeScale = 0;
+
         if (root != null)
         {
             root.style.display = DisplayStyle.Flex;
@@ -68,6 +71,9 @@ public class GameEndScreen : MonoBehaviour
 
     private void OnRestartButtonClicked()
     {
+        // Unpause the game
+        Time.timeScale = 1;
+
         TerrainManager.Instance.DeleteAll();
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
