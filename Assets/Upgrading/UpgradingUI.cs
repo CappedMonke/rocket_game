@@ -1,12 +1,12 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI.MessageBox;
 
 public class UpgradingUI : MonoBehaviour
 {
     public float oxygenPerOre = 60.0f;
     public float fuelPerOre = 50.0f;
+    public float healthPerOre = 20.0f;
 
     private VisualElement _root;
     private ScrollView _itemList;
@@ -152,7 +152,7 @@ public class UpgradingUI : MonoBehaviour
                 }
             })
             {
-                text = "Replenish Oxygen"
+                text = "Replenish Oxygen (Oxygenium)"
             };
             oxygenButton.AddToClassList("resource-tank-entry");
 
@@ -174,7 +174,7 @@ public class UpgradingUI : MonoBehaviour
                 }
             })
             {
-                text = "Replenish Fuel"
+                text = "Replenish Fuel (Kerosene)"
             };
             fuelButton.AddToClassList("resource-tank-entry");
 
@@ -183,6 +183,37 @@ public class UpgradingUI : MonoBehaviour
                 fuelButton.SetEnabled(false);
 
             _resourceTankList.Add(fuelButton);
+
+            var goldItem = _inventory.availableItems.FirstOrDefault(item => item.BlockKind == BlockKind.Gold);
+            var hasGold = _inventory.slots.Exists(slot => slot.item.BlockKind == BlockKind.Gold && slot.quantity > 0);
+            var healthField = rocket.GetType().GetField("health", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var maxHealthField = rocket.GetType().GetField("maxHealth", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            int health = (int)healthField.GetValue(rocket);
+            int maxHealth = (int)maxHealthField.GetValue(rocket);
+            var isDamaged = health < maxHealth;
+
+            var repairButton = new Button(() =>
+            {
+                if (goldItem != null && rocket != null)
+                {
+                    _inventory.RemoveItem(goldItem, 1);
+                    var setHealthMethod = rocket.GetType().GetMethod("SetHealth", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    int newHealth = Mathf.Min(health + Mathf.RoundToInt(healthPerOre), maxHealth);
+                    setHealthMethod.Invoke(rocket, new object[] { newHealth });
+                    RefreshUI();
+                }
+            })
+            {
+                text = $"Repair Rocket (Gold)"
+            };
+            repairButton.AddToClassList("resource-tank-entry");
+
+            if (!hasGold || !isDamaged)
+            {
+                repairButton.SetEnabled(false);
+            }
+
+            _resourceTankList.Add(repairButton);
         }
     }
 
