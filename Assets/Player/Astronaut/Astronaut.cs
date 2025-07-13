@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Astronaut : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class Astronaut : MonoBehaviour
 
         controls = new Controls();
         controls.Astronaut.EnterRocket.performed += ctx => EnterRocket();
+        controls.Astronaut.Restart.performed += ctx => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         controls.Astronaut.Jump.performed += ctx => movement.OnJumpInput();
         controls.Astronaut.Jump.canceled += ctx => movement.OnJumpUpInput();
         controls.Astronaut.Move.performed += ctx => movement.SetMoveInput(ctx.ReadValue<Vector2>());

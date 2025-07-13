@@ -117,6 +117,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""a79b71de-c75c-4fa8-8425-5b188c05688c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
                     ""action"": ""EnterRocket"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""359e180f-a55c-45f2-8edf-9bb44c375b33"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -317,6 +337,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Astronaut_Move = m_Astronaut.FindAction("Move", throwIfNotFound: true);
         m_Astronaut_Jump = m_Astronaut.FindAction("Jump", throwIfNotFound: true);
         m_Astronaut_EnterRocket = m_Astronaut.FindAction("EnterRocket", throwIfNotFound: true);
+        m_Astronaut_Restart = m_Astronaut.FindAction("Restart", throwIfNotFound: true);
         // Rocket
         m_Rocket = asset.FindActionMap("Rocket", throwIfNotFound: true);
         m_Rocket_Rotate = m_Rocket.FindAction("Rotate", throwIfNotFound: true);
@@ -407,6 +428,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Astronaut_Move;
     private readonly InputAction m_Astronaut_Jump;
     private readonly InputAction m_Astronaut_EnterRocket;
+    private readonly InputAction m_Astronaut_Restart;
     /// <summary>
     /// Provides access to input actions defined in input action map "Astronaut".
     /// </summary>
@@ -430,6 +452,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Astronaut/EnterRocket".
         /// </summary>
         public InputAction @EnterRocket => m_Wrapper.m_Astronaut_EnterRocket;
+        /// <summary>
+        /// Provides access to the underlying input action "Astronaut/Restart".
+        /// </summary>
+        public InputAction @Restart => m_Wrapper.m_Astronaut_Restart;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -465,6 +491,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @EnterRocket.started += instance.OnEnterRocket;
             @EnterRocket.performed += instance.OnEnterRocket;
             @EnterRocket.canceled += instance.OnEnterRocket;
+            @Restart.started += instance.OnRestart;
+            @Restart.performed += instance.OnRestart;
+            @Restart.canceled += instance.OnRestart;
         }
 
         /// <summary>
@@ -485,6 +514,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @EnterRocket.started -= instance.OnEnterRocket;
             @EnterRocket.performed -= instance.OnEnterRocket;
             @EnterRocket.canceled -= instance.OnEnterRocket;
+            @Restart.started -= instance.OnRestart;
+            @Restart.performed -= instance.OnRestart;
+            @Restart.canceled -= instance.OnRestart;
         }
 
         /// <summary>
@@ -675,6 +707,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEnterRocket(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Restart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRestart(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Rocket" which allows adding and removing callbacks.
