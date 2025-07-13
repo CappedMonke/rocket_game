@@ -499,7 +499,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 7bc63da61cf3166e498973e5c6d1dc49, type: 2}
     - target: {fileID: 2352302145782984090, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: orthographic size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3720165756339031641, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_Name
@@ -512,6 +512,10 @@ PrefabInstance:
     - target: {fileID: 5485844658584996908, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: UpdateMethod
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869683311563704274, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: Lens.OrthographicSize
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6663873365083701309, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_StopNaN
@@ -572,6 +576,10 @@ PrefabInstance:
     - target: {fileID: 7749674468526702368, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760957888516444703, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
+      propertyPath: Lens.OrthographicSize
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8179710869905724201, guid: d14490e0239b76cfeaca1097a94d1119, type: 3}
       propertyPath: m_LocalPosition.x

@@ -55,9 +55,6 @@ public class GameEndScreen : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        // Pause the game
-        Time.timeScale = 0;
-
         if (root != null)
         {
             root.style.display = DisplayStyle.Flex;
@@ -66,7 +63,14 @@ public class GameEndScreen : MonoBehaviour
                 messageLabel.text = message;
             }
             StartCoroutine(FadeInCoroutine(fadeDuration));
+            StartCoroutine(PauseGameAfterDelay(10f));
         }
+    }
+
+    private System.Collections.IEnumerator PauseGameAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        Time.timeScale = 0;
     }
 
     private void OnRestartButtonClicked()
