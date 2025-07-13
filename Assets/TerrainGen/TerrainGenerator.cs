@@ -414,7 +414,7 @@ public sealed class TerrainGenerator
             {
                 var worldX = x + ChunkPos.x * Chunk.ChunkSizeX;
                 float oreNoise = noise2.GetNoise(worldX * 11, worldY * 13);
-                if (chunkData[x + Chunk.ChunkSizeX * y] == BlockKind.Stone && oreNoise > 0.9f)
+                if (chunkData[x + Chunk.ChunkSizeX * y] == BlockKind.Stone && oreNoise > 0.85f)
                 {
                     chunkData[x + Chunk.ChunkSizeX * y] = BlockKind.Gold;
                 }
