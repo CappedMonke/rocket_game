@@ -26,7 +26,7 @@ public class InventoryUI : MonoBehaviour
             _root.style.display = DisplayStyle.None;
             RefreshUI();
         }
-        if (Input.GetKeyDown(KeyCode.I) && !RocketControlsEnabled())
+        if (Input.GetKeyDown(KeyCode.I) && !RocketControlsEnabled() && !RocketIsFlying())
         {
             bool isVisible = _root.style.display != DisplayStyle.None;
             _root.style.display = isVisible ? DisplayStyle.None : DisplayStyle.Flex;
@@ -57,6 +57,16 @@ public class InventoryUI : MonoBehaviour
         if (rocket != null)
         {
             return rocket.GetControls().Rocket.enabled;
+        }
+        return false;
+    }
+
+    private bool RocketIsFlying()
+    {
+        var rocket = FindAnyObjectByType<Rocket>();
+        if (rocket != null)
+        {
+            return rocket.IsFlying;
         }
         return false;
     }

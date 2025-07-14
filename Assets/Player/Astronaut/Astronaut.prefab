@@ -195,6 +195,7 @@ MonoBehaviour:
   maxHealth: 100
   oxygen: 100
   maxOxygen: 100
+  oxygenDepletionRate: 2
   startWithControlsEnabled: 1
   heartbeatSound: {fileID: 8300000, guid: 90c3fd550cc41b5eaaed12ccc1f47db0, type: 3}
   heavyBreathingSound: {fileID: 8300000, guid: b150447af7a8cf8c489caea0aa8c4fbb, type: 3}

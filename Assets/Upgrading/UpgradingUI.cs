@@ -4,9 +4,9 @@ using UnityEngine.UIElements;
 
 public class UpgradingUI : MonoBehaviour
 {
-    public float oxygenPerOre = 60.0f;
-    public float fuelPerOre = 50.0f;
-    public float healthPerOre = 20.0f;
+    public float oxygenPerOre = 25.0f;
+    public float fuelPerOre = 25.0f;
+    public float healthPerOre = 25.0f;
 
     private VisualElement _root;
     private ScrollView _itemList;
@@ -37,7 +37,7 @@ public class UpgradingUI : MonoBehaviour
             _root.style.display = DisplayStyle.None;
             RefreshUI();
         }
-        if (Input.GetKeyDown(KeyCode.I) && RocketControlsEnabled())
+        if (Input.GetKeyDown(KeyCode.I) && RocketControlsEnabled() && !RocketIsFlying())
         {
             bool isVisible = _root.style.display != DisplayStyle.None;
             _root.style.display = isVisible ? DisplayStyle.None : DisplayStyle.Flex;
@@ -55,6 +55,16 @@ public class UpgradingUI : MonoBehaviour
         if (rocket != null)
         {
             return rocket.GetControls().Rocket.enabled;
+        }
+        return false;
+    }
+
+    private bool RocketIsFlying()
+    {
+        var rocket = FindAnyObjectByType<Rocket>();
+        if (rocket != null)
+        {
+            return rocket.IsFlying;
         }
         return false;
     }

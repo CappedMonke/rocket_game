@@ -631,4 +631,6 @@ public class Rocket : MonoBehaviour
             hud.gameEndScreen.ShowGameEndScreen("Game won! You reached the win altitude!");
         }
     }
+
+    public bool IsFlying => isFlying;
 }
